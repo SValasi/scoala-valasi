@@ -68,10 +68,50 @@
   .completion { margin-top: 32px; background: linear-gradient(135deg, rgba(255,107,43,0.1), rgba(255,179,71,0.05)); border: 1px solid rgba(255,179,71,0.3); border-radius: 18px; padding: 28px; text-align: center; display: none; }
   .completion.visible { display: block; animation: fadeUp 0.4s ease; }
   .disclaimer { font-size: 11px; color: #7070A0; font-family: 'Cormorant Garamond', serif; font-style: italic; line-height: 1.7; padding: 12px 16px; background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 10px; margin-top: 32px; }
+.lesson-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(9, 9, 15, 0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.back-link {
+  color: var(--orange);
+  text-decoration: none;
+  font-size: 13px;
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 1px;
+}
+
+.back-link:hover {
+  opacity: 0.8;
+}
+
+.lesson-logo-img {
+  height: 34px;
+  width: auto;
+  display: block;
+}
 </style>
 </head>
 <body>
+<div class="lesson-header">
+  <a class="back-link" href="https://valasi.aydasist.ro/module/modul-0/">
+    ← Înapoi la Modul 0
+  </a>
 
+  <img
+    class="lesson-logo-img"
+    src="/images/logo-valasi.png"
+    alt="Școala Valasi"
+  >
+</div>
 <div class="top-nav">
   <span class="nav-label">Școala Valasi · Modul 0</span>
   <div class="progress-bar"><div class="progress-fill" id="pfill"></div></div>
