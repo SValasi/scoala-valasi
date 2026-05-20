@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dicționar | Școala Valasi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #09090F;
+  --orange: #FF6B2B;
+  --gold: #FFB347;
+  --teal: #4ECDC4;
+  --white: #F5F0E8;
+  --muted: rgba(245,240,232,0.45);
+  --border: rgba(245,240,232,0.08);
+  --card: rgba(245,240,232,0.03);
+  --sidebar-w: 280px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none; z-index: 0; opacity: 0.5;
+}
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  height: 60px;
+  padding: 0 48px;
+  display: flex; align-items: center; justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+  background: rgba(9,9,15,0.92);
+  backdrop-filter: blur(20px);
+}
+.nav-logo { font-family:'Cormorant Garamond',serif; font-size:.95rem; letter-spacing:.12em; color:var(--white); text-decoration:none; text-transform:uppercase; }
+.nav-logo span { color:var(--orange); }
+.nav-back { font-family:'DM Mono',monospace; font-size:.65rem; letter-spacing:.08em; color:var(--muted); text-decoration:none; transition:color .3s; }
+.nav-back:hover { color:var(--teal); }
+.nav-back::before { content:'← '; }
+
+/* PROGRESS */
+.progress-bar { position:fixed; top:0; left:0; height:2px; background:linear-gradient(90deg,var(--orange),var(--gold)); z-index:200; width:0; transition:width .15s; }
+
+/* LAYOUT */
+.layout {
+  display: flex;
+  padding-top: 60px;
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+/* SIDEBAR */
+.sidebar {
+  position: fixed;
+  top: 60px;
+  left: 0;
+  width: var(--sidebar-w);
+  height: calc(100vh - 60px);
+  overflow-y: auto;
+  border-right: 1px solid var(--border);
+  background: rgba(9,9,15,0.7);
+  backdrop-filter: blur(10px);
+  padding: 32px 0 48px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+.sidebar::-webkit-scrollbar { width: 3px; }
+.sidebar::-webkit-scrollbar-track { background: transparent; }
+.sidebar::-webkit-scrollbar-thumb { background: var(--border); }
+
+.sidebar-title {
+  font-family: 'DM Mono', monospace;
+  font-size: .6rem;
+  letter-spacing: .2em;
+  color: var(--orange);
+  text-transform: uppercase;
+  padding: 0 24px 16px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 8px;
+}
+
+.sidebar-item {
+  display: block;
+  padding: 10px 24px;
+  font-size: .78rem;
+  color: var(--muted);
+  text-decoration: none;
+  transition: all .2s;
+  border-left: 2px solid transparent;
+  line-height: 1.4;
+}
+.sidebar-item:hover { color: var(--white); border-left-color: var(--orange); background: rgba(255,107,43,0.04); }
+.sidebar-item.active { color: var(--orange); border-left-color: var(--orange); background: rgba(255,107,43,0.06); }
+.sidebar-num {
+  font-family: 'DM Mono', monospace;
+  font-size: .58rem;
+  color: rgba(245,240,232,.2);
+  margin-right: 8px;
+}
+
+/* MAIN */
+.main {
+  margin-left: var(--sidebar-w);
+  flex: 1;
+  max-width: 820px;
+  padding: 64px 64px 120px;
+}
+
+/* HEADER */
+.page-header { margin-bottom: 64px; }
+.page-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: .65rem;
+  letter-spacing: .2em;
+  color: var(--orange);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  display: flex; align-items: center; gap: 10px;
+}
+.page-tag::before { content:''; display:block; width:24px; height:1px; background:var(--orange); }
+.page-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.8rem, 5vw, 4.5rem);
+  font-weight: 300;
+  line-height: 1.05;
+  letter-spacing: -.02em;
+  margin-bottom: 20px;
+}
+.page-title em { font-style: italic; color: var(--gold); }
+.page-desc {
+  font-size: .9rem;
+  line-height: 1.8;
+  color: var(--muted);
+  max-width: 560px;
+}
+.page-count {
+  margin-top: 20px;
+  font-family: 'DM Mono', monospace;
+  font-size: .65rem;
+  letter-spacing: .12em;
+  color: rgba(245,240,232,.2);
+  text-transform: uppercase;
+}
+
+/* ENTRY */
+.entry {
+  padding: 56px 0;
+  border-top: 1px solid var(--border);
+  scroll-margin-top: 80px;
+}
+.entry:first-of-type { border-top: none; }
+
+.entry-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  margin-bottom: 28px;
+}
+.entry-num {
+  font-family: 'DM Mono', monospace;
+  font-size: .6rem;
+  letter-spacing: .15em;
+  color: rgba(245,240,232,.18);
+  padding-top: 8px;
+  flex-shrink: 0;
+  width: 28px;
+}
+.entry-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -.01em;
+}
+.entry-title .accent { color: var(--gold); }
+
+.entry-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'DM Mono', monospace;
+  font-size: .58rem;
+  letter-spacing: .15em;
+  color: var(--teal);
+  text-transform: uppercase;
+  border: 1px solid rgba(78,205,196,.2);
+  padding: 4px 10px;
+  margin-bottom: 20px;
+  margin-left: 48px;
+}
+
+.entry-body {
+  margin-left: 48px;
+}
+.entry-body p {
+  font-size: .92rem;
+  line-height: 1.85;
+  color: rgba(245,240,232,.8);
+  margin-bottom: 16px;
+}
+.entry-body p:last-child { margin-bottom: 0; }
+.entry-body strong { color: var(--white); font-weight: 500; }
+.entry-body em { color: var(--gold); font-style: italic; }
+
+/* ALERT BOX */
+.alert {
+  margin: 24px 0;
+  padding: 20px 24px;
+  border-left: 2px solid var(--orange);
+  background: rgba(255,107,43,0.04);
+  font-size: .85rem;
+  line-height: 1.75;
+  color: var(--muted);
+}
+.alert strong { color: var(--orange); }
+
+/* INFO BOX */
+.info {
+  margin: 24px 0;
+  padding: 20px 24px;
+  border-left: 2px solid var(--teal);
+  background: rgba(78,205,196,0.04);
+  font-size: .85rem;
+  line-height: 1.75;
+  color: var(--muted);
+}
+.info strong { color: var(--teal); }
+
+/* HELP BOX */
+.help {
+  margin: 28px 0;
+  padding: 24px;
+  border: 1px solid var(--border);
+  background: var(--card);
+}
+.help-title {
+  font-family: 'DM Mono', monospace;
+  font-size: .6rem;
+  letter-spacing: .15em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.help-body { font-size: .85rem; line-height: 1.8; color: var(--muted); }
+.help-number {
+  font-family: 'DM Mono', monospace;
+  font-size: 1.1rem;
+  color: var(--white);
+  font-weight: 500;
+  margin: 4px 0;
+}
+.help-detail { font-size: .78rem; color: rgba(245,240,232,.3); }
+
+/* DIVIDER */
+.divider {
+  margin: 0;
+  border: none;
+  border-top: 1px solid var(--border);
+}
+
+/* MOBILE TOGGLE */
+.sidebar-toggle {
+  display: none;
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 150;
+  width: 48px; height: 48px;
+  background: var(--orange);
+  border: none;
+  cursor: pointer;
+  align-items: center; justify-content: center;
+  font-size: 1.1rem;
+}
+
+/* BACK TO TOP */
+.back-top {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 64px;
+  font-family: 'DM Mono', monospace;
+  font-size: .65rem;
+  letter-spacing: .1em;
+  color: var(--muted);
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color .3s;
+}
+.back-top:hover { color: var(--orange); }
+.back-top::before { content: '↑'; }
+
+@media (max-width: 900px) {
+  .sidebar { transform: translateX(-100%); transition: transform .3s; z-index: 90; }
+  .sidebar.open { transform: translateX(0); }
+  .main { margin-left: 0; padding: 40px 24px 80px; }
+  .sidebar-toggle { display: flex; }
+  nav { padding: 0 24px; }
+  .entry-body { margin-left: 0; }
+  .entry-tag { margin-left: 0; }
+}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="prog"></div>
+
+<nav>
+  <a href="/scoala-valasi" class="nav-logo">Școala <span>Valasi</span></a>
+  <a href="/scoala-valasi/modul-0" class="nav-back">Modul 0</a>
+</nav>
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-title">Dicționar · 18 concepte</div>
+    <a href="#inginerie-sociala" class="sidebar-item"><span class="sidebar-num">01</span>Inginerie socială</a>
+    <a href="#phishing" class="sidebar-item"><span class="sidebar-num">02</span>Phishing</a>
+    <a href="#deepfake" class="sidebar-item"><span class="sidebar-num">03</span>Deepfake</a>
+    <a href="#manipulare-comportamentala" class="sidebar-item"><span class="sidebar-num">04</span>Manipulare comportamentală</a>
+    <a href="#dark-patterns" class="sidebar-item"><span class="sidebar-num">05</span>Dark patterns</a>
+    <a href="#misinformare" class="sidebar-item"><span class="sidebar-num">06</span>Misinformare și dezinformare</a>
+    <a href="#scoring-social" class="sidebar-item"><span class="sidebar-num">07</span>Scoring social</a>
+    <a href="#recunoastere-biometrica" class="sidebar-item"><span class="sidebar-num">08</span>Recunoaștere biometrică</a>
+    <a href="#uzurpare-identitate" class="sidebar-item"><span class="sidebar-num">09</span>Uzurparea identității digitale</a>
+    <a href="#ransomware" class="sidebar-item"><span class="sidebar-num">10</span>Ransomware</a>
+    <a href="#suprafata-atac" class="sidebar-item"><span class="sidebar-num">11</span>Suprafața de atac</a>
+    <a href="#bule-algoritmice" class="sidebar-item"><span class="sidebar-num">12</span>Bule algoritmice</a>
+    <a href="#pig-butchering" class="sidebar-item"><span class="sidebar-num">13</span>Pig butchering</a>
+    <a href="#cookies" class="sidebar-item"><span class="sidebar-num">14</span>Cookies</a>
+    <a href="#gdpr" class="sidebar-item"><span class="sidebar-num">15</span>GDPR</a>
+    <a href="#protectia-prietenilor" class="sidebar-item"><span class="sidebar-num">16</span>Cum îți protejezi prietenii</a>
+    <a href="#limite-varsta" class="sidebar-item"><span class="sidebar-num">17</span>Limite de vârstă</a>
+    <a href="#emotion-ai" class="sidebar-item"><span class="sidebar-num">18</span>Emotion AI</a>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <div class="page-header">
+      <div class="page-tag">Modul 0 · Resursă permanentă</div>
+      <h1 class="page-title">Dicționar<br><em>Valasi</em></h1>
+      <p class="page-desc">Termenii pe care trebuie să îi cunoști înainte să continui. Nu pentru a te speria, ci pentru a vedea clar ce există deja în jurul tău.</p>
+      <div class="page-count">18 concepte · actualizat continuu</div>
+    </div>
+
+    <!-- 01 -->
+    <div class="entry" id="inginerie-sociala">
+      <div class="entry-header">
+        <span class="entry-num">01</span>
+        <h2 class="entry-title">Inginerie <span class="accent">socială</span></h2>
+      </div>
+      <span class="entry-tag">Manipulare · Psihologie</span>
+      <div class="entry-body">
+        <p>Ingineria socială este arta de a convinge oamenii să facă lucruri pe care în mod normal nu le-ar face: să dea o parolă, să transfere bani, să creadă o informație falsă. Nu funcționează prin spargerea unui sistem informatic, ci prin exploatarea psihologiei umane. Folosește orice instrument disponibil: telefon, email, rețele sociale, aplicații, date personale, algoritmi. Tehnologia nu este opusul ingineriei sociale, ci infrastructura ei principală.</p>
+        <p>Funcționează pentru că suntem construiți să avem încredere. Când cineva pare să aibă autoritate, tindem să îi urmăm instrucțiunile. Când ceva pare urgent, nu mai gândim la fel de clar. Când cineva pare să aibă nevoie de ajutor, vrem să îl ajutăm. Acestea nu sunt slăbiciuni, sunt calități umane reale, care devin vulnerabilități doar când cineva le exploatează deliberat.</p>
+        <p>Cel mai bun exemplu la scară mare rămâne Cambridge Analytica. Christopher Wylie, directorul de cercetare al companiei care a construit sistemul, a descris public cum a funcționat: firma a obținut profilurile psihologice a 87 de milioane de utilizatori Facebook printr-un quiz de personalitate aparent inocent. Folosind modelul OCEAN — Openness (Deschidere), Conscientiousness (Conștiinciozitate), Extraversion (Extraversie), Agreeableness (Agreabilitate), Neuroticism (Nevrotism) — a cartografiat vulnerabilitățile psihologice ale alegătorilor: cine e susceptibil la frică, cine la furie, cine la teorii conspiraționiste. Apoi a livrat mesaje politice calibrate exact pe acele vulnerabilități. Nu argumente, ci triggere (declanșatoare). Wylie a descris ce a construit ca pe „un instrument de război psihologic".</p>
+        <p>Diferența dintre marketing și inginerie socială nu este o zonă gri, ci o distincție cu consecințe legale clare. Marketingul funcționează cu consimțământ și transparență. Ingineria socială le încalcă deliberat: îți modifică percepția realității fără să îți spună că o face, exploatează date personale fără consimțământ real și manipulează comportamentul fără ca tu să fii conștient că ești ținta unui proces calculat.</p>
+      </div>
+    </div>
+
+    <!-- 02 -->
+    <div class="entry" id="phishing">
+      <div class="entry-header">
+        <span class="entry-num">02</span>
+        <h2 class="entry-title"><span class="accent">Phishing</span></h2>
+      </div>
+      <span class="entry-tag">Atac cibernetic · Fraudă</span>
+      <div class="entry-body">
+        <p>Phishing-ul este una dintre cele mai vechi și mai eficiente metode de atac cibernetic și, în același timp, una dintre cele mai greu de recunoscut în momentul în care te lovește. Numele vine din engleză: "fishing" (pescuit), cu ideea că atacatorul aruncă o momeală și așteaptă să muști.</p>
+        <p>Concret, phishing-ul înseamnă că cineva îți trimite un mesaj care pare să vină dintr-o sursă de încredere și te convinge să faci ceva: să dai click pe un link, să introduci o parolă, să trimiți bani, să descarci un fișier. Mesajul este construit să pară autentic. Logoul e cel real, tonul e cel oficial, urgența e calibrată exact cât trebuie ca să nu mai verifici.</p>
+        <p>Există câteva variante pe care e important să le recunoști. Phishing-ul clasic vine prin email. <strong id="smishing">Smishing-ul</strong> vine prin mesagerie — SMS, WhatsApp, Telegram, Signal — de obicei cu un link scurt și un mesaj urgent: "Coletul tău nu a putut fi livrat, confirmă adresa aici." <strong id="vishing">Vishing-ul</strong> vine prin apel telefonic, unde o voce umană sau sintetică se prezintă drept angajat de bancă, reprezentant ANAF sau chiar un cunoscut al tău.</p>
+        <div class="alert"><strong>Cazuri românești documentate:</strong> Platformele TXEX și RS Deal, două scheme frauduloase de criptomonede răspândite în 2025 prin reclame pe TikTok, Facebook și YouTube, au păgubit zeci de mii de români cu peste 200 de milioane de euro. Victimele au primit mesaje și reclame care arătau legitim, au investit sume mici la început, au văzut „profituri" simulate pe un tablou de bord fals, au investit mai mult, și au pierdut tot.</div>
+        <p>Cel mai bun semn că ești în fața unui atac de phishing este urgența artificială combinată cu o cerere de date sau de acțiune. O bancă reală nu îți cere niciodată parola prin email. Dacă ceva te presează să acționezi imediat, înainte să gândești, acela e momentul să te oprești exact acolo.</p>
+      </div>
+    </div>
+
+    <!-- 03 -->
+    <div class="entry" id="deepfake">
+      <div class="entry-header">
+        <span class="entry-num">03</span>
+        <h2 class="entry-title"><span class="accent">Deepfake</span></h2>
+      </div>
+      <span class="entry-tag">IA Generativă · Identitate falsă</span>
+      <div class="entry-body">
+        <p>Deepfake-ul este conținut audio, video sau vizual generat sau modificat cu ajutorul inteligenței artificiale astfel încât să pară real. O persoană reală pare să spună ceva ce nu a spus niciodată, să facă ceva ce nu a făcut, sau să fie prezentă undeva unde nu a fost.</p>
+        <p>Tehnologia nu este nouă, dar accesibilitatea ei s-a schimbat dramatic. Până acum câțiva ani, un deepfake convingător necesita resurse tehnice serioase. Astăzi există aplicații gratuite care pot clona vocea cuiva după câteva secunde de înregistrare audio și pot genera un videoclip realist în câteva minute.</p>
+        <p>Utilizările malițioase sunt deja documentate și diverse. În fraude financiare, atacatorii clonează vocea unui director de companie și sună departamentul financiar cu instrucțiuni de transfer urgent. În campanii politice, videoclipuri falsificate cu lideri politici rostind declarații pe care nu le-au făcut sunt distribuite viral. În scheme de tip pig butchering, avataruri video realiste întrețin relații false cu victimele săptămâni întregi.</p>
+        <div class="info"><strong>Ce spune legea:</strong> AI Act impune ca orice conținut generat sau modificat cu IA să fie etichetat clar ca atare. Obligația există pentru actorii non-statali: platforme, companii, dezvoltatori de aplicații. În practică, etichetarea nu ajunge întotdeauna la utilizator înainte ca conținutul să fi fost distribuit de mii de ori.</div>
+        <p>Cel mai util reflex în fața unui conținut care pare șocant sau perfect calibrat să te înfurie este să te oprești înainte să dai mai departe. Sursa contează, contextul contează, și uneori cel mai onest lucru pe care îl poți face este să spui că nu știi dacă e real.</p>
+      </div>
+    </div>
+
+    <!-- 04 -->
+    <div class="entry" id="manipulare-comportamentala">
+      <div class="entry-header">
+        <span class="entry-num">04</span>
+        <h2 class="entry-title">Manipulare <span class="accent">comportamentală</span></h2>
+      </div>
+      <span class="entry-tag">Design · Algoritmi · Psihologie</span>
+      <div class="entry-body">
+        <p>Manipularea comportamentală înseamnă modificarea sistematică a ceea ce faci, nu prin forță și nu prin argumente, ci prin designul mediului în care trăiești.</p>
+        <p>Un exemplu simplu: dacă pui fructele la nivelul ochilor în cantină și chipsurile pe raftul de jos, mai mulți oameni iau fructe. Nimeni nu a fost forțat, nimeni nu a primit un argument. Mediul a fost aranjat astfel încât un comportament să devină mai ușor decât altul. Psihologii numesc asta nudge (împingere subtilă).</p>
+        <p>La scară digitală, același principiu funcționează altfel și mult mai puternic. Feed-ul unei rețele sociale nu îți arată ce vrei să vezi, îți arată ce te face să rămâi mai mult pe platformă. Notificările sunt calibrate să apară în momentul în care ești cel mai probabil să le urmezi. Butonul de confirmare e mare și colorat, cel de anulare e mic și gri. Jocurile online sunt construite să creeze exact acel sentiment de „mai un nivel și mă opresc."</p>
+        <p>Acestea nu sunt coincidențe de design, ci decizii luate de echipe de psihologi și ingineri cu date despre milioane de utilizatori și un singur obiectiv: să modifice comportamentul tău în direcția care aduce profit platformei.</p>
+        <p>Există și un nivel mai avansat, deja implementat curent în platformele și site-urile comerciale. Instrumente precum Microsoft Clarity, Hotjar sau FullStory înregistrează sesiunile utilizatorilor în detaliu: unde mișcă mouse-ul, unde se opresc, ce ignoră, unde dau click fără să se întâmple nimic. Sisteme bazate pe IA precum Attention Insight estimează chiar și unde se uită utilizatorul pe ecran, fără echipamente speciale. Pe baza acestor date, interfețele sunt optimizate continuu să ghideze comportamentul în direcția dorită de platformă.</p>
+        <div class="info"><strong>Ce spune legea:</strong> AI Act și DSA (Legea serviciilor digitale) interzic explicit tehnicile de manipulare comportamentală care exploatează vulnerabilitățile utilizatorilor, în special ale minorilor.</div>
+      </div>
+    </div>
+
+    <!-- 05 -->
+    <div class="entry" id="dark-patterns">
+      <div class="entry-header">
+        <span class="entry-num">05</span>
+        <h2 class="entry-title">Dark patterns <span class="accent">(tipare înșelătoare de design)</span></h2>
+      </div>
+      <span class="entry-tag">Design · Consum · Drepturi digitale</span>
+      <div class="entry-body">
+        <p>Ai mai deschis vreodată o aplicație și ai căutat minute întregi butonul de anulare a unui abonament, în timp ce butonul de reînnoire era mare, colorat și exact în față? Sau ai bifat ceva fără să vrei pentru că bifa era deja pusă și scrisă cu litere mici? Sau ai primit un pop-up care îți spunea „Mai sunt doar 2 locuri la acest preț!" chiar când erai pe punctul să închizi pagina? Acestea sunt dark patterns, tipare de design construite deliberat să te ducă spre o decizie pe care altfel nu ai fi luat-o.</p>
+        <p>Termenul a fost inventat în 2010 de designerul Harry Brignull, care a început să catalogheze și să facă publice aceste practici tocmai pentru că sunt atât de răspândite încât oamenii le consideră normale. Nu sunt normale, sunt decizii de design luate conștient împotriva interesului tău.</p>
+        <p>Câteva forme pe care le întâlnești zilnic: <strong>confirmshaming</strong> înseamnă că butonul de refuz e formulat să te facă să te simți prost, de tipul „Nu, mulțumesc, prefer să rămân needucat." <strong>Checkbox treachery</strong> înseamnă că bifele de consimțământ sunt pre-completate sau formulate în așa fel încât să nu înțelegi exact la ce ești de acord. <strong>Nagging</strong> înseamnă că platforma îți cere același lucru repetat, fără să existe o opțiune clară de a spune nu definitiv. <strong>Sneak-in basket</strong> înseamnă că în coșul de cumpărături îți apar produse sau servicii adăugate fără acordul tău explicit.</p>
+        <div class="alert"><strong>Consecințe legale reale:</strong> X (fostul Twitter) a primit o amendă de 120 de milioane de euro de la Comisia Europeană parțial pentru astfel de practici. Federal Trade Commission din SUA și Comisia Europeană prin DSA le tratează ca practici comerciale înșelătoare.</div>
+        <p>Cel mai util lucru pe care îl poți face când simți că o interfață te împinge undeva este să te oprești și să întrebi: această decizie o iau eu, sau mi-a fost aranjat să o iau?</p>
+      </div>
+    </div>
+
+    <!-- 06 -->
+    <div class="entry" id="misinformare">
+      <div class="entry-header">
+        <span class="entry-num">06</span>
+        <h2 class="entry-title">Misinformare și <span class="accent">dezinformare</span></h2>
+      </div>
+      <span class="entry-tag">Informație · Media · Gândire critică</span>
+      <div class="entry-body">
+        <p>Misinformarea este informație falsă sau înșelătoare care circulă fără ca cel care o distribuie să știe neapărat că e falsă. Dezinformarea este același lucru, dar cu intenție: cineva știe că e fals și o răspândește deliberat pentru a manipula. Distincția contează pentru că schimbă cine e responsabil și cum răspunzi, dar efectul asupra celui care o primește e același.</p>
+        <p>Creierul uman nu e construit să verifice informațiile în timp real. Procesăm rapid, decidem rapid și trecem mai departe. Când o informație vine dintr-o sursă în care avem încredere, o acceptăm mult mai ușor. Cercetările arată că misinformarea călătorește mai repede și mai departe decât informația corectă pe platformele sociale, pentru că e formulată să provoace emoții puternice: frică, furie, indignare. Emoția te face să dai mai departe fără să verifici.</p>
+        <p>Un exemplu documentat: în 2021, cel mai distribuit articol pe Facebook în primul trimestru era un titlu despre un medic sănătos mort la două săptămâni după vaccinul COVID-19. Articolul era publicat de o sursă credibilă și tehnic nu era fals: medicul chiar murise. Dar titlul sugera o legătură cauzală care nu fusese demonstrată. A fost distribuit masiv în special în grupuri anti-vaccinare.</p>
+        <p>Inteligența artificială generativă a schimbat scala problemei. Acum e posibil să produci texte, imagini și videoclipuri false în cantități industriale, la cost aproape zero, calibrate pe vulnerabilitățile psihologice ale unui anumit public. Această capacitate erodează treptat ceva mai greu de reparat decât o știre falsă individuală: capacitatea oamenilor de a mai distinge ce e real.</p>
+        <p>Cel mai eficient mecanism de apărare documentat nu este verificarea faptelor după ce ai citit ceva, ci prebunking-ul: înțelegerea în avans a tehnicilor de manipulare. Când știi cum arată o știre construită să te înfurie, o recunoști mai repede când o întâlnești.</p>
+      </div>
+    </div>
+
+    <!-- 07 -->
+    <div class="entry" id="scoring-social">
+      <div class="entry-header">
+        <span class="entry-num">07</span>
+        <h2 class="entry-title">Scoring <span class="accent">social</span></h2>
+      </div>
+      <span class="entry-tag">Control · Date · Drepturi</span>
+      <div class="entry-body">
+        <p>Scoring social înseamnă atribuirea unui punctaj numeric unei persoane pe baza comportamentului său și folosirea acelui punctaj pentru a decide ce acces are la servicii, oportunități sau drepturi.</p>
+        <p>Forma cea mai cunoscută este sistemul din China, adesea descrisă în presă ca un scor unic care urmărește fiecare cetățean și îi controlează viața. Realitatea e mai complexă: sistemul chinez este o rețea de liste și baze de date sectoriale, nu un număr centralizat per persoană. Cineva care nu respectă o hotărâre judecătorească poate ajunge pe o listă care îi restricționează accesul la bilete de avion sau tren. Nu există un scor unic al „bunului cetățean" la nivel național unificat, cel puțin nu încă, dar direcția e clară și infrastructura există.</p>
+        <p>Formele occidentale sunt mai fragmentate, dar nu absente. Credit scoring-ul financiar există peste tot: un număr care decide dacă poți lua un credit și la ce dobândă. Insurance scoring calculează cât plătești pentru asigurare în funcție de comportamentul tău. Platformele de ride-sharing îți dau un rating după fiecare cursă. Sistemele de recrutare bazate pe IA îți evaluează CV-ul și uneori comportamentul din interviu înainte să ajungă la un om.</p>
+        <div class="alert"><strong>Lipsă totală de transparență:</strong> În majoritatea sistemelor existente, persoana evaluată nu știe că are un scor, nu i se comunică valoarea lui, nu știe pe ce criterii a fost calculat, nu îl poate contesta și nu îl poate corecta. Această lipsă de transparență e tocmai ce îl face periculos: îți poate afecta accesul la credite, locuri de muncă sau servicii publice fără să ai nicio posibilitate de a înțelege de ce.</div>
+        <div class="info"><strong>Ce spune legea:</strong> AI Act interzice explicit scoring-ul social bazat pe IA pentru actorii non-statali pe teritoriul Uniunii Europene, clasificându-l ca risc inacceptabil. Statele membre păstrează excepții pentru securitate națională și aplicarea legii, cu condiții și supraveghere judiciară.</div>
+      </div>
+    </div>
+
+    <!-- 08 -->
+    <div class="entry" id="recunoastere-biometrica">
+      <div class="entry-header">
+        <span class="entry-num">08</span>
+        <h2 class="entry-title">Recunoaștere <span class="accent">biometrică în timp real</span></h2>
+      </div>
+      <span class="entry-tag">Supraveghere · Identitate · Spații publice</span>
+      <div class="entry-body">
+        <p>Biometria înseamnă identificarea unei persoane după caracteristici fizice unice: față, iris, amprentă, voce, mers. Recunoașterea biometrică în timp real înseamnă că un sistem poate face această identificare automat, instantaneu, în spații publice, fără ca persoana să știe sau să fi fost de acord.</p>
+        <p>Tehnologia funcționează și e deja implementată în multe țări. O cameră dintr-o stație de metrou, conectată la o bază de date de identitate, poate să știe în câteva secunde cine ești, unde ai mai fost și ce cazier ai, în timp ce tu treci pe lângă ea fără să te oprești și fără să fi semnat nimic.</p>
+        <p>Utilizările legitime există și sunt reale: găsirea persoanelor dispărute, identificarea suspecților după comiterea unei infracțiuni, autentificarea la frontieră cu consimțământ explicit. Utilizările problematice există în egală măsură: urmărirea protestatarilor, identificarea participanților la manifestații publice, construirea de profile de mișcare fără bază legală. Aceeași cameră, aceeași bază de date, decizie diferită a celui care o controlează.</p>
+        <div class="info"><strong>Ce spune legea:</strong> AI Act interzice identificarea biometrică în timp real în spații publice pentru actorii non-statali pe teritoriul Uniunii Europene. Interdicția se aplică companiilor și platformelor private. Autoritățile de aplicare a legii pot folosi sistemul în cazuri grave, cu aprobare judiciară. Serviciile de securitate națională operează sub un cadru juridic separat.</div>
+        <p>Ce face această tehnologie diferită de o cameră obișnuită de supraveghere este că nu înregistrează doar ce se întâmplă într-un loc, ci știe cine ești tu, personal, oriunde apari în raza ei. Diferența dintre a fi filmat și a fi identificat este diferența dintre anonimat și urmărire.</p>
+      </div>
+    </div>
+
+    <!-- 09 -->
+    <div class="entry" id="uzurpare-identitate">
+      <div class="entry-header">
+        <span class="entry-num">09</span>
+        <h2 class="entry-title">Uzurparea <span class="accent">identității digitale</span></h2>
+      </div>
+      <span class="entry-tag">Identitate · Fraudă · Date personale</span>
+      <div class="entry-body">
+        <p>Uzurparea identității digitale înseamnă că cineva preia sau reconstruiește identitatea ta online pentru a acționa în numele tău, a accesa conturile tale sau a-ți afecta reputația. E diferită de un deepfake izolat, care falsifică un moment. Uzurparea identității e un proces mai amplu: cineva adună date despre tine din surse publice și private, fotografii, voce, stilul în care scrii, relațiile tale, istoricul tău online, și construiește o versiune falsă a ta suficient de convingătoare pentru a înșela oameni care te cunosc.</p>
+        <p>Formele cele mai frecvente sunt accesul neautorizat la conturi, când cineva îți preia emailul, contul de social media sau aplicația de banking și acționează ca tine, și impersonarea, când cineva creează un profil fals în numele tău și interacționează cu contactele tale sau cu publicul larg.</p>
+        <p>Inteligența artificială a făcut ambele mult mai ușoare. Un model de voce poate fi creat din câteva secunde de înregistrare audio, suficient pentru a suna un membru al familiei și a cere bani urgent. Stilul tău de scriere poate fi imitat de un model lingvistic antrenat pe postările tale publice.</p>
+        <p>Efectele nu sunt doar financiare. Uzurparea identității poate compromite relații profesionale construite în ani, poate genera conținut pe care nu l-ai produs și de care ești asociat public, poate bloca accesul la propriile tale conturi și poate lăsa urme digitale false care sunt extrem de greu de șters.</p>
+        <p>Cel mai eficient mod de a reduce riscul este să îți tratezi datele personale publice cu aceeași atenție cu care tratezi o cheie de la casă: nu pentru că toată lumea e rea, ci pentru că nu știi cine le găsește și ce face cu ele.</p>
+      </div>
+    </div>
+
+    <!-- 10 -->
+    <div class="entry" id="ransomware">
+      <div class="entry-header">
+        <span class="entry-num">10</span>
+        <h2 class="entry-title"><span class="accent">Ransomware</span> (răscumpărare digitală)</h2>
+      </div>
+      <span class="entry-tag">Malware · Securitate · Date</span>
+      <div class="entry-body">
+        <p>Ransomware-ul este un tip de program malițios (malware) care îți blochează accesul la propriile date prin criptare și cere o răscumpărare pentru a ți le reda. Numele vine din engleză: "ransom" înseamnă răscumpărare.</p>
+        <p>Scenariul clasic: deschizi un fișier primit prin email, descarci ceva dintr-o sursă care părea legitimă sau accesezi un link dintr-un mesaj. În fundal, fără să știi, un program începe să cripteze tot ce găsește pe dispozitivul tău: fotografii, documente, fișiere de școală sau de muncă. Când procesul e terminat, pe ecran apare un mesaj care îți spune că datele tale sunt blocate și că trebuie să plătești, de obicei în criptomonede, pentru a primi cheia de decriptare. Uneori cheia vine după plată. Uneori nu vine.</p>
+        <p>Ransomware-ul nu vizează doar persoane individuale. În România și în toată Europa, spitale, școli, primării și companii au fost ținta unor astfel de atacuri. Un spital fără acces la dosarele pacienților nu e doar un inconvenient, e o urgență medicală reală.</p>
+        <div class="info"><strong>Apărare concretă:</strong> Backup regulat al datelor importante pe un dispozitiv separat sau în cloud, combinat cu atenție la ce deschizi și de unde descarci. Un ransomware nu poate cripta ce nu găsește pe dispozitivul infectat.</div>
+      </div>
+    </div>
+
+    <!-- 11 -->
+    <div class="entry" id="suprafata-atac">
+      <div class="entry-header">
+        <span class="entry-num">11</span>
+        <h2 class="entry-title">Suprafața <span class="accent">de atac</span></h2>
+      </div>
+      <span class="entry-tag">Securitate · Dispozitive · Conturi</span>
+      <div class="entry-body">
+        <p>Suprafața de atac este totalitatea punctelor prin care cineva ar putea încerca să acceseze neautorizat datele sau dispozitivele tale. Cu cât ai mai multe dispozitive conectate, mai multe conturi, mai multe aplicații instalate și mai multe servicii folosite, cu atât suprafața ta de atac e mai mare.</p>
+        <p>Un adolescent obișnuit în 2025 are o suprafață de atac considerabilă: un telefon cu zeci de aplicații instalate, un laptop, un cont de email, mai multe conturi de social media, poate un cont de gaming, o aplicație de banking, căști wireless, poate un smartwatch. Fiecare dintre acestea e un punct de intrare potențial.</p>
+        <p>Conceptul e important de înțeles pentru că schimbă modul în care te gândești la securitate. Nu e suficient să fii atent pe un singur canal dacă celelalte sunt lăsate deschise. Un atacator nu intră neapărat pe unde te aștepți: poate că emailul tău e securizat, dar aplicația unui joc pe care l-ai instalat acum doi ani și l-ai uitat are acces la contactele tale.</p>
+        <div class="info"><strong>Câteva lucruri simple care reduc suprafața de atac:</strong> parole diferite pentru conturi diferite, autentificare în doi pași acolo unde e disponibilă, ștergerea aplicațiilor pe care nu le mai folosești și atenție la ce permisiuni cer aplicațiile la instalare. O aplicație de lanternă care cere acces la microfon, contacte și locație nu are nevoie de acele permisiuni ca să funcționeze.</div>
+      </div>
+    </div>
+
+    <!-- 12 -->
+    <div class="entry" id="bule-algoritmice">
+      <div class="entry-header">
+        <span class="entry-num">12</span>
+        <h2 class="entry-title">Bule <span class="accent">algoritmice</span></h2>
+      </div>
+      <span class="entry-tag">Algoritmi · Opinie · Democrație</span>
+      <div class="entry-body">
+        <p>O bulă algoritmică este un mediu digital în care vezi din ce în ce mai mult conținut care îți confirmă opiniile existente și din ce în ce mai puțin conținut care le contrazice. Nu e ceva ce alegi conștient, e rezultatul modului în care algoritmii de recomandare sunt construiți.</p>
+        <p>Mecanismul e simplu: algoritmul observă cu ce interacționezi, ce privești mai mult, ce distribui, la ce reacționezi emoțional, și îți livrează mai mult din același lucru. Nu pentru că vrea să te manipuleze ideologic, ci pentru că asta te ține pe platformă mai mult timp. Efectul secundar e că realitatea pe care o vezi online devine treptat o cameră de ecou în care toată lumea pare să gândească la fel ca tine.</p>
+        <p>Pericolul nu e că ai o opinie, ci că nu mai știi că ai o perspectivă parțială. Cineva prins într-o bulă algoritmică nu simte că e în bulă, simte că vede lumea așa cum e.</p>
+        <p>Un mecanism mai puțin vizibil funcționează chiar în interiorul unei postări publice. Când o postare are sute sau mii de comentarii, nu le vezi pe toate și nu le vezi în ordine cronologică. Algoritmul decide ce comentarii îți apar primele, și tinde să îți arate comentariile cu care e mai probabil să fii de acord. Sub aceeași postare, doi oameni cu opinii diferite văd două conversații aproape diferite, fiecare cu impresia că majoritatea e de partea lui.</p>
+        <p>Platformele de mesagerie precum WhatsApp, Telegram sau Signal sunt și ele spații în care bulele se manifestă. Grupurile private amplifică conținut care circulă deja în interiorul unui cerc de oameni cu opinii similare, fără algoritmul explicit al unui feed public, dar cu același efect: informația care intră în grup e deja filtrată de cine a trimis-o.</p>
+        <p>Ieșirea nu e să renunți la platforme, ci să cauți activ surse diferite, să urmărești periodic oameni cu care nu ești de acord și să îți pui întrebarea: de ce văd tocmai asta acum?</p>
+      </div>
+    </div>
+
+    <!-- 13 -->
+    <div class="entry" id="pig-butchering">
+      <div class="entry-header">
+        <span class="entry-num">13</span>
+        <h2 class="entry-title">Pig butchering <span class="accent">(îngrășarea porcului)</span></h2>
+      </div>
+      <span class="entry-tag">Fraudă · Manipulare emoțională · Relații false</span>
+      <div class="entry-body">
+        <p>Pig butchering este o schemă de fraudă care combină manipulare emoțională pe termen lung cu înșelătorie financiară. Numele vine dintr-o expresie care descrie procesul de a îngrășa un porc înainte de a-l tăia: victima e „hrănită" cu atenție, afecțiune și câștiguri false până când e convinsă să investească sume mari, moment în care totul dispare.</p>
+        <p>Schema începe aproape întotdeauna cu un contact aparent întâmplător: un mesaj trimis „din greșeală", o cerere de prietenie pe o rețea socială, o conversație inițiată pe TikTok sau o aplicație de dating. Persoana de la celălalt capăt e prietenoasă, interesantă, pare să aibă o viață fascinantă și îți acordă o atenție neobișnuit de mare. Nu cere nimic săptămâni întregi, construiește o relație reală sau o prietenie apropiată.</p>
+        <p>La un moment dat, natural și fără presiune aparentă, subiectul investițiilor apare în conversație. Îți povestește că a câștigat bani frumoși dintr-o platformă de tranzacționare și vrea să te ajute și pe tine. Îți arată câștiguri, te ghidează pas cu pas. Primele retrageri funcționează. Investești mai mult. La un moment dat, când suma e suficient de mare, platforma devine inaccesibilă, persoana dispare și banii nu mai pot fi recuperați.</p>
+        <p>Schemele de pig butchering sunt susținute de infrastructuri dedicate și echipe specializate, uneori operate din centre în Asia de Sud-Est, unde oamenii lucrează în schimburi pentru a întreține simultan zeci de relații false. Un studiu academic publicat în Journal of Cybersecurity în 2026 documentează în detaliu tacticile psihologice și de comunicare folosite.</p>
+        <div class="alert"><strong>Semnal de alarmă:</strong> Dacă o persoană pe care nu o cunoști în viața reală îți acordă o atenție neobișnuit de mare și la un moment dat aduce vorba despre o oportunitate de investiție, acela e semnalul. Nu contează cât de reală pare relația și cât de convingătoare par câștigurile demonstrate.</div>
+      </div>
+    </div>
+
+    <!-- 14 -->
+    <div class="entry" id="cookies">
+      <div class="entry-header">
+        <span class="entry-num">14</span>
+        <h2 class="entry-title"><span class="accent">Cookies</span></h2>
+      </div>
+      <span class="entry-tag">Date · Tracking · Consimțământ</span>
+      <div class="entry-body">
+        <p>Cookies sunt fișiere mici de text pe care un site le salvează pe dispozitivul tău când îl vizitezi. Ideea originală era simplă și utilă: să țină minte că ești logat, ce ai în coșul de cumpărături, ce limbă preferi. Fără cookies, ar trebui să te autentifici din nou la fiecare pagină pe care o deschizi.</p>
+        <p>Problema nu e cookies-ul în sine, ci ce s-a construit în jurul lui. Există cookies de sesiune, care se șterg când închizi browserul, și cookies persistente, care rămân pe dispozitivul tău luni sau ani. Există cookies proprii, puse de site-ul pe care îl vizitezi, și cookies de la terți, puse de companii externe — rețele de publicitate, platforme de analiză, butoane de social media integrate în pagină — care îți urmăresc comportamentul pe zeci sau sute de site-uri diferite, indiferent dacă ai cont la ele sau nu.</p>
+        <p>Acesta e mecanismul prin care o reclamă pentru un produs pe care l-ai căutat ieri pe un site apare astăzi pe un site complet diferit. Nu e magie și nu e coincidență, e un profil comportamental construit din datele colectate de cookies de la terți de pe toate site-urile pe care le-ai vizitat.</p>
+        <p>Consimțământul pentru cookies e reglementat în Europa prin GDPR: teoretic, trebuie să fii informat și să îți dai acordul explicit înainte ca cookies-urile de tracking să fie activate. În practică, majoritatea bannerelor de cookies sunt proiectate ca dark patterns: butonul „Accept tot" e mare și colorat, butonul de refuz e mic, ascuns sau necesită mai mulți pași.</p>
+        <div class="alert"><strong>Important:</strong> Când dai „Accept tot" fără să citești, nu accepți doar să funcționeze site-ul. Accepți să fii urmărit, profilat și ținta unor sisteme de manipulare comportamentală.</div>
+      </div>
+    </div>
+
+    <!-- 15 -->
+    <div class="entry" id="gdpr">
+      <div class="entry-header">
+        <span class="entry-num">15</span>
+        <h2 class="entry-title"><span class="accent">GDPR</span> (Regulamentul General privind Protecția Datelor)</h2>
+      </div>
+      <span class="entry-tag">Lege europeană · Drepturi digitale · Date personale</span>
+      <div class="entry-body">
+        <p>GDPR este regulamentul european care stabilește regulile prin care companiile și instituțiile pot colecta, stoca și folosi datele tale personale. A intrat în vigoare în mai 2018 și se aplică oricărei organizații care prelucrează date ale cetățenilor din Uniunea Europeană, indiferent unde e sediul acelei organizații. O companie din SUA, China sau oriunde altundeva care îți colectează datele dacă ești cetățean european trebuie să respecte GDPR.</p>
+        <p>GDPR nu se aplică doar online. Se aplică oricărei organizații care prelucrează date personale, indiferent de format: un spital care îți stochează dosarul medical, o școală care ține evidența elevilor, o companie care îți procesează CV-ul, un magazin fizic care îți cere datele pentru un card de fidelitate.</p>
+        <p>Concret, GDPR îți dă câteva drepturi reale: dreptul de a ști ce date are o companie despre tine și de a cere să ți le arate, dreptul de a cere ștergerea lor (dreptul de a fi uitat), dreptul de a-ți retrage consimțământul oricând fără consecințe, dreptul de a fi informat clar și în limbaj accesibil despre cum îți sunt folosite datele înainte să îți dai acordul.</p>
+        <p>Există o diferență fundamentală față de alte zone geografice. În Statele Unite nu există o lege federală echivalentă, iar modelul implicit e că datele tale pot fi colectate și folosite dacă nu optezi explicit să ieși din sistem. În Europa modelul e invers: datele tale nu pot fi colectate fără consimțământul tău explicit și informat.</p>
+        <p>O cerință esențială pe care mulți o ignoră: textul prin care îți ceri consimțământul trebuie să fie clar, simplu și lizibil. Consimțământul trebuie dat separat pe categorii distincte de date și scopuri. Fiecare categorie trebuie să aibă bifa ei, iar bifa nu poate fi pre-completată. Dacă bifezi ceva, trebuie să fie o decizie activă și conștientă.</p>
+        <p>Dacă refuzi cookies-urile de marketing, platforma nu are dreptul legal să îți refuze accesul la serviciu doar pentru asta, cel puțin nu în Uniunea Europeană. Poți să folosești serviciul și să refuzi să fii profilat.</p>
+        <div class="info"><strong>Amenzi reale:</strong> GDPR prevede amenzi de până la 4% din cifra de afaceri globală anuală sau 20 de milioane de euro, oricare e mai mare. Meta a primit amenzi de peste un miliard de euro în total în ultimii ani. TikTok a primit 345 de milioane de euro pentru neprotejarea datelor minorilor.</div>
+      </div>
+    </div>
+
+    <!-- 16 -->
+    <div class="entry" id="protectia-prietenilor">
+      <div class="entry-header">
+        <span class="entry-num">16</span>
+        <h2 class="entry-title">Cum îți <span class="accent">protejezi prietenii</span> online</h2>
+      </div>
+      <span class="entry-tag">Siguranță · Relații · Acțiune</span>
+      <div class="entry-body">
+        <p>Există lucruri pe care le observi mai ușor la alții decât la tine însuți. Când ești în mijlocul unei situații, e greu să vezi clar. De aceea cel mai important lucru pe care îl poți face pentru un prieten nu e să îi dai sfaturi, ci să fii atent.</p>
+        <p>Câteva semne care merită o conversație, nu o judecată: prietenul tău vorbește mult despre cineva pe care l-a cunoscut online și pe care nu l-a întâlnit niciodată în viața reală. Persoana respectivă îi acordă o atenție neobișnuit de mare. Conversațiile s-au mutat pe WhatsApp sau Telegram. Persoana îi cere să nu spună altora despre relația lor.</p>
+        <p>Prietenul tău a început să se retragă, e mai secretos cu telefonul, pare anxios sau tulburat după anumite conversații. A primit o cerere pe care o consideră normală dar care nu e: să trimită o fotografie, să se conecteze pe video, să facă ceva „doar între ei." Sau a investit bani într-o platformă despre care îți vorbește entuziasmat și acum nu mai poate retrage nimic.</p>
+        <p>Ce faci dacă recunoști ceva din ce ai citit mai sus? Nu îl confrunți, nu îl judeci și nu îi spui că e naiv, pentru că asta îl va face să se închidă. Îi spui că ești acolo, că nu îl judeci și că vrei să înțelegi. Dacă situația pare serioasă, un adult de încredere nu e o trădare, e singurul lucru care poate ajuta cu adevărat.</p>
+        <p>Și dacă citind asta ai recunoscut ceva din propria ta experiență, același lucru e valabil și pentru tine.</p>
+        <div class="help">
+          <div class="help-title">Ai nevoie de ajutor? Există oameni disponibili acum.</div>
+          <div class="help-body">
+            <div class="help-number">116 111 — Telefonul Copilului</div>
+            <div class="help-detail">Luni–vineri, 10:00–20:00 · Psihologi și consilieri · Apel gratuit prin Orange România · telefonulcopilului.ro</div>
+            <br>
+            <div class="help-number">119 — Linia națională urgențe copii</div>
+            <div class="help-detail">24 de ore din 24, 7 zile din 7 · Gratuit de pe orice telefon · Direcția de Asistență Socială și Protecția Copilului</div>
+            <br>
+            <div style="font-size:.82rem; color:var(--muted); margin-top:8px;">Nu trebuie să fii în pericol iminent ca să suni. Poți suna și dacă ești confuz, speriat sau pur și simplu nu știi ce să faci.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 17 -->
+    <div class="entry" id="limite-varsta">
+      <div class="entry-header">
+        <span class="entry-num">17</span>
+        <h2 class="entry-title">Limite de vârstă în platformele digitale <span class="accent">și IA</span></h2>
+      </div>
+      <span class="entry-tag">Minori · Protecție · Lege</span>
+      <div class="entry-body">
+        <p>Există copii care s-au îndrăgostit de un personaj AI care părea să îi înțeleagă perfect, care nu îi judeca, nu obosea și nu pleca niciodată, și nu și-au dat seama că nu există nimeni la celălalt capăt. Există copii care au trimis fotografii sau filmulețe unei persoane care părea să îi înțeleagă și care au ajuns să fie șantajați cu ele. Există copii care s-au jucat online cu adulți care, în momentul în care au realizat că au de-a face cu un minor, nu au închis jocul, ci au început să îi urmărească și în viața reală. Acestea nu sunt scenarii inventate pentru a speria. Sunt cazuri documentate, raportate în România, în fiecare an.</p>
+        <p>Pe TikTok și pe alte platforme circulă filmulețe care îi învață pe adolescenți cum să păcălească sistemele de verificare a vârstei prin recunoaștere facială: cum să își machieze fața, ce unghi să folosească, ce iluminare funcționează. Sunt prezentate ca trucuri inofensive. Nu sunt. Cel care îți arată cum să intri pe o platformă pentru care nu ai vârsta legală nu îți face o favoare, îți elimină o protecție fără să îți explice de ce există.</p>
+        <p>Un adolescent care se ceartă cu părinții acasă, care se simte neînțeles sau singur, este exact profilul pe care îl caută un sistem AI construit să îți ofere validare nelimitată sau o persoană care vrea să exploateze tocmai acea vulnerabilitate. Nu pentru că ești slab, ci pentru că ești uman și ai nevoie de conexiune. Sistemele care știu asta și o folosesc deliberat există și funcționează.</p>
+        <p>Limitele de vârstă nu există pentru că platformele vor să te excludă. Există pentru că datele tale, comportamentul tău, emoțiile tale și vulnerabilitățile tale sunt mai expuse când ești minor, și pentru că legea recunoaște asta explicit. În România limita de consimțământ pentru prelucrarea datelor personale în servicii digitale este 16 ani. Când îți declari o vârstă falsă ca să intri pe o platformă, renunți la protecțiile legale care există specific pentru tine.</p>
+        <div class="info"><strong>Din 2025, regulile europene interzic platformelor</strong> să activeze implicit pentru minori notificări continue, scroll infinit, autoplay în jocuri video și filtre care modifică aspectul corpului. TikTok a primit o amendă de 345 de milioane de euro pentru că a proiectat deliberat interfața astfel încât minorii să nu își poată schimba ușor setările de confidențialitate.</div>
+        <p>Dacă ți se pare că regulile astea îți limitează accesul la ceva ce îți place, probabil că da. Dar înainte să cauți un truc ca să le ocolești, merită să știi exact la ce renunți când o faci.</p>
+      </div>
+    </div>
+
+    <!-- 18 -->
+    <div class="entry" id="emotion-ai">
+      <div class="entry-header">
+        <span class="entry-num">18</span>
+        <h2 class="entry-title">Emotion AI <span class="accent">(inteligența emoțională artificială)</span></h2>
+      </div>
+      <span class="entry-tag">IA · Emoții · Autonomie</span>
+      <div class="entry-body">
+        <p>Emotion AI este categoria de sisteme capabile să detecteze și să interpreteze stările emoționale ale oamenilor pe baza semnalelor pe care le producem în mod natural: expresii faciale, ton și ritm vocal, viteză de tastare, pauze între cuvinte, tipul de conținut care provoacă o reacție și cât de repede apare aceasta.</p>
+        <p>Diferența față de alte forme de manipulare comportamentală este importantă. Când un algoritm îți modifică feed-ul ca să stai mai mult pe platformă, acționează asupra comportamentului tău vizibil. Când un sistem de emotion AI detectează că ești trist și îți livrează conținut calibrat pe acea tristețe, intră într-un teritoriu diferit: stările tale interne, cele pe care poate nici tu nu le-ai formulat conștient în acel moment.</p>
+        <p>Sistemele de acest tip există și sunt deja integrate în platforme comerciale, publicitate, entertainment și interfețe conversaționale. Scopurile declarate includ experiențe mai personalizate și detectarea timpurie a stărilor de criză. Scopurile comerciale includ maximizarea timpului petrecut pe platformă și a comportamentului de cumpărare.</p>
+        <div class="alert"><strong>O întrebare care merită să ți-o pui:</strong> E diferit să îți fie influențat comportamentul față de a îți fi citită emoția fără să știi? Dacă răspunsul tău e da, urmează o a doua întrebare: ai consimțit vreodată la asta?</div>
+        <div class="info"><strong>Ce spune legea:</strong> AI Act clasifică sistemele de emotion AI folosite în locuri de muncă și instituții de învățământ ca sisteme cu risc ridicat. Folosirea lor de către platformele comerciale pentru maximizarea engagement-ului rămâne o zonă în care reglementarea e încă în urmă față de practică.</div>
+      </div>
+    </div>
+
+    <a href="#top" class="back-top">Înapoi sus</a>
+
+  </main>
+</div>
+
+<button class="sidebar-toggle" id="toggle" onclick="toggleSidebar()" aria-label="Meniu">☰</button>
+
+<script>
+// Progress bar
+window.addEventListener('scroll', () => {
+  const total = document.documentElement.scrollHeight - window.innerHeight;
+  document.getElementById('prog').style.width = (window.scrollY / total * 100) + '%';
+});
+
+// Sidebar active state
+const items = document.querySelectorAll('.sidebar-item');
+const entries = document.querySelectorAll('.entry');
+
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const id = e.target.id;
+      items.forEach(item => {
+        item.classList.toggle('active', item.getAttribute('href') === '#' + id);
+      });
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+
+entries.forEach(e => obs.observe(e));
+
+// Mobile sidebar
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+}
+
+// Close sidebar on link click (mobile)
+items.forEach(item => {
+  item.addEventListener('click', () => {
+    document.getElementById('sidebar').classList.remove('open');
+  });
+});
+</script>
+</body>
+</html>

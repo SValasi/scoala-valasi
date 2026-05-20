@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lecția 1 — Cum au definit inteligența cei care au construit mașinile · Școala Valasi</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #09090F;
+    --panel: #111320;
+    --border: #1C1F35;
+    --text: #E2E0F0;
+    --muted: #5A5880;
+    --orange: #FF6B2B;
+    --gold: #FFB347;
+    --teal: #4ECDC4;
+    --blue: #3B82F6;
+    --purple: #A855F7;
+    --green: #22C55E;
+    --red: #EF4444;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    background-image: radial-gradient(ellipse at 25% 10%, #1A0A2E 0%, var(--bg) 55%);
+  }
+
+  .top-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(9,9,15,0.92); backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 20px; display: flex; align-items: center; gap: 12px;
+  }
+  .nav-label { font-size: 9px; letter-spacing: 3px; color: var(--muted); text-transform: uppercase; font-family: monospace; flex-shrink: 0; }
+  .progress-bar { flex: 1; height: 3px; border-radius: 2px; background: var(--border); overflow: hidden; }
+  .progress-fill { height: 100%; border-radius: 2px; background: linear-gradient(90deg, var(--orange), var(--gold)); transition: width 0.5s; width: 0%; }
+  .progress-pct { font-size: 10px; color: var(--muted); font-family: monospace; flex-shrink: 0; }
+
+  .page { max-width: 680px; margin: 0 auto; padding: 0 20px 80px; }
+
+  .hero { padding: 48px 0 32px; }
+  .tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+  .tag { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; font-family: monospace; padding: 3px 10px; border-radius: 20px; border: 1px solid var(--border); color: var(--muted); }
+  .tag.active { border-color: rgba(255,107,43,0.4); color: var(--orange); }
+  .hero-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(22px,5vw,38px); font-weight: 300; line-height: 1.2; margin-bottom: 16px; background: linear-gradient(135deg, #fff 0%, var(--gold) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .hero-sub { font-family: 'Cormorant Garamond', serif; font-size: 17px; color: #8888BB; line-height: 1.8; }
+
+  .section-tabs { display: flex; gap: 6px; margin-bottom: 32px; flex-wrap: wrap; }
+  .tab-btn { font-size: 10px; padding: 5px 12px; border-radius: 20px; cursor: pointer; font-family: monospace; letter-spacing: 1px; text-transform: uppercase; border: 1px solid var(--border); background: transparent; color: #3A3A5A; transition: all 0.2s; }
+  .tab-btn.active { border-color: var(--orange); background: rgba(255,107,43,0.1); color: var(--orange); }
+  .tab-btn.done { color: var(--muted); }
+
+  .section { display: none; animation: fadeUp 0.4s ease; }
+  .section.visible { display: block; }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+
+  /* ── CARDS ── */
+  .card { background: linear-gradient(135deg, var(--panel), #0E0E20); border: 1px solid var(--border); border-radius: 18px; padding: 24px; margin-bottom: 16px; }
+  .prose { font-family: 'Cormorant Garamond', serif; font-size: 17px; line-height: 1.9; color: var(--text); margin-bottom: 16px; }
+  .prose:last-child { margin-bottom: 0; }
+  .prose.dim { color: #9090BB; }
+  .prose strong { color: #fff; }
+  .prose em { color: var(--orange); font-style: normal; }
+
+  .highlight { background: rgba(255,107,43,0.06); border: 1px solid rgba(255,107,43,0.2); border-radius: 14px; padding: 18px; margin-bottom: 16px; }
+  .highlight .prose { font-size: 15px; color: #B0B0CC; }
+
+  /* ── GÂNDITORI ── */
+  .thinker-card { background: var(--panel); border-radius: 16px; padding: 20px; margin-bottom: 14px; border-left: 3px solid var(--border); transition: border-color 0.2s; }
+  .thinker-name { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+  .thinker-idea { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; font-family: monospace; margin-bottom: 10px; }
+  .thinker-text { font-family: 'Cormorant Garamond', serif; font-size: 14px; color: #9090AA; line-height: 1.75; }
+
+  /* ── BUTTONS ── */
+  .btn-primary { width: 100%; padding: 16px; background: linear-gradient(135deg, var(--orange), var(--gold)); border: none; border-radius: 14px; color: #09090F; font-weight: 700; font-size: 15px; cursor: pointer; font-family: 'DM Sans', sans-serif; box-shadow: 0 6px 24px rgba(255,107,43,0.35); transition: all 0.2s; }
+  .btn-primary:hover { transform: translateY(-1px); }
+  .btn-ghost { width: 100%; padding: 14px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 14px; color: var(--muted); font-size: 13px; cursor: pointer; font-family: 'DM Sans', sans-serif; }
+  .btn-teal { width: 100%; padding: 16px; background: linear-gradient(135deg, var(--teal), #2DD4BF); border: none; border-radius: 14px; color: #09090F; font-weight: 700; font-size: 15px; cursor: pointer; font-family: 'DM Sans', sans-serif; box-shadow: 0 6px 24px rgba(78,205,196,0.35); }
+
+  /* ── CHECKLIST ── */
+  .checklist { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+  .check-item { display: flex; gap: 10px; align-items: flex-start; }
+  .check-icon { color: var(--orange); font-size: 14px; flex-shrink: 0; margin-top: 2px; }
+  .check-text { font-family: 'Cormorant Garamond', serif; font-size: 15px; color: #9090AA; line-height: 1.6; }
+
+  .quote-card { background: linear-gradient(135deg, var(--panel), #0E0820); border: 1px solid rgba(255,107,43,0.35); border-radius: 20px; padding: 28px; margin-bottom: 20px; text-align: center; }
+  .quote-card p { font-family: 'Cormorant Garamond', serif; font-size: 20px; line-height: 1.8; color: #fff; font-style: italic; margin-bottom: 20px; }
+  .quote-line { width: 40px; height: 2px; margin: 0 auto; background: linear-gradient(90deg, var(--orange), var(--gold)); }
+
+  .next-card { background: linear-gradient(135deg, #0F1A2A, #0A1020); border: 1px solid rgba(78,205,196,0.2); border-radius: 18px; padding: 22px; margin-bottom: 20px; }
+  .next-label { font-size: 10px; letter-spacing: 3px; color: var(--teal); text-transform: uppercase; font-family: monospace; margin-bottom: 10px; }
+  .next-title { font-size: 15px; font-weight: 600; color: #fff; margin-bottom: 8px; }
+  .next-desc { font-family: 'Cormorant Garamond', serif; font-size: 15px; color: #7090AA; line-height: 1.7; }
+
+  .completion { margin-top: 32px; background: linear-gradient(135deg, rgba(255,107,43,0.1), rgba(255,179,71,0.05)); border: 1px solid rgba(255,179,71,0.3); border-radius: 18px; padding: 28px; text-align: center; display: none; }
+  .completion.visible { display: block; animation: fadeUp 0.4s ease; }
+
+  /* ── JOC ── */
+  .tool-wrap { background: var(--panel); border: 1px solid rgba(255,107,43,0.3); border-radius: 20px; padding: 24px; margin-top: 16px; display: none; }
+  .tool-wrap.visible { display: block; animation: fadeUp 0.4s ease; }
+  .tool-title { font-size: 10px; letter-spacing: 3px; color: var(--orange); text-transform: uppercase; font-family: monospace; margin-bottom: 20px; }
+
+  .q-progress { display: flex; gap: 6px; margin-bottom: 20px; }
+  .q-bar { flex: 1; height: 4px; border-radius: 2px; background: var(--border); transition: all 0.3s; }
+  .q-level { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; font-family: monospace; margin-bottom: 10px; }
+  .q-quote { font-family: 'Cormorant Garamond', serif; font-size: 13px; color: var(--muted); font-style: italic; padding: 10px 14px; background: rgba(0,0,0,0.2); border-left: 2px solid rgba(255,255,255,0.1); border-radius: 0 8px 8px 0; margin-bottom: 14px; }
+  .q-quote small { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; font-family: monospace; display: block; margin-top: 6px; opacity: 0.6; }
+  .q-scenario { font-family: 'Cormorant Garamond', serif; font-size: 17px; line-height: 1.85; color: var(--text); margin-bottom: 16px; }
+  .q-question { font-size: 15px; font-weight: 600; color: #fff; margin-bottom: 14px; }
+  .q-options { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+  .q-opt { padding: 13px 16px; border-radius: 12px; border: 1px solid var(--border); background: rgba(0,0,0,0.15); cursor: pointer; transition: all 0.2s; display: flex; align-items: flex-start; gap: 12px; }
+  .q-opt:hover { border-color: var(--orange); background: rgba(255,107,43,0.06); }
+  .q-opt.disabled { pointer-events: none; }
+  .q-opt.correct { border-color: var(--green); background: rgba(34,197,94,0.08); }
+  .q-opt.wrong { border-color: var(--red); background: rgba(239,68,68,0.08); }
+  .q-letter { width: 26px; height: 26px; border-radius: 50%; flex-shrink: 0; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 10px; font-family: monospace; font-weight: 700; color: var(--muted); transition: all 0.2s; }
+  .q-opt.correct .q-letter { background: var(--green); border-color: var(--green); color: #09090F; }
+  .q-opt.wrong .q-letter { background: var(--red); border-color: var(--red); color: #09090F; }
+  .q-opt-name { font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: 2px; }
+  .q-opt-hint { font-size: 11px; color: var(--muted); font-style: italic; }
+  .q-explanation { padding: 14px 16px; border-radius: 10px; margin-bottom: 14px; }
+  .q-exp-label { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; font-family: monospace; margin-bottom: 6px; }
+  .q-exp-text { font-family: 'Cormorant Garamond', serif; font-size: 14px; color: #9090AA; line-height: 1.7; }
+  .q-exp-source { font-size: 10px; color: var(--muted); font-family: monospace; margin-top: 8px; font-style: italic; }
+  .btn-next { width: 100%; padding: 13px; border: none; border-radius: 12px; font-weight: 700; font-size: 13px; cursor: pointer; font-family: 'DM Sans', sans-serif; }
+
+  /* ── DISCLAIMER ── */
+  .disclaimer { font-size: 11px; color: #7070A0; font-family: 'Cormorant Garamond', serif; font-style: italic; line-height: 1.7; padding: 12px 16px; background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 10px; margin-top: 32px; }
+</style>
+</head>
+<body>
+
+<div class="top-nav">
+  <span class="nav-label">Școala Valasi · Modul 0</span>
+  <div class="progress-bar"><div class="progress-fill" id="pfill"></div></div>
+  <span class="progress-pct" id="ppct">0%</span>
+</div>
+
+<div class="page">
+
+  <div class="hero">
+    <div class="tags">
+      <span class="tag active">Modul 0</span>
+      <span class="tag">Înainte să începi</span>
+      <span class="tag">Lecția 1 din 3</span>
+    </div>
+    <h1 class="hero-title">Cum au definit inteligența cei care au construit mașinile</h1>
+    <p class="hero-sub">Nu răspundem la întrebare. Explorăm cum au răspuns alții — și ce a rezultat din alegerile lor.</p>
+  </div>
+
+  <div class="section-tabs">
+    <button class="tab-btn active" onclick="goTo(0)">Harta</button>
+    <button class="tab-btn" onclick="goTo(1)">Introducere</button>
+    <button class="tab-btn" onclick="goTo(2)">Gânditorii</button>
+    <button class="tab-btn" onclick="goTo(3)">Exercițiu</button>
+    <button class="tab-btn" onclick="goTo(4)">Concluzia</button>
+  </div>
+
+  <!-- HARTA -->
+  <div class="section visible" id="sec-0">
+    <div class="card">
+      <p class="prose">Mașinile nu s-au construit singure. În spatele fiecărui sistem AI există o viziune despre ce înseamnă să gândești — viziunea unui om real, cu o biografie, cu obsesii, cu limitele lui.</p>
+      <p class="prose dim">Înainte să intri în lecție, iată câțiva dintre oamenii care au luat decizii ce îți modelează lumea azi.</p>
+    </div>
+
+    <div class="thinker-card" style="border-left-color:#6B7280">
+      <div class="thinker-name">John McCarthy</div>
+      <div class="thinker-idea" style="color:#6B7280">Context — Fondatorul termenului</div>
+      <div class="thinker-text">A inventat termenul "Artificial Intelligence" în 1956 și a organizat prima conferință pe tema asta la Dartmouth. A crezut că inteligența înseamnă procesare logică de simboluri. Dacă poți scrie regulile gândirii, poți replica gândirea. Viziunea lui a dominat domeniul timp de trei decenii și a eșuat când a întâlnit o lume care nu se lasă redusă la reguli.</div>
+    </div>
+
+    <div class="thinker-card" style="border-left-color:#6B7280">
+      <div class="thinker-name">Marvin Minsky</div>
+      <div class="thinker-idea" style="color:#6B7280">Context — Cofondatorul MIT AI Lab</div>
+      <div class="thinker-text">A cofondatorul MIT AI Lab și una dintre cele mai influente minți din istoria tehnologiei. Credea că mintea e o societate de procese simple care împreună produc ceva complex. A format generații de cercetători; ideile lui trăiesc în arhitectura fiecărui sistem AI modern.</div>
+    </div>
+
+    <div class="thinker-card" style="border-left-color:var(--blue)">
+      <div class="thinker-name">Alan Turing</div>
+      <div class="thinker-idea" style="color:var(--blue)">Inteligența ca comportament → OpenAI</div>
+      <div class="thinker-text">A pus prima întrebare serioasă: poate o mașină să gândească? A spart codul Enigma în al Doilea Război Mondial și a salvat, după estimările istoricilor, milioane de vieți. Statul pe care l-a salvat l-a persecutat pentru cine era. A murit la 41 de ani. Reabilitat oficial de statul britanic în 2013 — la 59 de ani după moarte.</div>
+    </div>
+
+    <div class="thinker-card" style="border-left-color:var(--green)">
+      <div class="thinker-name">Charles Darwin</div>
+      <div class="thinker-idea" style="color:var(--green)">Inteligența ca observație acumulată → Google DeepMind</div>
+      <div class="thinker-text">A eșuat la medicină și la teologie înainte să găsească ce era cu adevărat al lui. A petrecut 5 ani observând înainte să scrie o teorie. Tatăl lui i-a spus că singurul lui talent pare să fie vânatul. A murit celebru, îngropat la Westminster Abbey lângă Newton.</div>
+    </div>
+
+    <div class="thinker-card" style="border-left-color:var(--gold)">
+      <div class="thinker-name">Albert Einstein</div>
+      <div class="thinker-idea" style="color:var(--gold)">Inteligența ca modele mentale → Anthropic</div>
+      <div class="thinker-text">Considerat lent în școală, gândea în imagini înainte să gândească în ecuații. A eșuat examenul de admitere la Politehnica din Zurich la prima încercare. A regretut scrisoarea către Roosevelt despre bomba atomică tot restul vieții. A murit în 1955 refuzând o operație: "Vreau să plec când vreau."</div>
+    </div>
+
+    <div class="thinker-card" style="border-left-color:var(--purple)">
+      <div class="thinker-name">Ada Lovelace</div>
+      <div class="thinker-idea" style="color:var(--purple)">Inteligența ca traducere → DeepMind</div>
+      <div class="thinker-text">Fiica poetului Lord Byron, crescută deliberat departe de poezie — mama ei a ales matematica pentru a o feri de nebunia familiei Byron. A scris primul algoritm din istorie pentru o mașină care nu exista. A rămas invizibilă aproape un secol. Limbajul de programare Ada a apărut în 1980 — la un secol după moartea ei.</div>
+    </div>
+
+    <div class="thinker-card" style="border-left-color:var(--orange)">
+      <div class="thinker-name">Richard Feynman</div>
+      <div class="thinker-idea" style="color:var(--orange)">Inteligența ca simplitate → Palantir</div>
+      <div class="thinker-text">Fizician, profesor și om incomod. Dacă nu poți explica ceva simplu, nu ai înțeles. A investigat dezastrul Challenger luând un inel de cauciuc și punându-l în apă cu gheață. NASA prezentase grafice. El a tăcut și a arătat. A murit în 1988. Ultimele lui cuvinte: "Ar fi plictisitor să mor de două ori."</div>
+    </div>
+
+    <div style="margin-top:20px">
+      <button class="btn-primary" onclick="markRead(0)">Intră în lecție →</button>
+    </div>
+  </div>
+
+  <!-- INTRODUCERE -->
+  <div class="section" id="sec-1">
+    <div style="font-size:11px;letter-spacing:3px;color:var(--orange);text-transform:uppercase;font-family:monospace;margin-bottom:16px">De ce contează</div>
+
+    <div class="card">
+      <p class="prose">Fiecare om din hartă a luat o decizie, nu una tehnică, ci una filozofică. A răspuns, conștient sau nu, la întrebarea: ce înseamnă să gândești?</p>
+      <p class="prose dim">Și din acel răspuns a construit ceva. Un algoritm, un laborator, o companie, un sistem care azi rulează pe miliarde de dispozitive.</p>
+    </div>
+
+    <div class="highlight">
+      <p class="prose">Problema e că nu există un singur răspuns corect la această întrebare. Filozofii o dezbat de mii de ani. Psihologii nu sunt de acord. Neurologii descoperă în continuare lucruri care le contrazic teoriile anterioare.</p>
+    </div>
+
+    <div class="card">
+      <p class="prose dim">Turing a ales comportamentul. Darwin a ales observația. Einstein a ales analogia. Lovelace a ales traducerea. Feynman a ales claritatea.</p>
+      <p class="prose">Fiecare alegere a produs ceva diferit.</p>
+    </div>
+
+    <div style="font-size:11px;letter-spacing:3px;color:var(--orange);text-transform:uppercase;font-family:monospace;margin:24px 0 16px">Ce înseamnă asta pentru tine</div>
+
+    <div class="card">
+      <p class="prose dim">Trăiești simultan în toate aceste sisteme. Când cauți pe Google, ești în universul lui Darwin. Când vorbești cu ChatGPT, ești în universul lui Turing. Când Palantir analizează date despre tine undeva, ești în universul lui Feynman.</p>
+      <p class="prose">Nu ai ales asta. Poți alege însă să înțelegi în ce lume ești.</p>
+    </div>
+
+    <div style="font-size:11px;letter-spacing:3px;color:var(--orange);text-transform:uppercase;font-family:monospace;margin:24px 0 16px">Ce nu facem</div>
+
+    <div class="card">
+      <p class="prose dim">Nu îți dăm o definiție a inteligenței. Nu există una universal acceptată și oricine pretinde că o are fie simplifică, fie minte.</p>
+      <p class="prose dim">AI-ul nu e periculos sau salvator. Este un instrument construit pe viziunile unor oameni, viziuni care au puncte forte și limite.</p>
+      <p class="prose">Îți arătăm cum să citești sistemele în care trăiești. Restul e al tău.</p>
+    </div>
+
+    <button class="btn-primary" onclick="markRead(1)">Explorează gânditorii →</button>
+  </div>
+
+  <!-- GÂNDITORII -->
+  <div class="section" id="sec-2">
+    <div style="font-size:11px;letter-spacing:3px;color:var(--orange);text-transform:uppercase;font-family:monospace;margin-bottom:16px">Cei cinci protagoniști</div>
+
+    <!-- TURING -->
+    <div class="card" style="border-left:3px solid var(--blue)">
+      <div style="font-size:10px;letter-spacing:2px;color:var(--blue);text-transform:uppercase;font-family:monospace;margin-bottom:8px">Alan Turing — Inteligența ca comportament</div>
+      <p class="prose">Alan Turing nu a întrebat <em>ce este</em> inteligența, ci cum o recunoști.</p>
+      <p class="prose dim">Diferența pare mică, dar nu este. Dacă întrebi ce este, intri într-o dezbatere filozofică fără sfârșit. Dacă întrebi cum o recunoști, poți construi un test.</p>
+      <p class="prose dim">Logica lui era simplă: dacă o mașină se comportă în mod indistinct de un om inteligent, nu avem niciun motiv să spunem că nu e inteligentă. Nu contează ce se întâmplă înăuntru. Contează ce iese afară. Inteligența înțeleasă prin analiza comportamentului.</p>
+      <p class="prose dim">Testul Turing, propus în 1950, cere unui judecător uman să poarte o conversație scrisă cu un om și cu o mașină, fără să știe care e care. Dacă nu poate face diferența, mașina a trecut testul.</p>
+      <p class="prose">ChatGPT trece testul Turing cu ușurință. Ceea ce ridică o întrebare pe care Turing însuși nu a anticipat-o complet: ce facem când testul e depășit, dar nu știm încă ce înseamnă asta?</p>
+      <div style="margin-top:14px;padding:12px 14px;background:rgba(59,130,246,0.06);border:1px solid rgba(59,130,246,0.2);border-radius:10px">
+        <p class="prose dim" style="font-size:14px">Oamenii nu se tem de ce sunt sistemele AI acum. Se tem de ce pot deveni în mâinile greșite — sau în mâinile celor care cred sincer că fac bine, dar nu s-au întrebat niciodată cine le-a dat dreptul să decidă pentru toți. Întrebarea care rămâne deschisă nu e tehnică. E una foarte veche: cine stabilește limitele?</p>
+      </div>
+    </div>
+
+    <!-- DARWIN -->
+    <div class="card" style="border-left:3px solid var(--green)">
+      <div style="font-size:10px;letter-spacing:2px;color:var(--green);text-transform:uppercase;font-family:monospace;margin-bottom:8px">Charles Darwin — Inteligența ca observație acumulată</div>
+      <p class="prose">Darwin nu a avut o revelație. A avut răbdare.</p>
+      <p class="prose dim">Înainte să scrie o singură teorie, a petrecut cinci ani pe o corabie observând. A strâns specimene, a luat notițe, a pus întrebări fără să se grăbească spre răspunsuri. A mai așteptat 20 de ani înainte să publice <em style="color:inherit;font-style:italic">Originea Speciilor</em> — nu din lene, ci din rigoare.</p>
+      <p class="prose dim">Teoria lui era că inteligența, adaptarea, complexitatea nu vin dintr-o scânteie divină. Vin din acumulare. Din mici ajustări repetate în timp, fiecare construind pe ce a funcționat înainte.</p>
+      <p class="prose">Nu cel mai puternic supraviețuiește. Cel mai adaptat.</p>
+      <p class="prose dim">Google a construit pe această viziune mai direct decât orice altă companie. A observat miliarde de pagini, linkuri, comportamente — și a lăsat tiparul să apară din volum.</p>
+      <div style="margin-top:14px;padding:12px 14px;background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.2);border-radius:10px">
+        <p class="prose dim" style="font-size:14px">Darwin a descris cum evoluează speciile. Nu a putut anticipa o specie care creează o altă formă de inteligență superioară ei înseși. Ce se întâmplă cu omul când e depășit cognitiv de ceea ce a creat? Nu e o întrebare science fiction. E biologie aplicată la tehnologie.</p>
+      </div>
+    </div>
+
+    <!-- EINSTEIN -->
+    <div class="card" style="border-left:3px solid var(--gold)">
+      <div style="font-size:10px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;font-family:monospace;margin-bottom:8px">Albert Einstein — Inteligența ca modele mentale</div>
+      <p class="prose">Einstein nu gândea în ecuații. Gândea în imagini.</p>
+      <p class="prose dim">Înainte să scrie o singură formulă, și-a imaginat cum ar arăta lumea dacă ar călări pe o rază de lumină. Nu a calculat. A vizualizat. Ecuațiile au venit după.</p>
+      <p class="prose dim">A ales să definească inteligența ca abilitate de a construi modele, nu de a acumula fapte. Un om inteligent nu e cel care știe mai mult; e cel care înțelege structura din spatele lucrurilor.</p>
+      <p class="prose">Imaginația e mai importantă decât cunoașterea. Cunoașterea descrie ce există. Imaginația descrie ce ar putea exista.</p>
+      <div style="margin-top:14px;padding:12px 14px;background:rgba(255,179,71,0.06);border:1px solid rgba(255,179,71,0.2);border-radius:10px">
+        <p class="prose dim" style="font-size:14px">Dacă inteligența e capacitatea de a construi modele, ce se întâmplă când modelele sunt construite de mașini? Un model mental uman poartă urmele a ce înseamnă să trăiești. Un model al unei mașini poartă urmele informației despre viață. Care înțelege lumea mai bine? Nu știm.</p>
+      </div>
+    </div>
+
+    <!-- LOVELACE -->
+    <div class="card" style="border-left:3px solid var(--purple)">
+      <div style="font-size:10px;letter-spacing:2px;color:var(--purple);text-transform:uppercase;font-family:monospace;margin-bottom:8px">Ada Lovelace — Inteligența ca traducere între lumi</div>
+      <p class="prose">Ada Lovelace nu a programat niciodată un computer. Nu putea — computerul nu exista încă.</p>
+      <p class="prose dim">A văzut însă ce ar putea face o mașină înainte ca mașina să existe. Charles Babbage a construit Motorul Analitic. Toți cei care îl priveau vedeau o mașină de calculat numere. Ada a văzut altceva: un sistem care poate manipula orice simboluri, nu doar cifre. Poate compune muzică. Poate rezolva probleme pe care oamenii nu le-au imaginat încă.</p>
+      <p class="prose">A scris primul algoritm din istorie. Pentru o mașină care nu fusese construită.</p>
+      <p class="prose dim">A ales să definească inteligența ca traducere între lumi diferite. DeepMind construiește pe această viziune: AlphaFold a rezolvat structura proteinelor pentru că cineva a văzut că biologia poate fi tradusă în matematică.</p>
+      <p class="prose dim">A fost invizibilă nu doar pentru că era femeie. A fost invizibilă pentru că a vorbit despre un viitor pe care contemporanii ei nu îl puteau vedea.</p>
+    </div>
+
+    <!-- FEYNMAN -->
+    <div class="card" style="border-left:3px solid var(--orange)">
+      <div style="font-size:10px;letter-spacing:2px;color:var(--orange);text-transform:uppercase;font-family:monospace;margin-bottom:8px">Richard Feynman — Inteligența ca simplitate</div>
+      <p class="prose">Feynman nu tolera limbajul care ascunde în loc să explice.</p>
+      <p class="prose dim">A spus că dacă nu poți explica ceva simplu, nu ai înțeles cu adevărat. Nu era modestie — era un standard. Complexitatea care nu poate fi simplificată e de obicei complexitate care nu a fost înțeleasă complet.</p>
+      <p class="prose dim">Când a investigat dezastrul Challenger în 1986, a demonstrat cauza luând un inel de cauciuc și punându-l în apă cu gheață. NASA prezentase grafice și rapoarte. Feynman a tăcut și a arătat.</p>
+      <p class="prose">Palantir construiește pe această viziune: nu cel mai sofisticat sistem, ci cel mai clar instrument de decizie pentru oameni care au nevoie de răspunsuri acum.</p>
+      <div style="margin-top:14px;padding:12px 14px;background:rgba(255,107,43,0.06);border:1px solid rgba(255,107,43,0.2);border-radius:10px">
+        <p class="prose dim" style="font-size:14px">Claritatea acționabilă poate simplifica oameni la scoruri, situații la variabile, vieți la date. Feynman însuși nu ar fi aprobat asta — el cerea simplitate în serviciul adevărului, nu în serviciul deciziei rapide.</p>
+      </div>
+    </div>
+
+    <button class="btn-primary" onclick="markRead(2)" style="margin-top:8px">Mergi la exercițiu →</button>
+  </div>
+
+  <!-- EXERCIȚIU -->
+  <div class="section" id="sec-3">
+    <div style="font-size:11px;letter-spacing:3px;color:var(--orange);text-transform:uppercase;font-family:monospace;margin-bottom:16px">Exercițiu — Recunoaște gânditorul</div>
+
+    <div class="card">
+      <p class="prose dim">Ai citit despre cei cinci gânditori și viziunile lor. Acum antrenează ochiul să le recunoască în sisteme reale.</p>
+      <p class="prose dim">Fiecare scenariu descrie un sistem AI real. Identifică pe viziunea cui e construit.</p>
+      <button class="btn-primary" id="open-game-btn" onclick="openGame()" style="margin-top:16px">Deschide exercițiul →</button>
+    </div>
+
+    <div class="tool-wrap" id="game-wrap">
+      <div class="tool-title">Recunoaște gânditorul din spatele sistemului</div>
+      <div id="game-content"></div>
+    </div>
+
+    <div style="margin-top:16px">
+      <button class="btn-ghost" onclick="markRead(3)">Am terminat exercițiul — mergi la concluzie →</button>
+    </div>
+  </div>
+
+  <!-- CONCLUZIE -->
+  <div class="section" id="sec-4">
+    <div style="font-size:11px;letter-spacing:3px;color:var(--orange);text-transform:uppercase;font-family:monospace;margin-bottom:16px">Concluzia</div>
+
+    <div class="quote-card">
+      <p>"Fiecare sistem AI pe care îl folosești azi e răspunsul unui om la o întrebare filozofică despre ce înseamnă să gândești. A ști asta nu te face mai deștept. Te face mai liber."</p>
+      <div class="quote-line"></div>
+    </div>
+
+    <div class="card" style="padding:20px">
+      <div style="font-size:11px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;font-family:monospace;margin-bottom:14px">Ce ai învățat</div>
+      <div class="checklist">
+        <div class="check-item"><span class="check-icon">✓</span><span class="check-text">Că oamenii care au construit AI au ales fiecare o definiție diferită a inteligenței — și fiecare alegere a produs sisteme diferite</span></div>
+        <div class="check-item"><span class="check-icon">✓</span><span class="check-text">Că poți recunoaște viziunea din spatele unui sistem dacă știi ce a ales să optimizeze</span></div>
+        <div class="check-item"><span class="check-icon">✓</span><span class="check-text">Că întrebările importante nu sunt tehnice — sunt filozofice și politice</span></div>
+      </div>
+    </div>
+
+    <div class="next-card">
+      <div class="next-label">Lecția 2 — ce urmează</div>
+      <div class="next-title">Ce rămâne uman</div>
+      <div class="next-desc">Dacă mașinile pot face tot ce face mintea umană — ce mai rămâne al tău? Gardner, tipurile de inteligență și de ce bogăția interioară nu se poate descărca.</div>
+    </div>
+
+    <button class="btn-teal" onclick="markRead(4)">Mergi la Lecția 2 →</button>
+
+    <div class="disclaimer">
+      Conținutul Școlii Valasi este creat în scop educațional și de autocunoaștere. Nu reprezintă consiliere psihologică, medicală, juridică sau financiară profesională. Folosește ce rezonează cu tine — lasă ce nu rezonează. · Young Dragons Academy · Școala Valasi · Construit împreună cu Claude · Anthropic
+    </div>
+  </div>
+
+  <div class="completion" id="completion">
+    <div style="font-size:48px;margin-bottom:12px">🐉</div>
+    <h3 style="font-size:18px;font-weight:700;color:#fff;margin-bottom:8px">Lecția 1 completată</h3>
+    <p style="font-family:'Cormorant Garamond',serif;font-size:15px;color:#9090AA;line-height:1.7">Dragonul tău știe acum să citească un sistem după viziunea din spatele lui.</p>
+  </div>
+
+</div>
+
+<script>
+// ── NAV ──────────────────────────────────────────────────────────────────────
+const TOTAL = 5;
+const readSections = new Set([0]);
+
+function goTo(i) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('visible'));
+  document.getElementById('sec-' + i).classList.add('visible');
+  document.querySelectorAll('.tab-btn').forEach((b, idx) => {
+    b.classList.remove('active','done');
+    if (idx === i) b.classList.add('active');
+    else if (readSections.has(idx)) b.classList.add('done');
+  });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function markRead(i) {
+  readSections.add(i);
+  updateProgress();
+  if (i < TOTAL - 1) goTo(i + 1);
+  if (readSections.size === TOTAL) document.getElementById('completion').classList.add('visible');
+}
+
+function updateProgress() {
+  const pct = Math.round((readSections.size / TOTAL) * 100);
+  document.getElementById('pfill').style.width = pct + '%';
+  document.getElementById('ppct').textContent = pct + '%';
+}
+
+// ── JOC ──────────────────────────────────────────────────────────────────────
+const POOL = [
+  {g:'Turing',color:'#3B82F6',
+   quote:'"Our mission is to ensure that artificial general intelligence benefits all of humanity."',
+   source:'OpenAI — openai.com/about',
+   scenario:'Un sistem primește un mesaj scris și răspunde. Nu știe că e testat. Criteriul de succes e unul singur: dacă judecătorul nu poate face diferența între om și mașină, sistemul a reușit. Ce se întâmplă înăuntru nu contează — contează ce iese afară.',
+   question:'Pe viziunea cui e construit acest criteriu de succes?',
+   opts:['Alan Turing|Inteligența ca comportament — dacă nu poți face diferența, e inteligent.',
+         'Charles Darwin|Inteligența ca observație acumulată și adaptare.',
+         'Ada Lovelace|Inteligența ca traducere între lumi diferite.',
+         'Albert Einstein|Inteligența ca modele mentale și imaginație.'],
+   answer:'Alan Turing',
+   explanation:'Testul Turing, propus în 1950, e exact acest criteriu. OpenAI a construit pe această tradiție: modelele sunt evaluate prin ce produc, nu prin cum funcționează înăuntru.'},
+  {g:'Turing',color:'#3B82F6',
+   quote:'"Our mission is to ensure that artificial general intelligence benefits all of humanity."',
+   source:'OpenAI — openai.com/about',
+   scenario:'Cercetătorii nu știu exact cum funcționează sistemul înăuntru. Știu doar că răspunsurile sunt corecte în 94% din cazuri. Întrebarea dacă sistemul înțelege sau simulează înțelegerea e considerată irelevantă pentru evaluare.',
+   question:'Această abordare — evaluarea prin output, nu prin proces intern — vine de la cine?',
+   opts:['Richard Feynman|Feynman cerea să înțelegi procesul, nu doar outputul.',
+         'Albert Einstein|Einstein se interesa de structura internă a realității.',
+         'Alan Turing|Ce contează e comportamentul, nu mecanismul intern.',
+         'Ada Lovelace|Lovelace se interesa de ce poate face sistemul, nu de cum e evaluat.'],
+   answer:'Alan Turing',
+   explanation:'Turing a eliminat deliberat întrebarea despre mecanismul intern. Această alegere a permis progresul tehnic rapid — și a lăsat deschisă întrebarea: un sistem care vorbește bine înțelege ce spune?'},
+  {g:'Darwin',color:'#22C55E',
+   quote:'"Google DeepMind brings together two of the world\'s leading AI labs into a single, focused team led by our CEO Demis Hassabis."',
+   source:'Google DeepMind — deepmind.google/about',
+   scenario:'Un sistem nu a fost programat cu reguli. A observat miliarde de exemple până când tiparul a apărut singur din volum. Cu cât mai multe date, cu atât mai precis. Nu cel mai puternic supraviețuiește — cel mai adaptat la ce a văzut.',
+   question:'Cine a definit inteligența exact astfel?',
+   opts:['Richard Feynman|Feynman cerea simplitate, nu acumulare.',
+         'Charles Darwin|Inteligența ca adaptare bazată pe observație acumulată.',
+         'Alan Turing|Turing se interesa de comportament, nu de date acumulate.',
+         'Ada Lovelace|Lovelace se interesa de traducere, nu de acumulare.'],
+   answer:'Charles Darwin',
+   explanation:'Darwin a petrecut 20 de ani observând înainte să publice o singură teorie. Google DeepMind a construit pe această viziune: nu programezi răspunsurile, observi ce funcționează și optimizezi.'},
+  {g:'Darwin',color:'#22C55E',
+   quote:'"Google DeepMind brings together two of the world\'s leading AI labs into a single, focused team led by our CEO Demis Hassabis."',
+   source:'Google DeepMind — deepmind.google/about',
+   scenario:'Un sistem joacă un joc pe care nu îl cunoaște. Nu i se explică regulile. Primește puncte când câștigă și pierde puncte când pierde. Încearcă, greșește, încearcă altfel. Câteva milioane de runde mai târziu, joacă mai bine decât orice om.',
+   question:'Această metodă — tentative, erori, adaptare — seamănă cel mai mult cu viziunea cui?',
+   opts:['Richard Feynman|Feynman credea în înțelegere profundă, nu în erori repetate.',
+         'Alan Turing|Turing evalua rezultatul final, nu procesul de învățare.',
+         'Ada Lovelace|Lovelace se interesa de ce poate face sistemul, nu de cum învață.',
+         'Charles Darwin|Variație, selecție, adaptare — același mecanism.'],
+   answer:'Charles Darwin',
+   explanation:'DQN — primul sistem DeepMind care a bătut oamenii la jocuri Atari — a învățat exact astfel: nicio regulă programată, doar feedback și adaptare. Darwin a descris același mecanism pentru specii în 1859.'},
+  {g:'Lovelace',color:'#A855F7',
+   quote:'"Anthropic is an AI safety and research company. We build reliable, interpretable, and steerable AI systems."',
+   source:'Anthropic — anthropic.com',
+   scenario:'Un sistem a învățat că biologia poate fi tradusă în matematică. O proteină — o moleculă vie — poate fi descrisă ca un sistem de ecuații. A rezolvat în câteva ore o problemă pe care oamenii de știință nu o puteau rezolva în decenii. Nu pentru că era mai deștept — ci pentru că a văzut că un limbaj poate fi transformat în altul.',
+   question:'Cine a văzut primul că mașinile pot traduce între lumi diferite?',
+   opts:['Albert Einstein|Einstein construia modele mentale, nu traducea între limbaje.',
+         'Alan Turing|Turing se interesa de comportament, nu de traducere.',
+         'Ada Lovelace|Mașinile pot manipula orice simboluri — nu doar numere.',
+         'Richard Feynman|Feynman simplifica, nu traducea între domenii.'],
+   answer:'Ada Lovelace',
+   explanation:'Ada Lovelace a scris primul algoritm din istorie pentru o mașină care nu exista. A văzut că Motorul Analitic putea manipula orice simboluri. Limbajul de programare Ada a apărut în 1980 — la un secol după moartea ei.'},
+  {g:'Lovelace',color:'#A855F7',
+   quote:'"Anthropic is an AI safety and research company. We build reliable, interpretable, and steerable AI systems."',
+   source:'Anthropic — anthropic.com',
+   scenario:'Un sistem citește radiografii și produce diagnostice. Nu a studiat medicina. A văzut mii de imagini etichetate de medici și a tradus imaginea — un limbaj vizual — în diagnostic — un limbaj medical.',
+   question:'Această capacitate de a traduce între domenii complet diferite vine din viziunea cui?',
+   opts:['Richard Feynman|Feynman ar fi vrut să înțeleagă mecanismul, nu să traducă.',
+         'Albert Einstein|Einstein construia modele mentale, nu traducea imagini în diagnostic.',
+         'Charles Darwin|Darwin acumula observații din același domeniu.',
+         'Ada Lovelace|Mașinile pot traduce orice simboluri — inclusiv imagini medicale.'],
+   answer:'Ada Lovelace',
+   explanation:'Lovelace a văzut că mașinile nu sunt calculatoare — sunt traducători universali. Orice sistem de simboluri poate fi transformat în altul. Sistemele de imagistică medicală fac exact asta. Lovelace a scris asta în 1843.'},
+  {g:'Feynman',color:'#FF6B2B',
+   quote:'"Organizations around the world are using Palantir to help them do their most important work."',
+   source:'Palantir — palantir.com',
+   scenario:'Un investigator are la dispoziție milioane de tranzacții financiare. Nu are timp pentru rapoarte complexe. Are nevoie de un răspuns clar, acum: unde e anomalia? Sistemul nu explică tot — extrage esențialul. Dacă nu poți arăta simplu ce s-a întâmplat, nu ai înțeles datele.',
+   question:'Pe viziunea cui e construit acest principiu?',
+   opts:['Charles Darwin|Darwin acumula date — nu le simplifica pentru decizie rapidă.',
+         'Richard Feynman|Dacă nu poți explica simplu, nu ai înțeles.',
+         'Ada Lovelace|Lovelace traducea între lumi, nu simplifica pentru acțiune.',
+         'Albert Einstein|Einstein simplifica pentru înțelegere profundă, nu decizie imediată.'],
+   answer:'Richard Feynman',
+   explanation:'Feynman a demonstrat cauza Challenger cu un inel de cauciuc în apă cu gheață. NASA prezentase grafice. El a tăcut și a arătat. Palantir construiește pe această viziune: claritatea acționabilă peste orice altceva.'},
+  {g:'Feynman',color:'#FF6B2B',
+   quote:'"We are working to build a future in which public institutions can use data to function as they were designed."',
+   source:'Palantir — palantir.com',
+   scenario:'Un general are informații de la 12 surse despre mișcările unui adversar. Sistemul nu îi prezintă toate cele 12 surse. Îi prezintă o singură hartă cu o singură concluzie: iată unde va fi adversarul mâine dimineață.',
+   question:'Această filozofie — claritatea acționabilă peste volumul de informație — vine de la cine?',
+   opts:['Charles Darwin|Darwin credea în acumularea exhaustivă de observații.',
+         'Ada Lovelace|Lovelace vorbea despre capacitățile mașinilor, nu despre comunicare.',
+         'Alan Turing|Turing se interesa de criteriul de evaluare, nu de comunicare.',
+         'Richard Feynman|Dacă nu poți arăta simplu, nu ai înțeles.'],
+   answer:'Richard Feynman',
+   explanation:'Feynman investigând Challenger nu a prezentat un raport de 500 de pagini. A arătat un inel în apă cu gheață. Palantir construiește pe același principiu: dintr-un ocean de date, o singură concluzie clară.'},
+  {g:'Einstein',color:'#FFB347',
+   quote:'"We believe AI will have a vast impact on the world. Anthropic is dedicated to building systems that people can rely on."',
+   source:'Anthropic — anthropic.com',
+   scenario:'Un sistem nu răspunde doar la întrebări — încearcă să înțeleagă de ce întrebarea a fost pusă. Construiește un model al lumii în care trăiește interlocutorul. Dacă modelul din interior e incoerent, outputul va fi incoerent — indiferent câte date a văzut sistemul.',
+   question:'Cine a definit inteligența ca abilitate de a construi modele, nu de a acumula fapte?',
+   opts:['Alan Turing|Turing se interesa de comportamentul exterior, nu de modele interne.',
+         'Ada Lovelace|Lovelace vorbea despre traducere, nu despre modele mentale.',
+         'Albert Einstein|Imaginația e mai importantă decât cunoașterea.',
+         'Charles Darwin|Darwin acumula observații, nu construia modele abstracte.'],
+   answer:'Albert Einstein',
+   explanation:'Einstein gândea în imagini înainte să gândească în ecuații. A vizualizat cum ar arăta lumea dacă ar călări pe o rază de lumină. Anthropic pune această întrebare în centrul cercetării: nu doar ce produce sistemul, ci dacă modelul din interior e coerent.'},
+  {g:'Einstein',color:'#FFB347',
+   quote:'"We believe AI will have a vast impact on the world. Anthropic is dedicated to building systems that people can rely on."',
+   source:'Anthropic — anthropic.com',
+   scenario:'Un sistem a memorat milioane de fapte despre fizică. Poate reproduce orice formulă. Dar când i se prezintă o situație nouă pe care nu a văzut-o, eșuează. Un alt sistem a memorat mai puțin — dar a construit un model despre cum funcționează fizica. Cel de-al doilea rezolvă situații noi.',
+   question:'Această diferență — între acumularea de fapte și construirea de modele — a fost formulată cel mai clar de cine?',
+   opts:['Ada Lovelace|Lovelace vorbea despre ce pot face mașinile, nu despre cum gândesc.',
+         'Albert Einstein|Imaginația — modelele mentale — depășește cunoașterea faptelor.',
+         'Charles Darwin|Darwin acumula fapte — tocmai asta a făcut 20 de ani.',
+         'Alan Turing|Turing nu s-a interesat de procesul intern.'],
+   answer:'Albert Einstein',
+   explanation:'Cunoașterea descrie ce există. Imaginația descrie ce ar putea exista — spunea Einstein. Sistemele AI care generalizează bine nu sunt cele cu mai multe date — sunt cele cu modele mai bune. Anthropic cercetează exact această diferență.'},
+];
+
+const THINKER_INFO = {
+  'Turing':  {full:'Alan Turing',    color:'#3B82F6', idea:'Inteligența ca comportament',           company:'OpenAI'},
+  'Darwin':  {full:'Charles Darwin', color:'#22C55E', idea:'Inteligența ca observație acumulată',   company:'Google DeepMind'},
+  'Lovelace':{full:'Ada Lovelace',   color:'#A855F7', idea:'Inteligența ca traducere între lumi',   company:'DeepMind'},
+  'Feynman': {full:'Richard Feynman',color:'#FF6B2B', idea:'Inteligența ca simplitate',             company:'Palantir'},
+  'Einstein':{full:'Albert Einstein',color:'#FFB347', idea:'Inteligența ca modele mentale',         company:'Anthropic'},
+};
+
+function shuffle(a) {
+  const b=[...a];
+  for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}
+  return b;
+}
+
+function buildGame() {
+  const groups = ['Turing','Darwin','Lovelace','Feynman','Einstein'];
+  return shuffle(groups.map(g => shuffle(POOL.filter(q=>q.g===g))[0]));
+}
+
+let game = buildGame();
+let current = 0;
+let score = 0;
+let answered = false;
+
+function openGame() {
+  document.getElementById('game-wrap').classList.add('visible');
+  document.getElementById('open-game-btn').style.display = 'none';
+  renderGame();
+}
+
+function renderGame() {
+  answered = false;
+  const el = document.getElementById('game-content');
+  if (current >= game.length) { renderResult(); return; }
+  const q = game[current];
+  const opts = shuffle(q.opts.map(s => { const [name,...rest]=s.split('|'); return {name:name.trim(),hint:rest.join('|').trim()}; }));
+  window._opts = opts;
+
+  el.innerHTML = `
+    <div class="q-progress">${game.map((_,i)=>`<div class="q-bar" style="background:${i<current?game[i].color:i===current?q.color:'var(--border)'};opacity:${i<current?0.4:1}"></div>`).join('')}</div>
+    <div class="q-level" style="color:${q.color}">Scenariul ${current+1} din ${game.length}</div>
+    <div class="q-quote">${q.quote}<small>Sursa: ${q.source}</small></div>
+    <div class="q-scenario">${q.scenario}</div>
+    <div class="q-question">${q.question}</div>
+    <div class="q-options">${opts.map((o,i)=>`
+      <div class="q-opt" id="qo${i}" onclick="pickOpt(${i})">
+        <div class="q-letter" id="ql${i}">${String.fromCharCode(65+i)}</div>
+        <div><div class="q-opt-name">${o.name}</div><div class="q-opt-hint">${o.hint}</div></div>
+      </div>`).join('')}</div>
+    <div id="q-exp"></div>
+    <div id="q-nxt"></div>`;
+}
+
+function pickOpt(i) {
+  if (answered) return;
+  answered = true;
+  const q = game[current];
+  const chosen = window._opts[i].name;
+  const isOk = chosen === q.answer;
+  if (isOk) score++;
+
+  document.querySelectorAll('.q-opt').forEach(el => { el.classList.add('disabled'); el.onclick = null; });
+  window._opts.forEach((o,idx) => {
+    const el = document.getElementById('qo'+idx);
+    const let_ = document.getElementById('ql'+idx);
+    if (o.name === q.answer) { el.classList.add('correct'); let_.textContent = '✓'; }
+    else if (idx === i && !isOk) { el.classList.add('wrong'); let_.textContent = '×'; }
+  });
+
+  const expEl = document.getElementById('q-exp');
+  expEl.className = 'q-explanation';
+  expEl.style.cssText = `background:${isOk?'rgba(34,197,94,0.06)':'rgba(239,68,68,0.06)'};border:1px solid ${isOk?'rgba(34,197,94,0.2)':'rgba(239,68,68,0.2)'}`;
+  expEl.innerHTML = `<div class="q-exp-label" style="color:${isOk?'var(--green)':'var(--red)'}">${isOk?'Corect':'Răspuns incorect'} — ${q.answer}</div><div class="q-exp-text">${q.explanation}</div><div class="q-exp-source">Sursa: ${q.source}</div>`;
+
+  const nxt = document.getElementById('q-nxt');
+  nxt.innerHTML = `<button class="btn-next" style="background:linear-gradient(135deg,${q.color},${q.color}99);color:#09090F;margin-top:8px" onclick="nextQ()">${current<game.length-1?'Scenariul următor →':'Vezi rezultatul →'}</button>`;
+}
+
+function nextQ() {
+  current++;
+  document.getElementById('game-content').style.opacity='0';
+  setTimeout(()=>{document.getElementById('game-content').style.opacity='1';renderGame();},120);
+}
+
+function renderResult() {
+  const msgs = ['Continuă să observi. Tiparele vin cu exercițiu.','Continuă.','Jumătate din hartă — o bază solidă.','Aproape complet.','Aproape complet.','Harta completă. Acum știi să citești un sistem după viziunea din spatele lui.'];
+  const recap = Object.values(THINKER_INFO).map(t=>`<div style="display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:10px;margin-bottom:8px"><div style="width:8px;height:8px;border-radius:50%;background:${t.color};flex-shrink:0;margin-top:5px"></div><div><div style="font-size:13px;font-weight:600;color:#fff;margin-bottom:2px">${t.full}</div><div style="font-size:12px;color:var(--muted);font-family:'Cormorant Garamond',serif;font-style:italic">${t.idea} → ${t.company}</div></div></div>`).join('');
+  document.getElementById('game-content').innerHTML = `
+    <div style="text-align:center;padding:20px 0">
+      <div style="font-size:40px;margin-bottom:12px">${score===5?'🐉':score>=3?'🔥':'👁'}</div>
+      <div style="font-size:16px;font-weight:700;color:#fff;margin-bottom:8px">${score}/${game.length} corecte</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:14px;color:#9090AA;line-height:1.7;margin-bottom:16px">${msgs[score]}</div>
+    </div>
+    ${recap}
+    <button class="btn-ghost" style="margin-top:8px" onclick="game=buildGame();current=0;score=0;renderGame()">Joacă din nou — scenarii noi</button>`;
+}
+
+updateProgress();
+</script>
+</body>
+</html>
