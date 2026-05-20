@@ -98,10 +98,50 @@
   .insight-text p:last-child { margin-bottom: 0; }
   .insight-text em { color: var(--orange); font-style: normal; }
   @media (max-width: 560px) { .input-area { grid-template-columns: 1fr; } .grid-2 { grid-template-columns: 1fr; } }
+.lesson-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(9, 9, 15, 0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.back-link {
+  color: var(--orange);
+  text-decoration: none;
+  font-size: 13px;
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 1px;
+}
+
+.back-link:hover {
+  opacity: 0.8;
+}
+
+.lesson-logo-img {
+  height: 34px;
+  width: auto;
+  display: block;
+}
 </style>
 </head>
 <body>
+<div class="lesson-header">
+  <a class="back-link" href="https://valasi.aydasist.ro/module/modul-0/">
+    ← Înapoi la Modul 0
+  </a>
 
+  <img
+    class="lesson-logo-img"
+    src="/images/logo-valasi.png"
+    alt="Școala Valasi"
+  >
+</div>
 <div class="top-nav">
   <span class="nav-label">Școala Valasi · Modul 0</span>
   <div class="progress-bar"><div class="progress-fill" id="pfill"></div></div>
