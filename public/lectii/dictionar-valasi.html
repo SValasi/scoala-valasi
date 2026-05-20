@@ -317,10 +317,50 @@ nav {
   .entry-body { margin-left: 0; }
   .entry-tag { margin-left: 0; }
 }
+.lesson-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(9, 9, 15, 0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.back-link {
+  color: var(--orange);
+  text-decoration: none;
+  font-size: 13px;
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 1px;
+}
+
+.back-link:hover {
+  opacity: 0.8;
+}
+
+.lesson-logo-img {
+  height: 34px;
+  width: auto;
+  display: block;
+}
 </style>
 </head>
 <body>
+<div class="lesson-header">
+  <a class="back-link" href="https://valasi.aydasist.ro/module/modul-0/">
+    ← Înapoi la Modul 0
+  </a>
 
+  <img
+    class="lesson-logo-img"
+    src="/images/logo-valasi.png"
+    alt="Școala Valasi"
+  >
+</div>
 <div class="progress-bar" id="prog"></div>
 
 <nav>
@@ -708,5 +748,27 @@ items.forEach(item => {
   });
 });
 </script>
+<div style="
+  width:100%;
+  display:flex;
+  justify-content:center;
+  margin:60px 0 80px;
+">
+  <a
+    href="https://valasi.aydasist.ro/module/modul-0/"
+    style="
+      background:#FF6B2B;
+      color:white;
+      padding:16px 28px;
+      border-radius:999px;
+      text-decoration:none;
+      font-family:'DM Mono', monospace;
+      font-size:13px;
+      letter-spacing:1px;
+    "
+  >
+    Înapoi la Modul 0 →
+  </a>
+</div>
 </body>
 </html>
