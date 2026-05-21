@@ -1,12 +1,13 @@
 "use client";
+
 import { useState, useRef, useEffect } from "react";
 
 const DRAGON_ORANGE = "#FF6B2B";
 const DRAGON_DARK = "#F3F4F6";
-const DRAGON_DEEP = "#EEF2F7";
+const DRAGON_DEEP = "#111827FFF";
 const DRAGON_GOLD = "#FFB347";
-const DRAGON_RED = "#DC2626";
-const DRAGON_GRAY = "#E5E7EB";
+const DRAGON_RED = "#C0392B";
+const DRAGON_GRAY = "#CBD5E1";
 
 const initialNodes = {
   center: {
@@ -85,7 +86,64 @@ function useWindowSize() {
   useEffect(() => {
     const fn = () => setSize({ w: window.innerWidth, h: window.innerHeight });
     window.addEventListener("resize", fn);
-    return () => window.removeEventListener("resize", fn);
+    return (
+    <>
+      {/* valasi-harta-final-force-light */}
+
+      <style>{`
+        html, body {
+          background: #F3F4F6 !important;
+        }
+
+        body::before {
+          opacity: 0 !important;
+        }
+
+        * {
+          text-shadow: none !important;
+        }
+
+        svg {
+          background: transparent !important;
+        }
+
+        svg text {
+          fill: #111827 !important;
+          opacity: 1 !important;
+          font-weight: 700 !important;
+        }
+
+        svg circle {
+          fill: #FFFFFF !important;
+          opacity: 1 !important;
+        }
+
+        svg line {
+          opacity: 0.55 !important;
+        }
+
+        textarea,
+        input {
+          background: #FFFFFF !important;
+          color: #111827 !important;
+          border-color: #CBD5E1 !important;
+        }
+
+        textarea::placeholder,
+        input::placeholder {
+          color: #64748B !important;
+          opacity: 1 !important;
+        }
+
+        button {
+          color: #111827;
+          font-family: 'DM Sans', sans-serif;
+        }
+      `}</style>
+
+    <>
+      {/* valasi-harta-readability-final */}
+) => window.removeEventListener("resize", fn);
   }, []);
   return size;
 }
@@ -121,7 +179,7 @@ export default function HartaFortelor() {
   return (
     <div style={{
       minHeight: "100vh",
-      background: `radial-gradient(ellipse at 30% 20%, #1e0a3c 0%, ${DRAGON_DEEP} 60%)`,
+      background: "#F3F4F6"
       fontFamily: "'Georgia', 'Times New Roman', serif",
       color: "#E8E0FF",
       display: "flex",
@@ -144,7 +202,7 @@ export default function HartaFortelor() {
           fontSize: "clamp(22px, 5vw, 34px)",
           fontWeight: 700,
           margin: 0,
-          background: `linear-gradient(135deg, #fff 0%, ${DRAGON_GOLD} 100%)`,
+          background: "#FFFFFF"
           WebkitBackgroundClip: "text",
           WebkitTextFillColor: "transparent",
           lineHeight: 1.2,
@@ -213,7 +271,7 @@ export default function HartaFortelor() {
               {nodes.center.value ? (
                 <>
                   <text x={centerX} y={centerY - 6} textAnchor="middle"
-                    fill="#fff" fontSize={svgW < 400 ? 9 : 11} fontWeight="bold">
+                    fill="#111827" fontSize={svgW < 400 ? 9 : 11} fontWeight="bold">
                     {nodes.center.value.length > 18
                       ? nodes.center.value.slice(0, 18) + "…"
                       : nodes.center.value}
@@ -224,7 +282,7 @@ export default function HartaFortelor() {
               ) : (
                 <>
                   <text x={centerX} y={centerY - 4} textAnchor="middle"
-                    fill="#C0BAFF" fontSize={svgW < 400 ? 10 : 12} fontWeight="bold">
+                    fill="#334155" fontSize={svgW < 400 ? 10 : 12} fontWeight="bold">
                     {nodes.center.label}
                   </text>
                   <text x={centerX} y={centerY + 12} textAnchor="middle"
@@ -261,7 +319,7 @@ export default function HartaFortelor() {
                         {n.label}
                       </text>
                       <text x={sx} y={sy + 9} textAnchor="middle"
-                        fill="#ccc" fontSize={svgW < 400 ? 7.5 : 9}>
+                        fill="#475569" fontSize={svgW < 400 ? 7.5 : 9}>
                         {n.value.length > 14 ? n.value.slice(0, 14) + "…" : n.value}
                       </text>
                     </>
@@ -286,12 +344,12 @@ export default function HartaFortelor() {
           {activeNode && (
             <div style={{
               width: "100%", maxWidth: 480,
-              background: `linear-gradient(160deg, ${DRAGON_GRAY} 0%, #1E1E3E 100%)`,
+              background: "#FFFFFF"
               border: `1px solid ${activeNode.color || DRAGON_ORANGE}`,
               borderRadius: 20,
               padding: "22px 22px 18px",
               marginTop: 16,
-              boxShadow: `0 8px 24px rgba(15,23,42,0.08)`,
+              boxShadow: `0 0 32px ${activeNode.color || DRAGON_ORANGE}33`,
               transition: "all 0.3s",
             }}>
               {/* Node title */}
@@ -301,7 +359,7 @@ export default function HartaFortelor() {
                 <div style={{
                   width: 10, height: 10, borderRadius: "50%",
                   background: activeNode.color || DRAGON_ORANGE,
-                  boxShadow: `0 8px 24px rgba(15,23,42,0.08)`,
+                  boxShadow: `0 0 8px ${activeNode.color || DRAGON_ORANGE}`,
                   flexShrink: 0,
                 }} />
                 <div style={{
@@ -314,7 +372,7 @@ export default function HartaFortelor() {
 
               {/* Main question */}
               <div style={{
-                fontSize: 16, color: "#fff", fontWeight: "600",
+                fontSize: 16, color: "#111827", fontWeight: "600",
                 marginBottom: 10, lineHeight: 1.4,
               }}>
                 {activeNode.question}
@@ -343,7 +401,7 @@ export default function HartaFortelor() {
                     {activeNode.hints.map((hint, i) => (
                       <div key={i} style={{
                         fontSize: 11, color: "#9990CC",
-                        background: "rgba(15,23,42,0.04)",
+                        background: "#111827FFF",
                         border: "1px solid #3A3A6A",
                         borderRadius: 20,
                         padding: "4px 10px",
@@ -364,7 +422,7 @@ export default function HartaFortelor() {
                 placeholder={activeNode.placeholder || "Scrie răspunsul tău aici..."}
                 style={{
                   width: "100%", minHeight: 90,
-                  background: "rgba(0,0,0,0.35)",
+                  background: "#F8FAFC",
                   border: `1px solid ${activeNode.color || DRAGON_ORANGE}55`,
                   borderRadius: 10,
                   color: "#E8E0FF",
@@ -382,9 +440,9 @@ export default function HartaFortelor() {
                 onClick={() => setActive(null)}
                 style={{
                   marginTop: 12,
-                  background: `linear-gradient(135deg, ${activeNode.color || DRAGON_ORANGE}, ${DRAGON_GOLD})`,
+                  background: "#FFFFFF"
                   border: "none", borderRadius: 10,
-                  color: DRAGON_DARK, fontWeight: "bold",
+                  color: "#111827", fontWeight: "bold",
                   fontSize: 13, padding: "10px 24px",
                   cursor: "pointer",
                   boxShadow: `0 4px 16px ${activeNode.color || DRAGON_ORANGE}44`,
@@ -416,12 +474,12 @@ export default function HartaFortelor() {
           {allFilled && (
             <div style={{
               width: "100%", maxWidth: 480,
-              background: `linear-gradient(135deg, #F3F4F6 0%, #FFF7ED 100%)`,
+              background: "#FFFFFF"
               border: `1px solid ${DRAGON_ORANGE}`,
               borderRadius: 16,
               padding: "18px 20px",
               marginTop: 20,
-              boxShadow: `0 8px 24px rgba(15,23,42,0.08)`,
+              boxShadow: `0 0 30px ${DRAGON_ORANGE}44`,
             }}>
               <div style={{
                 fontSize: 11, letterSpacing: 3, textTransform: "uppercase",
@@ -437,7 +495,7 @@ export default function HartaFortelor() {
                 placeholder='Data viitoare, intervin la [punct structural] prin [acțiune concretă]...'
                 style={{
                   width: "100%", minHeight: 70,
-                  background: "rgba(0,0,0,0.4)",
+                  background: "#F8FAFC",
                   border: `1px solid ${DRAGON_ORANGE}55`,
                   borderRadius: 10,
                   color: "#E8E0FF",
@@ -454,9 +512,9 @@ export default function HartaFortelor() {
                   onClick={() => setPhase("result")}
                   style={{
                     marginTop: 12,
-                    background: `linear-gradient(135deg, ${DRAGON_ORANGE}, ${DRAGON_GOLD})`,
+                    background: "#FFFFFF"
                     border: "none", borderRadius: 10,
-                    color: DRAGON_DARK, fontWeight: "bold",
+                    color: "#111827", fontWeight: "bold",
                     fontSize: 14, padding: "10px 28px",
                     cursor: "pointer",
                     boxShadow: `0 4px 20px ${DRAGON_ORANGE}55`,
@@ -474,11 +532,11 @@ export default function HartaFortelor() {
           width: "100%", maxWidth: 480, marginTop: 20,
         }}>
           <div style={{
-            background: `linear-gradient(135deg, ${DRAGON_GRAY}, #1E1E3E)`,
+            background: "#FFFFFF"
             borderRadius: 20,
             padding: "28px 24px",
             border: `1px solid ${DRAGON_ORANGE}`,
-            boxShadow: `0 8px 24px rgba(15,23,42,0.08)`,
+            boxShadow: `0 0 40px ${DRAGON_ORANGE}33`,
           }}>
             <div style={{
               fontSize: 11, letterSpacing: 4, color: DRAGON_ORANGE,
@@ -486,7 +544,7 @@ export default function HartaFortelor() {
             }}>Analiza ta structurală</div>
 
             <div style={{
-              fontSize: 15, fontWeight: "bold", color: "#fff",
+              fontSize: 15, fontWeight: "bold", color: "#111827",
               marginBottom: 20, padding: "12px 16px",
               background: "rgba(255,107,43,0.1)",
               borderRadius: 10, borderLeft: `3px solid ${DRAGON_ORANGE}`,
@@ -501,7 +559,7 @@ export default function HartaFortelor() {
                   color: nodes[id].color, fontFamily: "monospace", marginBottom: 4,
                 }}>{nodes[id].label}</div>
                 <div style={{
-                  fontSize: 13, color: "#C0BAFF",
+                  fontSize: 13, color: "#334155",
                   padding: "8px 12px",
                   background: "#F8FAFC",
                   borderRadius: 8,
@@ -512,7 +570,7 @@ export default function HartaFortelor() {
 
             <div style={{
               marginTop: 24, padding: "16px 18px",
-              background: `linear-gradient(135deg, rgba(255,107,43,0.15), rgba(255,179,71,0.1))`,
+              background: "#FFFFFF"
               borderRadius: 12,
               border: `1px solid ${DRAGON_GOLD}55`,
             }}>
@@ -520,7 +578,7 @@ export default function HartaFortelor() {
                 fontSize: 10, letterSpacing: 3, color: DRAGON_GOLD,
                 textTransform: "uppercase", fontFamily: "monospace", marginBottom: 8,
               }}>Punctul tău de intervenție</div>
-              <div style={{ fontSize: 14, color: "#fff", fontStyle: "italic", lineHeight: 1.6 }}>
+              <div style={{ fontSize: 14, color: "#111827", fontStyle: "italic", lineHeight: 1.6 }}>
                 "{intervention}"
               </div>
             </div>
@@ -545,7 +603,7 @@ export default function HartaFortelor() {
               }}
               style={{
                 marginTop: 20, width: "100%",
-                background: "rgba(15,23,42,0.05)",
+                background: "#FFFFFF",
                 border: "1px solid #3A3A6A",
                 borderRadius: 10, color: "#9990CC",
                 fontSize: 13, padding: "10px",
@@ -564,5 +622,6 @@ export default function HartaFortelor() {
         Structural Intelligence · Modul 1 · Lecția 1
       </div>
     </div>
+    </>
   );
 }
