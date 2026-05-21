@@ -1,21 +1,21 @@
 import { useState, useEffect, useRef } from "react";
 
 const C = {
-  bg: "#08090F",
-  bgWarm: "#0F0A08",
-  panel: "#110F0D",
-  panelWarm: "#161210",
-  border: "#1E1A16",
-  borderWarm: "#2A2218",
-  text: "#EDE8E0",
-  muted: "#6B6560",
-  faint: "#0A0908",
+  bg: "#F3F4F6",
+  bgWarm: "#FFF7ED",
+  panel: "#FFFFFF",
+  panelWarm: "#FFFFFF",
+  border: "#E5E7EB",
+  borderWarm: "#FED7AA",
+  text: "#111827",
+  muted: "#475569",
+  faint: "#F8FAFC",
   orange: "#FF6B2B",
   gold: "#FFB347",
-  teal: "#4ECDC4",
-  red: "#E05A3A",
-  green: "#4CAF7D",
-  purple: "#9B7FD4",
+  teal: "#14B8A6",
+  red: "#DC2626",
+  green: "#16A34A",
+  purple: "#7C3AED",
   accent: "#FF6B2B",
 };
 
@@ -94,7 +94,7 @@ function PrivacyScreen({ onContinue }) {
           border: `1px solid ${C.borderWarm}`,
           borderRadius: 24, padding: "32px 28px",
           marginBottom: 20,
-          boxShadow: `0 0 60px ${C.orange}08`,
+          boxShadow: `0 8px 24px rgba(15,23,42,0.08)`,
         }}>
           <p style={{
             fontSize: 18, fontWeight: "700", color: "#fff",
@@ -164,7 +164,7 @@ function PrivacyScreen({ onContinue }) {
             width: "100%",
             background: `linear-gradient(135deg, ${C.orange}, ${C.gold})`,
             border: "none", borderRadius: 16,
-            color: "#08090F", fontWeight: "bold", fontSize: 16,
+            color: "#F3F4F6", fontWeight: "bold", fontSize: 16,
             padding: "18px", cursor: "pointer",
             boxShadow: `0 6px 28px ${C.orange}44`,
             fontFamily: "Georgia, serif",
@@ -236,7 +236,7 @@ function NewEntryForm({ onSave, onCancel }) {
     <div style={{
       background: C.panelWarm, border: `1px solid ${C.borderWarm}`,
       borderRadius: 20, padding: "24px 22px",
-      boxShadow: `0 0 40px ${C.orange}08`,
+      boxShadow: `0 8px 24px rgba(15,23,42,0.08)`,
     }}>
       <div style={{
         display: "flex", justifyContent: "space-between",
@@ -283,7 +283,7 @@ function NewEntryForm({ onSave, onCancel }) {
             placeholder={current.placeholder}
             style={{
               width: "100%", minHeight: 100,
-              background: "rgba(0,0,0,0.3)",
+              background: "#F8FAFC",
               border: `1px solid ${C.borderWarm}`,
               borderRadius: 12, color: C.text, fontSize: 14,
               padding: "12px 14px", resize: "vertical",
@@ -295,7 +295,7 @@ function NewEntryForm({ onSave, onCancel }) {
           <div style={{ display: "flex", gap: 10, marginTop: 14 }}>
             {step > 0 && (
               <button onClick={() => setStep(s => s - 1)} style={{
-                background: "rgba(255,255,255,0.04)", border: `1px solid ${C.border}`,
+                background: "rgba(15,23,42,0.04)", border: `1px solid ${C.border}`,
                 borderRadius: 10, color: C.muted, fontSize: 13,
                 padding: "10px 18px", cursor: "pointer",
               }}>← Înapoi</button>
@@ -307,7 +307,7 @@ function NewEntryForm({ onSave, onCancel }) {
                 flex: 1,
                 background: canNext ? `linear-gradient(135deg, ${C.orange}, ${C.gold})` : C.border,
                 border: "none", borderRadius: 10,
-                color: canNext ? "#08090F" : C.muted,
+                color: canNext ? "#F3F4F6" : C.muted,
                 fontWeight: "bold", fontSize: 14,
                 padding: "11px", cursor: canNext ? "pointer" : "default",
                 transition: "all 0.3s",
@@ -336,7 +336,7 @@ function NewEntryForm({ onSave, onCancel }) {
                   key={cat.id}
                   onClick={() => selectPattern(cat.id)}
                   style={{
-                    background: selected ? `${cat.color}18` : "rgba(0,0,0,0.2)",
+                    background: selected ? `${cat.color}18` : "#F8FAFC",
                     border: `1px solid ${selected ? cat.color : C.border}`,
                     borderRadius: 12, padding: "12px",
                     cursor: "pointer", transition: "all 0.2s",
@@ -358,7 +358,7 @@ function NewEntryForm({ onSave, onCancel }) {
               onChange={e => setForm(f => ({ ...f, tiparCustom: e.target.value }))}
               placeholder="Descrie tiparele pe scurt..."
               style={{
-                width: "100%", background: "rgba(0,0,0,0.3)",
+                width: "100%", background: "#F8FAFC",
                 border: `1px solid ${C.borderWarm}`, borderRadius: 10,
                 color: C.text, fontSize: 13, padding: "10px 12px",
                 fontFamily: "Georgia, serif", outline: "none",
@@ -377,7 +377,7 @@ function NewEntryForm({ onSave, onCancel }) {
               placeholder="Orice altceva vrei să reții despre această situație..."
               style={{
                 width: "100%", minHeight: 60,
-                background: "rgba(0,0,0,0.2)",
+                background: "#F8FAFC",
                 border: `1px solid ${C.border}`, borderRadius: 10,
                 color: C.text, fontSize: 13, padding: "10px 12px",
                 resize: "vertical", fontFamily: "Georgia, serif",
@@ -388,7 +388,7 @@ function NewEntryForm({ onSave, onCancel }) {
 
           <div style={{ display: "flex", gap: 10 }}>
             <button onClick={() => setStep(2)} style={{
-              background: "rgba(255,255,255,0.04)", border: `1px solid ${C.border}`,
+              background: "rgba(15,23,42,0.04)", border: `1px solid ${C.border}`,
               borderRadius: 10, color: C.muted, fontSize: 13,
               padding: "10px 18px", cursor: "pointer",
             }}>← Înapoi</button>
@@ -399,7 +399,7 @@ function NewEntryForm({ onSave, onCancel }) {
                 flex: 1,
                 background: form.tipar ? `linear-gradient(135deg, ${C.green}, #2ECC71)` : C.border,
                 border: "none", borderRadius: 10,
-                color: form.tipar ? "#08090F" : C.muted,
+                color: form.tipar ? "#F3F4F6" : C.muted,
                 fontWeight: "bold", fontSize: 14,
                 padding: "11px", cursor: form.tipar ? "pointer" : "default",
                 transition: "all 0.3s",
@@ -457,7 +457,7 @@ function EntryCard({ entry, onDelete }) {
           ].map(item => (
             <div key={item.label} style={{ marginBottom: 12 }}>
               <div style={{ fontSize: 9, letterSpacing: 2, color: item.color, textTransform: "uppercase", fontFamily: "monospace", marginBottom: 4 }}>{item.label}</div>
-              <div style={{ fontSize: 13, color: "#9090AA", lineHeight: 1.6, padding: "8px 12px", background: "rgba(0,0,0,0.2)", borderRadius: 8, borderLeft: `2px solid ${item.color}44` }}>{item.value}</div>
+              <div style={{ fontSize: 13, color: "#9090AA", lineHeight: 1.6, padding: "8px 12px", background: "#F8FAFC", borderRadius: 8, borderLeft: `2px solid ${item.color}44` }}>{item.value}</div>
             </div>
           ))}
           <button onClick={() => onDelete(entry.id)} style={{
@@ -490,7 +490,7 @@ function PatternInsight({ entries }) {
       border: `1px solid ${cat.color}44`,
       borderRadius: 18, padding: "22px 22px",
       marginBottom: 16,
-      boxShadow: `0 0 30px ${cat.color}11`,
+      boxShadow: `0 8px 24px rgba(15,23,42,0.08)`,
       animation: "fadeUp 0.5s ease",
     }}>
       <div style={{ fontSize: 10, letterSpacing: 3, color: cat.color, textTransform: "uppercase", fontFamily: "monospace", marginBottom: 12 }}>
@@ -504,7 +504,7 @@ function PatternInsight({ entries }) {
       </div>
       <div style={{
         padding: "12px 16px",
-        background: "rgba(0,0,0,0.2)",
+        background: "#F8FAFC",
         borderRadius: 12,
         fontSize: 13, color: "#8080AA", fontStyle: "italic", lineHeight: 1.7,
       }}>
@@ -613,7 +613,7 @@ export default function JurnalTipare() {
               width: "100%",
               background: `linear-gradient(135deg, ${C.orange}, ${C.gold})`,
               border: "none", borderRadius: 16,
-              color: "#08090F", fontWeight: "bold", fontSize: 15,
+              color: "#F3F4F6", fontWeight: "bold", fontSize: 15,
               padding: "16px", cursor: "pointer",
               boxShadow: `0 6px 28px ${C.orange}33`,
               marginBottom: 12,
@@ -656,7 +656,7 @@ export default function JurnalTipare() {
                   Sigur vrei să ștergi toate intrările? Această acțiune nu poate fi anulată.
                 </div>
                 <div style={{ display: "flex", gap: 8, justifyContent: "center" }}>
-                  <button onClick={() => setShowClearConfirm(false)} style={{ background: "rgba(255,255,255,0.05)", border: `1px solid ${C.border}`, borderRadius: 8, color: C.muted, fontSize: 12, padding: "8px 16px", cursor: "pointer" }}>
+                  <button onClick={() => setShowClearConfirm(false)} style={{ background: "rgba(15,23,42,0.05)", border: `1px solid ${C.border}`, borderRadius: 8, color: C.muted, fontSize: 12, padding: "8px 16px", cursor: "pointer" }}>
                     Anulează
                   </button>
                   <button onClick={() => { clearAll(); setShowClearConfirm(false); }} style={{ background: `${C.red}22`, border: `1px solid ${C.red}44`, borderRadius: 8, color: C.red, fontSize: 12, padding: "8px 16px", cursor: "pointer" }}>

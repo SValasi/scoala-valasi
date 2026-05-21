@@ -1,18 +1,18 @@
 import { useState, useEffect } from "react";
 
 const C = {
-  bg: "#0A0E1A",
-  bgDeep: "#060810",
-  panel: "#111827",
-  panelBorder: "#1E2A3A",
-  intrari: "#3B82F6",
-  proces: "#8B5CF6",
-  declarate: "#10B981",
-  reale: "#F59E0B",
-  accent: "#F59E0B",
-  text: "#E2E8F0",
-  muted: "#64748B",
-  faint: "#1E293B",
+  bg: "#F3F4F6",
+  bgDeep: "#EEF2F7",
+  panel: "#FFFFFF",
+  panelBorder: "#E5E7EB",
+  intrari: "#2563EB",
+  proces: "#7C3AED",
+  declarate: "#16A34A",
+  reale: "#D97706",
+  accent: "#FF6B2B",
+  text: "#111827",
+  muted: "#475569",
+  faint: "#F8FAFC",
 };
 
 const STEPS = [
@@ -153,7 +153,7 @@ export default function DisectiaSistemului() {
         {/* Sistem bubble */}
         <div style={{
           fontSize: 10, color: values.sistem ? "#fff" : C.muted,
-          background: values.sistem ? "#1E293B" : "transparent",
+          background: values.sistem ? "#F8FAFC" : "transparent",
           border: `1px solid ${values.sistem ? "#CBD5E1" : C.panelBorder}`,
           borderRadius: 20, padding: "4px 10px",
           fontFamily: "monospace", whiteSpace: "nowrap",
@@ -224,11 +224,11 @@ export default function DisectiaSistemului() {
 
           {/* Card */}
           <div style={{
-            background: `linear-gradient(160deg, ${C.panel} 0%, #0D1525 100%)`,
+            background: `linear-gradient(135deg, #F3F4F6 0%, #FFF7ED 100%)`,
             border: `1px solid ${current.color}44`,
             borderRadius: 20,
             padding: "24px 22px",
-            boxShadow: `0 0 40px ${current.color}22`,
+            boxShadow: `0 8px 24px rgba(15,23,42,0.08)`,
           }}>
             {/* Question */}
             <div style={{
@@ -243,7 +243,7 @@ export default function DisectiaSistemului() {
               fontSize: 13, color: "#94A3B8", lineHeight: 1.8,
               marginBottom: 16,
               padding: "12px 14px",
-              background: "rgba(0,0,0,0.25)",
+              background: "#F8FAFC",
               borderRadius: 10,
               borderLeft: `2px solid ${current.color}55`,
             }}>
@@ -260,8 +260,8 @@ export default function DisectiaSistemului() {
                 {current.hints.map((h, i) => (
                   <div key={i} style={{
                     fontSize: 11, color: "#94A3B8",
-                    background: "rgba(255,255,255,0.03)",
-                    border: "1px solid #1E293B",
+                    background: "rgba(15,23,42,0.03)",
+                    border: "1px solid #F8FAFC",
                     borderRadius: 20, padding: "4px 10px",
                   }}>{h}</div>
                 ))}
@@ -293,8 +293,8 @@ export default function DisectiaSistemului() {
             <div style={{ display: "flex", gap: 10, marginTop: 14 }}>
               {step > 0 && (
                 <button onClick={prev} style={{
-                  background: "rgba(255,255,255,0.04)",
-                  border: "1px solid #1E293B",
+                  background: "rgba(15,23,42,0.04)",
+                  border: "1px solid #F8FAFC",
                   borderRadius: 10, color: C.muted,
                   fontSize: 13, padding: "10px 18px",
                   cursor: "pointer",
@@ -307,9 +307,9 @@ export default function DisectiaSistemului() {
                   flex: 1,
                   background: canAdvance
                     ? `linear-gradient(135deg, ${current.color}, ${C.accent})`
-                    : "#1E293B",
+                    : "#F8FAFC",
                   border: "none", borderRadius: 10,
-                  color: canAdvance ? "#0A0E1A" : C.muted,
+                  color: canAdvance ? "#F3F4F6" : C.muted,
                   fontWeight: "bold", fontSize: 14,
                   padding: "11px 20px", cursor: canAdvance ? "pointer" : "default",
                   transition: "all 0.3s",
@@ -326,10 +326,10 @@ export default function DisectiaSistemului() {
       {phase === "gap" && (
         <div style={{ width: "100%", maxWidth: 480 }}>
           <div style={{
-            background: `linear-gradient(160deg, ${C.panel}, #0D1525)`,
+            background: `linear-gradient(135deg, #F3F4F6 0%, #FFF7ED 100%)`,
             border: `1px solid ${C.accent}55`,
             borderRadius: 20, padding: "24px 22px",
-            boxShadow: `0 0 40px ${C.accent}22`,
+            boxShadow: `0 8px 24px rgba(15,23,42,0.08)`,
           }}>
             <div style={{
               fontSize: 10, letterSpacing: 3, color: C.accent,
@@ -371,7 +371,7 @@ export default function DisectiaSistemului() {
             {/* Gap arrow visual */}
             <div style={{
               textAlign: "center", padding: "10px 0", marginBottom: 16,
-              borderTop: "1px solid #1E293B", borderBottom: "1px solid #1E293B",
+              borderTop: "1px solid #F8FAFC", borderBottom: "1px solid #F8FAFC",
             }}>
               <div style={{
                 fontSize: 11, color: C.muted, fontFamily: "monospace",
@@ -388,7 +388,7 @@ export default function DisectiaSistemului() {
               fontSize: 13, color: "#94A3B8", lineHeight: 1.7,
               marginBottom: 14,
               padding: "12px 14px",
-              background: "rgba(0,0,0,0.25)",
+              background: "#F8FAFC",
               borderRadius: 10,
               borderLeft: `2px solid ${C.accent}55`,
             }}>
@@ -415,8 +415,8 @@ export default function DisectiaSistemului() {
 
             <div style={{ display: "flex", gap: 10, marginTop: 14 }}>
               <button onClick={prev} style={{
-                background: "rgba(255,255,255,0.04)",
-                border: "1px solid #1E293B",
+                background: "rgba(15,23,42,0.04)",
+                border: "1px solid #F8FAFC",
                 borderRadius: 10, color: C.muted,
                 fontSize: 13, padding: "10px 18px", cursor: "pointer",
               }}>← Înapoi</button>
@@ -427,9 +427,9 @@ export default function DisectiaSistemului() {
                   flex: 1,
                   background: gap.trim()
                     ? `linear-gradient(135deg, ${C.accent}, #F97316)`
-                    : "#1E293B",
+                    : "#F8FAFC",
                   border: "none", borderRadius: 10,
-                  color: gap.trim() ? "#0A0E1A" : C.muted,
+                  color: gap.trim() ? "#F3F4F6" : C.muted,
                   fontWeight: "bold", fontSize: 14,
                   padding: "11px 20px",
                   cursor: gap.trim() ? "pointer" : "default",
@@ -447,10 +447,10 @@ export default function DisectiaSistemului() {
       {phase === "result" && (
         <div style={{ width: "100%", maxWidth: 480 }}>
           <div style={{
-            background: `linear-gradient(160deg, ${C.panel}, #0D1525)`,
+            background: `linear-gradient(135deg, #F3F4F6 0%, #FFF7ED 100%)`,
             border: `1px solid ${C.accent}`,
             borderRadius: 20, padding: "28px 24px",
-            boxShadow: `0 0 50px ${C.accent}22`,
+            boxShadow: `0 8px 24px rgba(15,23,42,0.08)`,
           }}>
             <div style={{
               fontSize: 10, letterSpacing: 4, color: C.accent,
@@ -470,7 +470,7 @@ export default function DisectiaSistemului() {
                 <div style={{
                   fontSize: 13, color: "#94A3B8", lineHeight: 1.6,
                   padding: "10px 12px",
-                  background: "rgba(0,0,0,0.2)",
+                  background: "#F8FAFC",
                   borderRadius: 8,
                   borderLeft: `2px solid ${item.color}`,
                 }}>{values[item.id]}</div>
@@ -536,8 +536,8 @@ export default function DisectiaSistemului() {
               setGap(""); setStep(0); setPhase("steps");
             }} style={{
               marginTop: 20, width: "100%",
-              background: "rgba(255,255,255,0.04)",
-              border: "1px solid #1E293B",
+              background: "rgba(15,23,42,0.04)",
+              border: "1px solid #F8FAFC",
               borderRadius: 10, color: C.muted,
               fontSize: 13, padding: "11px",
               cursor: "pointer",
@@ -547,7 +547,7 @@ export default function DisectiaSistemului() {
       )}
 
       <div style={{
-        marginTop: 40, fontSize: 9, color: "#1E293B",
+        marginTop: 40, fontSize: 9, color: "#F8FAFC",
         letterSpacing: 3, textTransform: "uppercase", fontFamily: "monospace",
       }}>
         Structural Intelligence · Modul 1 · Lecția 2

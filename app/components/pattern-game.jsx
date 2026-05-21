@@ -1,20 +1,20 @@
 import { useState, useEffect, useRef } from "react";
 
 const C = {
-  bg: "#07080E",
-  panel: "#0D0E18",
-  panelAlt: "#10111C",
-  border: "#181928",
-  text: "#E0DEF0",
-  muted: "#4A4868",
+  bg: "#F3F4F6",
+  panel: "#FFFFFF",
+  panelAlt: "#F8FAFC",
+  border: "#E5E7EB",
+  text: "#111827",
+  muted: "#475569",
   orange: "#FF6B2B",
   gold: "#FFB347",
-  teal: "#4ECDC4",
-  purple: "#A855F7",
-  blue: "#3B82F6",
-  green: "#22C55E",
-  red: "#EF4444",
-  pink: "#EC4899",
+  teal: "#14B8A6",
+  purple: "#7C3AED",
+  blue: "#2563EB",
+  green: "#16A34A",
+  red: "#DC2626",
+  pink: "#DB2777",
 };
 
 // ── LEVELS ────────────────────────────────────────────────────────────────────
@@ -339,7 +339,7 @@ function ProgressBar({ current, total, color }) {
         width: `${(current / total) * 100}%`,
         background: `linear-gradient(90deg, ${color}, ${color}AA)`,
         transition: "width 0.5s cubic-bezier(0.4,0,0.2,1)",
-        boxShadow: `0 0 8px ${color}55`,
+        boxShadow: `0 8px 24px rgba(15,23,42,0.08)`,
       }} />
     </div>
   );
@@ -477,7 +477,7 @@ export default function PatternGame() {
           width: "100%",
           background: `linear-gradient(135deg, ${C.blue}, #60A5FA)`,
           border: "none", borderRadius: 16,
-          color: "#07080E", fontWeight: "bold", fontSize: 16,
+          color: "#F3F4F6", fontWeight: "bold", fontSize: 16,
           padding: "18px", cursor: "pointer",
           boxShadow: `0 6px 28px ${C.blue}44`,
           fontFamily: "Georgia, serif",
@@ -544,7 +544,7 @@ export default function PatternGame() {
             marginTop: 20, width: "100%",
             background: `linear-gradient(135deg, ${TYPE_COLORS[nextLevel?.type] || C.gold}, ${TYPE_COLORS[nextLevel?.type] || C.gold}AA)`,
             border: "none", borderRadius: 14,
-            color: "#07080E", fontWeight: "bold", fontSize: 15,
+            color: "#F3F4F6", fontWeight: "bold", fontSize: 15,
             padding: "16px", cursor: "pointer",
             boxShadow: `0 6px 24px ${TYPE_COLORS[nextLevel?.type] || C.gold}33`,
           }}>Continuă →</button>
@@ -630,7 +630,7 @@ export default function PatternGame() {
             setSelected(null); setRevealed(false); setScore(0);
             setTotalAnswered(0); setLevelScores({}); setStreak(0);
           }} style={{
-            width: "100%", background: "rgba(255,255,255,0.04)",
+            width: "100%", background: "rgba(15,23,42,0.04)",
             border: `1px solid ${C.border}`, borderRadius: 14,
             color: C.muted, fontSize: 13, padding: "14px", cursor: "pointer",
           }}>↺ Joacă din nou</button>
@@ -688,7 +688,7 @@ export default function PatternGame() {
           <div style={{
             position: "fixed", top: 80, left: "50%", transform: "translateX(-50%)",
             background: `${C.gold}EE`, borderRadius: 20, padding: "10px 20px",
-            fontSize: 14, fontWeight: "bold", color: "#08080E",
+            fontSize: 14, fontWeight: "bold", color: "#F3F4F6",
             animation: "streakPop 2s ease forwards",
             zIndex: 100, pointerEvents: "none",
           }}>🔥 {streak} la rând!</div>
@@ -708,7 +708,7 @@ export default function PatternGame() {
           background: C.panel, border: `1px solid ${typeColor}22`,
           borderRadius: 20, padding: "22px 22px",
           marginBottom: 14,
-          boxShadow: `0 0 30px ${typeColor}08`,
+          boxShadow: `0 8px 24px rgba(15,23,42,0.08)`,
           animation: "fadeUp 0.3s ease",
           key: `${levelIdx}-${questionIdx}`,
         }}>
@@ -722,7 +722,7 @@ export default function PatternGame() {
                   {question.sequence.map((row, i) => (
                     <div key={i} style={{
                       fontSize: "clamp(16px, 4vw, 22px)",
-                      background: "rgba(0,0,0,0.2)", borderRadius: 10,
+                      background: "#F8FAFC", borderRadius: 10,
                       padding: "10px 14px", letterSpacing: 4,
                       fontFamily: "monospace", color: C.text,
                       textAlign: "center",
@@ -732,7 +732,7 @@ export default function PatternGame() {
               ) : (
                 <div style={{
                   display: "flex", gap: 8, flexWrap: "wrap", alignItems: "center",
-                  background: "rgba(0,0,0,0.2)", borderRadius: 12, padding: "14px 16px",
+                  background: "#F8FAFC", borderRadius: 12, padding: "14px 16px",
                 }}>
                   {question.sequence.map((item, i) => (
                     <span key={i} style={{
@@ -764,7 +764,7 @@ export default function PatternGame() {
               <div style={{
                 fontSize: 13, color: "#A0A0CC", lineHeight: 1.8,
                 padding: "14px 16px",
-                background: "rgba(0,0,0,0.2)",
+                background: "#F8FAFC",
                 borderRadius: 12,
                 borderLeft: `3px solid ${typeColor}55`,
                 fontStyle: "italic",
@@ -792,7 +792,7 @@ export default function PatternGame() {
                   style={{
                     padding: "12px 16px", borderRadius: 12,
                     border: `1px solid ${showCorrect ? C.green : showWrong ? C.red : isSelected ? typeColor : C.border}`,
-                    background: showCorrect ? `${C.green}12` : showWrong ? `${C.red}10` : isSelected ? `${typeColor}10` : "rgba(0,0,0,0.15)",
+                    background: showCorrect ? `${C.green}12` : showWrong ? `${C.red}10` : isSelected ? `${typeColor}10` : "#F8FAFC",
                     cursor: revealed ? "default" : "pointer",
                     transition: "all 0.2s",
                     display: "flex", alignItems: "center", gap: 10,
@@ -805,7 +805,7 @@ export default function PatternGame() {
                     border: `2px solid ${showCorrect ? C.green : showWrong ? C.red : isSelected ? typeColor : C.border}`,
                     background: showCorrect ? C.green : showWrong ? C.red : isSelected ? typeColor : "transparent",
                     display: "flex", alignItems: "center", justifyContent: "center",
-                    fontSize: 11, color: "#08080E", fontWeight: "bold",
+                    fontSize: 11, color: "#F3F4F6", fontWeight: "bold",
                     transition: "all 0.2s",
                   }}>
                     {showCorrect ? "✓" : showWrong ? "×" : String.fromCharCode(65 + i)}
@@ -849,7 +849,7 @@ export default function PatternGame() {
               width: "100%",
               background: `linear-gradient(135deg, ${typeColor}, ${typeColor}AA)`,
               border: "none", borderRadius: 14,
-              color: "#07080E", fontWeight: "bold", fontSize: 15,
+              color: "#F3F4F6", fontWeight: "bold", fontSize: 15,
               padding: "16px", cursor: "pointer",
               boxShadow: `0 6px 24px ${typeColor}33`,
               animation: "fadeUp 0.3s ease",

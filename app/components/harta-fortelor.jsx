@@ -1,12 +1,11 @@
-"use client";
 import { useState, useRef, useEffect } from "react";
 
 const DRAGON_ORANGE = "#FF6B2B";
-const DRAGON_DARK = "#1A1A2E";
-const DRAGON_DEEP = "#0D0D1A";
+const DRAGON_DARK = "#F3F4F6";
+const DRAGON_DEEP = "#EEF2F7";
 const DRAGON_GOLD = "#FFB347";
-const DRAGON_RED = "#C0392B";
-const DRAGON_GRAY = "#2A2A4A";
+const DRAGON_RED = "#DC2626";
+const DRAGON_GRAY = "#E5E7EB";
 
 const initialNodes = {
   center: {
@@ -81,25 +80,14 @@ const initialNodes = {
 };
 
 function useWindowSize() {
-  const [size, setSize] = useState({ w: 0, h: 0 });
-
+  const [size, setSize] = useState({ w: window.innerWidth, h: window.innerHeight });
   useEffect(() => {
-    const update = () => {
-      setSize({
-        w: window.innerWidth,
-        h: window.innerHeight,
-      });
-    };
-
-    update(); // inițializare
-
-    window.addEventListener("resize", update);
-    return () => window.removeEventListener("resize", update);
+    const fn = () => setSize({ w: window.innerWidth, h: window.innerHeight });
+    window.addEventListener("resize", fn);
+    return () => window.removeEventListener("resize", fn);
   }, []);
-
   return size;
 }
-
 
 export default function HartaFortelor() {
   const [nodes, setNodes] = useState(initialNodes);
@@ -302,7 +290,7 @@ export default function HartaFortelor() {
               borderRadius: 20,
               padding: "22px 22px 18px",
               marginTop: 16,
-              boxShadow: `0 0 32px ${activeNode.color || DRAGON_ORANGE}33`,
+              boxShadow: `0 8px 24px rgba(15,23,42,0.08)`,
               transition: "all 0.3s",
             }}>
               {/* Node title */}
@@ -312,7 +300,7 @@ export default function HartaFortelor() {
                 <div style={{
                   width: 10, height: 10, borderRadius: "50%",
                   background: activeNode.color || DRAGON_ORANGE,
-                  boxShadow: `0 0 8px ${activeNode.color || DRAGON_ORANGE}`,
+                  boxShadow: `0 8px 24px rgba(15,23,42,0.08)`,
                   flexShrink: 0,
                 }} />
                 <div style={{
@@ -336,7 +324,7 @@ export default function HartaFortelor() {
                 fontSize: 13, color: "#A09ACC", lineHeight: 1.7,
                 marginBottom: 14,
                 padding: "12px 14px",
-                background: "rgba(0,0,0,0.2)",
+                background: "#F8FAFC",
                 borderRadius: 10,
                 borderLeft: `2px solid ${activeNode.color || DRAGON_ORANGE}55`,
               }}>
@@ -354,7 +342,7 @@ export default function HartaFortelor() {
                     {activeNode.hints.map((hint, i) => (
                       <div key={i} style={{
                         fontSize: 11, color: "#9990CC",
-                        background: "rgba(255,255,255,0.04)",
+                        background: "rgba(15,23,42,0.04)",
                         border: "1px solid #3A3A6A",
                         borderRadius: 20,
                         padding: "4px 10px",
@@ -427,12 +415,12 @@ export default function HartaFortelor() {
           {allFilled && (
             <div style={{
               width: "100%", maxWidth: 480,
-              background: `linear-gradient(135deg, #1E2A1E, #0D1A0D)`,
+              background: `linear-gradient(135deg, #F3F4F6 0%, #FFF7ED 100%)`,
               border: `1px solid ${DRAGON_ORANGE}`,
               borderRadius: 16,
               padding: "18px 20px",
               marginTop: 20,
-              boxShadow: `0 0 30px ${DRAGON_ORANGE}44`,
+              boxShadow: `0 8px 24px rgba(15,23,42,0.08)`,
             }}>
               <div style={{
                 fontSize: 11, letterSpacing: 3, textTransform: "uppercase",
@@ -489,7 +477,7 @@ export default function HartaFortelor() {
             borderRadius: 20,
             padding: "28px 24px",
             border: `1px solid ${DRAGON_ORANGE}`,
-            boxShadow: `0 0 40px ${DRAGON_ORANGE}33`,
+            boxShadow: `0 8px 24px rgba(15,23,42,0.08)`,
           }}>
             <div style={{
               fontSize: 11, letterSpacing: 4, color: DRAGON_ORANGE,
@@ -514,7 +502,7 @@ export default function HartaFortelor() {
                 <div style={{
                   fontSize: 13, color: "#C0BAFF",
                   padding: "8px 12px",
-                  background: "rgba(0,0,0,0.2)",
+                  background: "#F8FAFC",
                   borderRadius: 8,
                   borderLeft: `2px solid ${nodes[id].color}`,
                 }}>{nodes[id].value}</div>
@@ -556,7 +544,7 @@ export default function HartaFortelor() {
               }}
               style={{
                 marginTop: 20, width: "100%",
-                background: "rgba(255,255,255,0.05)",
+                background: "rgba(15,23,42,0.05)",
                 border: "1px solid #3A3A6A",
                 borderRadius: 10, color: "#9990CC",
                 fontSize: 13, padding: "10px",

@@ -98,54 +98,678 @@
   .insight-text p:last-child { margin-bottom: 0; }
   .insight-text em { color: var(--orange); font-style: normal; }
   @media (max-width: 560px) { .input-area { grid-template-columns: 1fr; } .grid-2 { grid-template-columns: 1fr; } }
-.lesson-header {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  background: rgba(9, 9, 15, 0.92);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border);
-  padding: 12px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+</style>
+
+<style id="valasi-light-global-theme">
+/* VALASI LIGHT THEME — fundal prietenos, text lizibil */
+:root{
+  --bg:#F3F4F6 !important;
+  --panel:#FFFFFF !important;
+  --border:#E5E7EB !important;
+  --text:#111827 !important;
+  --muted:#5B6472 !important;
+  --white:#111827 !important;
+  --card:#FFFFFF !important;
+  --orange:#FF6B2B !important;
+  --gold:#FFB347 !important;
+  --teal:#14B8A6 !important;
+  --blue:#2563EB !important;
+  --purple:#7C3AED !important;
+  --green:#16A34A !important;
+  --red:#DC2626 !important;
 }
 
-.back-link {
-  color: var(--orange);
-  text-decoration: none;
-  font-size: 13px;
-  font-family: 'DM Mono', monospace;
-  letter-spacing: 1px;
+html, body{
+  background:#F3F4F6 !important;
+  color:#111827 !important;
 }
 
-.back-link:hover {
-  opacity: 0.8;
+body{
+  background-image:
+    radial-gradient(circle at 20% 0%, rgba(255,107,43,0.08), transparent 32%),
+    radial-gradient(circle at 80% 10%, rgba(255,179,71,0.06), transparent 28%) !important;
+  font-family:'DM Sans',sans-serif !important;
+  font-weight:400 !important;
 }
 
-.lesson-logo-img {
-  height: 34px;
-  width: auto;
-  display: block;
+body::before{
+  opacity:0.08 !important;
+}
+
+.top-nav,
+nav{
+  background:rgba(255,255,255,0.94) !important;
+  border-bottom:1px solid #E5E7EB !important;
+  color:#111827 !important;
+}
+
+.nav-label,
+.progress-pct,
+.nav-back,
+.sidebar-num,
+.page-count{
+  color:#64748B !important;
+  opacity:1 !important;
+}
+
+.page,
+.main{
+  color:#111827 !important;
+}
+
+.hero-title,
+.page-title,
+.entry-title{
+  color:#111827 !important;
+  -webkit-text-fill-color:#111827 !important;
+  background:none !important;
+}
+
+.hero-sub,
+.page-desc{
+  color:#475569 !important;
+  font-family:'DM Sans',sans-serif !important;
+}
+
+.card,
+.thinker-card,
+.type-card,
+.state-card,
+.half-card,
+.intel-item,
+.highlight,
+.alert-box,
+.teal-box,
+.quote-card,
+.next-card,
+.completion,
+.tool-wrap,
+.map-wrap,
+.input-col,
+.insight-box,
+.disclaimer,
+.alert,
+.info,
+.help{
+  background:#FFFFFF !important;
+  border-color:#E5E7EB !important;
+  box-shadow:0 8px 30px rgba(15,23,42,0.045) !important;
+}
+
+.prose,
+.type-text,
+.state-text,
+.check-text,
+.half-text,
+.intel-desc,
+.next-desc,
+.disclaimer,
+.entry-body p,
+.help-body,
+.alert,
+.info{
+  color:#374151 !important;
+  font-family:'DM Sans',sans-serif !important;
+  font-weight:400 !important;
+}
+
+.prose{
+  font-size:16.5px !important;
+  line-height:1.85 !important;
+}
+
+.prose.dim,
+.type-text,
+.state-text,
+.half-text,
+.intel-desc,
+.check-text{
+  color:#475569 !important;
+}
+
+.prose strong,
+.type-name,
+.state-name,
+.intel-name,
+.next-title,
+.entry-body strong{
+  color:#111827 !important;
+}
+
+.prose em,
+.entry-body em,
+.entry-title .accent,
+.page-title em{
+  color:#EA580C !important;
+}
+
+.section-label,
+.next-label,
+.page-tag,
+.sidebar-title,
+.help-title,
+.entry-tag{
+  color:#EA580C !important;
+  opacity:1 !important;
+}
+
+.tab-btn{
+  background:#FFFFFF !important;
+  color:#64748B !important;
+  border:1px solid #E5E7EB !important;
+}
+
+.tab-btn.active{
+  background:rgba(255,107,43,0.08) !important;
+  color:#EA580C !important;
+  border-color:#FF6B2B !important;
+}
+
+.tab-btn.done{
+  color:#475569 !important;
+}
+
+.btn-primary,
+.btn-teal,
+.btn-next{
+  color:#FFFFFF !important;
+  font-weight:700 !important;
+}
+
+.btn-ghost{
+  background:#FFFFFF !important;
+  border:1px solid #CBD5E1 !important;
+  color:#334155 !important;
+  font-weight:600 !important;
+}
+
+.btn-ghost:hover{
+  background:#FFF7ED !important;
+  border-color:#FF6B2B !important;
+  color:#EA580C !important;
+}
+
+.quote-card p,
+.quote-block{
+  color:#111827 !important;
+  font-family:'Cormorant Garamond',serif !important;
+}
+
+.quote-line{
+  background:linear-gradient(90deg,#FF6B2B,#FFB347) !important;
+}
+
+.next-card{
+  background:#FFFFFF !important;
+  border:1px solid #E5E7EB !important;
+}
+
+.next-label{
+  color:#EA580C !important;
+  font-weight:700 !important;
+}
+
+.next-title{
+  color:#111827 !important;
+  font-weight:700 !important;
+}
+
+.next-desc{
+  color:#475569 !important;
+  font-family:'DM Sans',sans-serif !important;
+  font-size:15px !important;
+  line-height:1.75 !important;
+}
+
+/* Formular/harta lectia 2 */
+.col-hint,
+.col-input,
+.col-tag,
+.stat-pill,
+.unlock-msg,
+.insight-text p{
+  color:#374151 !important;
+  font-family:'DM Sans',sans-serif !important;
+}
+
+.col-input{
+  background:#F8FAFC !important;
+  border:1px solid #CBD5E1 !important;
+}
+
+.col-input::placeholder{
+  color:#94A3B8 !important;
+}
+
+/* Dicționar */
+.sidebar{
+  background:rgba(255,255,255,0.92) !important;
+  border-right:1px solid #E5E7EB !important;
+}
+
+.sidebar-item{
+  color:#475569 !important;
+  font-size:.86rem !important;
+}
+
+.sidebar-item:hover,
+.sidebar-item.active{
+  color:#EA580C !important;
+  background:#FFF7ED !important;
+}
+
+.entry{
+  border-top-color:#E5E7EB !important;
+}
+
+.entry-num{
+  color:#94A3B8 !important;
+}
+
+.entry-tag{
+  border-color:#FED7AA !important;
+  background:#FFF7ED !important;
+}
+
+.alert{
+  border-left-color:#FF6B2B !important;
+  background:#FFF7ED !important;
+}
+
+.info{
+  border-left-color:#14B8A6 !important;
+  background:#F0FDFA !important;
+}
+
+.help{
+  background:#FFFFFF !important;
+}
+
+.help-number{
+  color:#111827 !important;
+}
+
+/* Mobile readability */
+@media (max-width: 700px){
+  .prose,
+  .entry-body p{
+    font-size:16px !important;
+    line-height:1.8 !important;
+  }
 }
 </style>
+
+
+<style id="valasi-light-exercise-readability-fix">
+/* EXERCIȚII / QUIZ — contrast puternic */
+.tool-wrap,
+#game-wrap{
+  background:#FFFFFF !important;
+  border:1px solid rgba(255,107,43,0.38) !important;
+  box-shadow:0 18px 50px rgba(15,23,42,0.08) !important;
+}
+
+.tool-title,
+.q-level{
+  color:#EA580C !important;
+  opacity:1 !important;
+}
+
+.q-quote{
+  background:#FFF8F1 !important;
+  border:1px solid #FED7AA !important;
+  border-left:3px solid #FF6B2B !important;
+  color:#334155 !important;
+  opacity:1 !important;
+}
+
+.q-quote small,
+.q-exp-source{
+  color:#64748B !important;
+  opacity:1 !important;
+}
+
+.q-scenario{
+  color:#1F2937 !important;
+  opacity:1 !important;
+  font-family:'DM Sans',sans-serif !important;
+  font-size:17px !important;
+  line-height:1.8 !important;
+  font-weight:400 !important;
+}
+
+.q-question{
+  color:#111827 !important;
+  opacity:1 !important;
+  font-size:16px !important;
+  line-height:1.55 !important;
+  font-weight:700 !important;
+}
+
+.q-options{
+  gap:10px !important;
+}
+
+.q-opt{
+  background:#FFFFFF !important;
+  border:1px solid #CBD5E1 !important;
+  box-shadow:0 2px 10px rgba(15,23,42,0.035) !important;
+  opacity:1 !important;
+}
+
+.q-opt:hover{
+  background:#FFF7ED !important;
+  border-color:#FF6B2B !important;
+}
+
+.q-opt.disabled{
+  opacity:1 !important;
+}
+
+.q-letter{
+  background:#F8FAFC !important;
+  border:1px solid #CBD5E1 !important;
+  color:#334155 !important;
+  opacity:1 !important;
+  font-weight:700 !important;
+}
+
+.q-opt-name{
+  color:#111827 !important;
+  opacity:1 !important;
+  font-size:15px !important;
+  font-weight:700 !important;
+}
+
+.q-opt-hint{
+  color:#475569 !important;
+  opacity:1 !important;
+  font-size:13px !important;
+  line-height:1.55 !important;
+  font-style:normal !important;
+  font-weight:400 !important;
+}
+
+.q-explanation{
+  background:#F8FAFC !important;
+  border:1px solid #CBD5E1 !important;
+  color:#1F2937 !important;
+}
+
+.q-exp-label{
+  color:#EA580C !important;
+  opacity:1 !important;
+}
+
+.q-exp-text{
+  color:#334155 !important;
+  opacity:1 !important;
+  font-family:'DM Sans',sans-serif !important;
+  font-size:15px !important;
+  line-height:1.75 !important;
+}
+
+.q-opt.correct{
+  border-color:#22C55E !important;
+  background:#ECFDF5 !important;
+}
+
+.q-opt.correct .q-letter{
+  background:#22C55E !important;
+  border-color:#22C55E !important;
+  color:#FFFFFF !important;
+}
+
+.q-opt.wrong{
+  border-color:#EF4444 !important;
+  background:#FEF2F2 !important;
+}
+
+.q-opt.wrong .q-letter{
+  background:#EF4444 !important;
+  border-color:#EF4444 !important;
+  color:#FFFFFF !important;
+}
+</style>
+
+
+<style id="valasi-map-visibility-fix">
+/* HARTA MENTALĂ — vizibilitate completă */
+
+.map-wrap{
+  background:#FFFFFF !important;
+  border:1px solid #E5E7EB !important;
+  box-shadow:0 10px 35px rgba(15,23,42,0.06) !important;
+}
+
+.map-empty{
+  background:linear-gradient(to bottom, rgba(255,255,255,0.0), rgba(255,255,255,0.0)) !important;
+}
+
+.map-empty p{
+  color:#475569 !important;
+  font-size:15px !important;
+  line-height:1.8 !important;
+  font-style:normal !important;
+}
+
+#map-canvas{
+  background:
+    radial-gradient(circle at center, rgba(255,107,43,0.06), transparent 40%),
+    #FFFFFF !important;
+}
+
+/* INPUTURI */
+.input-col{
+  background:#FFFFFF !important;
+  border:1px solid #CBD5E1 !important;
+}
+
+.input-col.locked{
+  opacity:0.72 !important;
+}
+
+.col-label{
+  color:#EA580C !important;
+}
+
+.col-hint{
+  color:#475569 !important;
+  font-size:14px !important;
+  line-height:1.7 !important;
+  font-style:normal !important;
+}
+
+.col-input{
+  background:#F8FAFC !important;
+  border:1px solid #CBD5E1 !important;
+  color:#111827 !important;
+  font-size:14px !important;
+}
+
+.col-input::placeholder{
+  color:#94A3B8 !important;
+}
+
+/* TAGURI */
+.col-tag{
+  font-weight:600 !important;
+  opacity:1 !important;
+}
+
+/* STATS */
+.stat-pill{
+  background:#FFFFFF !important;
+  border:1px solid #CBD5E1 !important;
+  color:#334155 !important;
+}
+
+/* DISCLAIMER */
+.disclaimer{
+  background:#FFFFFF !important;
+  border:1px solid #E5E7EB !important;
+  color:#475569 !important;
+  font-size:13px !important;
+  line-height:1.8 !important;
+  font-style:normal !important;
+}
+
+/* INSIGHT */
+.insight-box{
+  background:#FFFFFF !important;
+  border:1px solid rgba(255,107,43,0.35) !important;
+}
+
+.insight-label{
+  color:#EA580C !important;
+}
+
+.insight-text p{
+  color:#334155 !important;
+  font-size:16px !important;
+  line-height:1.85 !important;
+  font-style:normal !important;
+}
+
+/* Force all faded text visible */
+.map-wrap *,
+.input-area *,
+.insight-box *{
+  opacity:1 !important;
+}
+</style>
+
+
+<style id="valasi-header-and-links-fix">
+/* HEADER VALASI + LINKURI */
+.top-nav{
+  min-height:64px !important;
+  padding:10px 20px !important;
+  display:grid !important;
+  grid-template-columns:auto minmax(80px,1fr) auto auto !important;
+  align-items:center !important;
+  gap:14px !important;
+  background:rgba(255,255,255,0.94) !important;
+  border-bottom:1px solid #E5E7EB !important;
+  backdrop-filter:blur(14px) !important;
+}
+
+.valasi-logo{
+  display:inline-flex !important;
+  align-items:center !important;
+  gap:10px !important;
+  color:#111827 !important;
+  text-decoration:none !important;
+  white-space:nowrap !important;
+}
+
+.valasi-mark{
+  width:34px !important;
+  height:34px !important;
+  border-radius:50% !important;
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  background:linear-gradient(135deg,#FF6B2B,#FFB347) !important;
+  color:#FFFFFF !important;
+  font-family:'Cormorant Garamond',serif !important;
+  font-size:20px !important;
+  font-weight:600 !important;
+  line-height:1 !important;
+  box-shadow:0 8px 18px rgba(255,107,43,0.18) !important;
+}
+
+.valasi-logo-text{
+  display:flex !important;
+  flex-direction:column !important;
+  gap:1px !important;
+  line-height:1.05 !important;
+}
+
+.valasi-logo-small{
+  font-family:'DM Mono',monospace !important;
+  font-size:9px !important;
+  letter-spacing:0.16em !important;
+  text-transform:uppercase !important;
+  color:#64748B !important;
+}
+
+.valasi-logo-main{
+  font-family:'Cormorant Garamond',serif !important;
+  font-size:19px !important;
+  font-weight:600 !important;
+  letter-spacing:0.01em !important;
+  color:#111827 !important;
+}
+
+.back-module{
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  padding:9px 13px !important;
+  border:1px solid #E5E7EB !important;
+  border-radius:999px !important;
+  background:#FFFFFF !important;
+  color:#334155 !important;
+  text-decoration:none !important;
+  font-family:'DM Sans',sans-serif !important;
+  font-size:13px !important;
+  font-weight:700 !important;
+  white-space:nowrap !important;
+  box-shadow:0 4px 14px rgba(15,23,42,0.04) !important;
+}
+
+.back-module:hover{
+  border-color:#FF6B2B !important;
+  background:#FFF7ED !important;
+  color:#EA580C !important;
+}
+
+.top-nav .progress-bar{
+  min-width:80px !important;
+}
+
+.progress-pct{
+  color:#64748B !important;
+  font-weight:700 !important;
+}
+
+@media (max-width:720px){
+  .top-nav{
+    grid-template-columns:1fr auto !important;
+    gap:10px !important;
+  }
+  .top-nav .progress-bar,
+  .progress-pct{
+    display:none !important;
+  }
+  .valasi-logo-small{
+    display:none !important;
+  }
+  .valasi-logo-main{
+    font-size:18px !important;
+  }
+  .back-module{
+    padding:8px 11px !important;
+    font-size:12px !important;
+  }
+}
+</style>
+
 </head>
 <body>
-<div class="lesson-header">
-  <a class="back-link" href="https://valasi.aydasist.ro/module/modul-0/">
-    ← Înapoi la Modul 0
-  </a>
 
-  <img
-    class="lesson-logo-img"
-    src="/images/logo-valasi.png"
-    alt="Școala Valasi"
-  >
-</div>
 <div class="top-nav">
-  <span class="nav-label">Școala Valasi · Modul 0</span>
+  <a href="https://valasi.aydasist.ro/" class="valasi-logo" aria-label="Școala Valasi">
+    <span class="valasi-mark">V</span>
+    <span class="valasi-logo-text">
+      <span class="valasi-logo-small">Școala</span>
+      <span class="valasi-logo-main">Valasi</span>
+    </span>
+  </a>
   <div class="progress-bar"><div class="progress-fill" id="pfill"></div></div>
   <span class="progress-pct" id="ppct">0%</span>
+  <a href="https://valasi.aydasist.ro/module/modul-0/" class="back-module">← Înapoi la Modul 0</a>
 </div>
 
 <div class="page">
@@ -351,13 +975,7 @@
       <div class="next-title">Cum recunoști un sistem AI</div>
       <div class="next-desc">ANI, AGI, ASI. Ce știm, ce nu știm și de ce datele tale personale sunt mai valoroase decât crezi.</div>
     </div>
-    <a
-  href="/lectii/modul0-lectia3.html"
-  class="btn-teal"
-  style="display:block;text-align:center;text-decoration:none;"
->
-  Mergi la Lecția 3 →
-</a>
+    <button class="btn-teal" onclick="markRead(4); window.location.href='modul0-lectia3.html'">Mergi la Lecția 3 →</button>
     <div class="disclaimer">Conținutul Școlii Valasi este creat în scop educațional și de autocunoaștere. Nu reprezintă consiliere psihologică, medicală, juridică sau financiară profesională. Folosește ce rezonează cu tine — lasă ce nu rezonează. · Young Dragons Academy · Școala Valasi · Construit împreună cu Claude · Anthropic</div>
   </div>
 

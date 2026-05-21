@@ -1,19 +1,19 @@
 import { useState, useEffect } from "react";
 
 const C = {
-  bg: "#070B14",
-  panel: "#0F1623",
-  panelBorder: "#1A2535",
-  text: "#E2E8F0",
-  muted: "#4A5568",
-  faint: "#0D1420",
-  intrari: "#3B82F6",
-  proces: "#8B5CF6",
-  declarate: "#10B981",
-  reale: "#F59E0B",
-  accent: "#F59E0B",
-  danger: "#EF4444",
-  good: "#10B981",
+  bg: "#F3F4F6",
+  panel: "#FFFFFF",
+  panelBorder: "#E5E7EB",
+  text: "#111827",
+  muted: "#475569",
+  faint: "#F8FAFC",
+  intrari: "#2563EB",
+  proces: "#7C3AED",
+  declarate: "#16A34A",
+  reale: "#D97706",
+  accent: "#FF6B2B",
+  danger: "#DC2626",
+  good: "#16A34A",
 };
 
 // ─── PRESET SYSTEMS ───────────────────────────────────────────────────────────
@@ -350,7 +350,7 @@ export default function SimulatorSisteme() {
           background: `linear-gradient(135deg, #fff 0%, ${C.accent} 100%)`,
           WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
         }}>Simulatorul de Sisteme</h1>
-        <p style={{ fontSize: 14, color: "#64748B", maxWidth: 400, margin: "0 auto", lineHeight: 1.7 }}>
+        <p style={{ fontSize: 14, color: "#475569", maxWidth: 400, margin: "0 auto", lineHeight: 1.7 }}>
           Orice sistem face compromisuri. Dar ce se întâmplă dacă schimbi un element?
           Experimentează și vezi cum se propagă efectele.
         </p>
@@ -406,7 +406,7 @@ export default function SimulatorSisteme() {
         </div>
       </div>
 
-      <div style={{ marginTop: 40, fontSize: 9, color: "#1E293B", letterSpacing: 3, textTransform: "uppercase", fontFamily: "monospace" }}>
+      <div style={{ marginTop: 40, fontSize: 9, color: "#F8FAFC", letterSpacing: 3, textTransform: "uppercase", fontFamily: "monospace" }}>
         Structural Intelligence · Simulatorul de Sisteme
       </div>
     </div>
@@ -533,14 +533,14 @@ export default function SimulatorSisteme() {
             [...preset.elements.intrari, ...preset.elements.proces].forEach(el => { init[el.id] = el.value; });
             setSliderVals(init); setPrevGap(null);
           }} style={{
-            flex: 1, background: "rgba(255,255,255,0.04)", border: "1px solid #1E293B",
+            flex: 1, background: "rgba(15,23,42,0.04)", border: "1px solid #F8FAFC",
             borderRadius: 10, color: C.muted, fontSize: 13, padding: "10px", cursor: "pointer",
           }}>↺ Reset</button>
           <button onClick={() => { setMode("custom"); setSelectedPreset(null); }} style={{
             flex: 2,
             background: `linear-gradient(135deg, ${C.accent}, #F97316)`,
             border: "none", borderRadius: 10,
-            color: "#0A0E1A", fontWeight: "bold", fontSize: 13,
+            color: "#F3F4F6", fontWeight: "bold", fontSize: 13,
             padding: "10px 16px", cursor: "pointer",
           }}>Simulează sistemul meu →</button>
         </div>
@@ -584,7 +584,7 @@ export default function SimulatorSisteme() {
                   placeholder={f.placeholder}
                   style={{
                     width: "100%", minHeight: 70,
-                    background: "rgba(0,0,0,0.3)", border: `1px solid ${C.accent}33`,
+                    background: "#F8FAFC", border: `1px solid ${C.accent}33`,
                     borderRadius: 10, color: C.text, fontSize: 13,
                     padding: "10px 12px", resize: "vertical",
                     fontFamily: "Georgia, serif", outline: "none", boxSizing: "border-box", lineHeight: 1.6,
@@ -598,9 +598,9 @@ export default function SimulatorSisteme() {
               disabled={!customTexts.sistem.trim() || !customTexts.declarat.trim() || !customTexts.real.trim()}
               style={{
                 background: customTexts.sistem && customTexts.declarat && customTexts.real
-                  ? `linear-gradient(135deg, ${C.accent}, #F97316)` : "#1E293B",
+                  ? `linear-gradient(135deg, ${C.accent}, #F97316)` : "#F8FAFC",
                 border: "none", borderRadius: 12,
-                color: customTexts.sistem && customTexts.declarat && customTexts.real ? "#0A0E1A" : C.muted,
+                color: customTexts.sistem && customTexts.declarat && customTexts.real ? "#F3F4F6" : C.muted,
                 fontWeight: "bold", fontSize: 15,
                 padding: "14px", cursor: "pointer",
                 transition: "all 0.3s",
@@ -624,7 +624,7 @@ export default function SimulatorSisteme() {
                 <div style={{ fontSize: 14, color: "#fff", fontWeight: "600" }}>{customTexts.sistem}</div>
               </div>
               <button onClick={() => setCustomPhase("setup")} style={{
-                background: "none", border: "1px solid #1E293B", borderRadius: 8,
+                background: "none", border: "1px solid #F8FAFC", borderRadius: 8,
                 color: C.muted, fontSize: 11, padding: "6px 12px", cursor: "pointer",
               }}>Editează</button>
             </div>
@@ -678,14 +678,14 @@ export default function SimulatorSisteme() {
             <button onClick={() => {
               setCustomVals({ resurse: 50, calitate_proces: 50, transparenta: 50, flexibilitate: 50, presiune: 50 });
             }} style={{
-              background: "rgba(255,255,255,0.04)", border: "1px solid #1E293B",
+              background: "rgba(15,23,42,0.04)", border: "1px solid #F8FAFC",
               borderRadius: 10, color: C.muted, fontSize: 13, padding: "10px", cursor: "pointer",
             }}>↺ Reset slidere</button>
           </div>
         )}
       </div>
 
-      <div style={{ marginTop: 40, fontSize: 9, color: "#1E293B", letterSpacing: 3, textTransform: "uppercase", fontFamily: "monospace" }}>
+      <div style={{ marginTop: 40, fontSize: 9, color: "#F8FAFC", letterSpacing: 3, textTransform: "uppercase", fontFamily: "monospace" }}>
         Structural Intelligence · Simulatorul de Sisteme
       </div>
     </div>

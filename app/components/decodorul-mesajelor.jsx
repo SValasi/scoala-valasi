@@ -1,21 +1,21 @@
 import { useState, useEffect, useRef } from "react";
 
 const C = {
-  bg: "#08090F",
-  bgGlow: "#0C1020",
-  panel: "#0F1318",
-  border: "#1A2030",
-  text: "#DCE4F0",
-  muted: "#4A5568",
-  faint: "#0D1118",
-  red: "#EF4444",
-  orange: "#F97316",
+  bg: "#F3F4F6",
+  bgGlow: "#FFF7ED",
+  panel: "#FFFFFF",
+  border: "#E5E7EB",
+  text: "#111827",
+  muted: "#475569",
+  faint: "#F8FAFC",
+  red: "#DC2626",
+  orange: "#FF6B2B",
   yellow: "#EAB308",
-  green: "#22C55E",
-  blue: "#3B82F6",
-  purple: "#A855F7",
-  cyan: "#06B6D4",
-  accent: "#F97316",
+  green: "#16A34A",
+  blue: "#2563EB",
+  purple: "#7C3AED",
+  cyan: "#0891B2",
+  accent: "#FF6B2B",
 };
 
 const EMOTIONS = {
@@ -67,7 +67,7 @@ function TypewriterText({ text, speed = 18, onDone }) {
     return () => clearInterval(interval);
   }, [text]);
 
-  return <span>{displayed}{!done && <span style={{ opacity: 0.5 }}>▌</span>}</span>;
+  return <span>{displayed}{!done && <span style={{ opacity: 0.82 }}>▌</span>}</span>;
 }
 
 function PulsingDot({ color }) {
@@ -75,7 +75,7 @@ function PulsingDot({ color }) {
     <span style={{
       display: "inline-block", width: 8, height: 8, borderRadius: "50%",
       background: color, marginRight: 8, flexShrink: 0,
-      boxShadow: `0 0 6px ${color}`,
+      boxShadow: `0 8px 24px rgba(15,23,42,0.08)`,
       animation: "pulse 1.5s ease-in-out infinite",
     }} />
   );
@@ -93,7 +93,7 @@ function ScoreBar({ value, color, label }) {
           height: "100%", borderRadius: 2, width: `${value}%`,
           background: `linear-gradient(90deg, ${color}88, ${color})`,
           transition: "width 0.8s cubic-bezier(0.4,0,0.2,1)",
-          boxShadow: `0 0 8px ${color}55`,
+          boxShadow: `0 8px 24px rgba(15,23,42,0.08)`,
         }} />
       </div>
     </div>
@@ -184,7 +184,7 @@ Fii direct, nu moralizator. Scopul nu e să judeci sursa, ci să explici mecanis
       padding: "28px 16px 80px",
     }}>
       <style>{`
-        @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.6;transform:scale(0.85)} }
+        @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity: 0.88;transform:scale(0.85)} }
         @keyframes fadeSlideIn { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
         @keyframes scanline { 0%{transform:translateY(-100%)} 100%{transform:translateY(100vh)} }
         @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
@@ -359,7 +359,7 @@ Fii direct, nu moralizator. Scopul nu e să judeci sursa, ci să explici mecanis
               border: `1px solid ${C.accent}44`,
               borderRadius: 18, padding: "20px 22px",
               marginBottom: 12,
-              boxShadow: `0 0 40px ${C.accent}11`,
+              boxShadow: `0 8px 24px rgba(15,23,42,0.08)`,
             }}>
               <div style={{
                 fontSize: 9, letterSpacing: 3, color: C.accent,
@@ -383,7 +383,7 @@ Fii direct, nu moralizator. Scopul nu e să judeci sursa, ci să explici mecanis
                 <div style={{
                   background: C.panel, border: `1px solid ${emotionData?.color}44`,
                   borderRadius: 16, padding: "16px 16px",
-                  boxShadow: `0 0 20px ${emotionData?.color}11`,
+                  boxShadow: `0 8px 24px rgba(15,23,42,0.08)`,
                 }}>
                   <div style={{ fontSize: 9, letterSpacing: 2, color: C.muted, textTransform: "uppercase", fontFamily: "monospace", marginBottom: 10 }}>Emoția activată</div>
                   <div style={{ fontSize: 28, marginBottom: 6 }}>{emotionData?.emoji}</div>
@@ -400,7 +400,7 @@ Fii direct, nu moralizator. Scopul nu e să judeci sursa, ci să explici mecanis
                 <div style={{
                   background: C.panel, border: `1px solid ${honestyColor}44`,
                   borderRadius: 16, padding: "16px 16px",
-                  boxShadow: `0 0 20px ${honestyColor}11`,
+                  boxShadow: `0 8px 24px rgba(15,23,42,0.08)`,
                 }}>
                   <div style={{ fontSize: 9, letterSpacing: 2, color: C.muted, textTransform: "uppercase", fontFamily: "monospace", marginBottom: 10 }}>Scor de onestitate</div>
                   <div style={{
@@ -506,7 +506,7 @@ Fii direct, nu moralizator. Scopul nu e să judeci sursa, ci să explici mecanis
                 border: `1px solid ${C.accent}55`,
                 borderRadius: 18, padding: "22px 22px",
                 marginBottom: 12,
-                boxShadow: `0 0 30px ${C.accent}15`,
+                boxShadow: `0 8px 24px rgba(15,23,42,0.08)`,
                 animation: "fadeSlideIn 0.4s ease",
               }}>
                 <div style={{ fontSize: 9, letterSpacing: 3, color: C.accent, textTransform: "uppercase", fontFamily: "monospace", marginBottom: 12 }}>
@@ -543,8 +543,8 @@ Fii direct, nu moralizator. Scopul nu e să judeci sursa, ci să explici mecanis
                 <button
                   onClick={() => { setPhase("idle"); setInput(""); setResult(null); setSectionsReady([]); setActiveSection(0); }}
                   style={{
-                    flex: 1, background: "rgba(255,255,255,0.03)",
-                    border: "1px solid #1E293B", borderRadius: 12,
+                    flex: 1, background: "rgba(15,23,42,0.03)",
+                    border: "1px solid #F8FAFC", borderRadius: 12,
                     color: C.muted, fontSize: 13, padding: "12px",
                     cursor: "pointer", fontFamily: "monospace",
                   }}>← Analizează alt mesaj</button>
@@ -574,7 +574,7 @@ Fii direct, nu moralizator. Scopul nu e să judeci sursa, ci să explici mecanis
 
         <div style={{
           marginTop: 48, textAlign: "center",
-          fontSize: 9, color: "#1A2030",
+          fontSize: 9, color: "#E5E7EB",
           letterSpacing: 3, textTransform: "uppercase", fontFamily: "monospace",
         }}>
           Structural Intelligence · Pattern Recognition · 3C

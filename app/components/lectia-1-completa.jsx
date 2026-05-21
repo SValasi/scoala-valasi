@@ -1,17 +1,17 @@
 import { useState, useRef, useEffect } from "react";
 
 const C = {
-  bg: "#09090F",
-  bgMid: "#0D0D18",
-  panel: "#111320",
-  border: "#1C1F35",
-  text: "#E2E0F0",
-  muted: "#5A5880",
-  faint: "#0A0A14",
+  bg: "#F3F4F6",
+  bgMid: "#F8FAFC",
+  panel: "#FFFFFF",
+  border: "#E5E7EB",
+  text: "#111827",
+  muted: "#475569",
+  faint: "#F8FAFC",
   orange: "#FF6B2B",
   gold: "#FFB347",
-  red: "#C0392B",
-  teal: "#4ECDC4",
+  red: "#DC2626",
+  teal: "#14B8A6",
   yellow: "#EAB308",
   accent: "#FF6B2B",
 };
@@ -68,7 +68,7 @@ function HartaFortelor() {
             {satIds.map(id => {
               const n = nodes[id];
               const filled = n.value.trim() !== "";
-              return <line key={id} x1={cx} y1={cy} x2={px(n.x)} y2={py(n.y)} stroke={filled ? n.color : "#2A2A4A"} strokeWidth={filled ? 2 : 1} strokeDasharray={filled ? "none" : "4,3"} opacity={filled ? 0.7 : 0.35} style={{ transition: "all 0.4s" }} />;
+              return <line key={id} x1={cx} y1={cy} x2={px(n.x)} y2={py(n.y)} stroke={filled ? n.color : "#E5E7EB"} strokeWidth={filled ? 2 : 1} strokeDasharray={filled ? "none" : "4,3"} opacity={filled ? 0.7 : 0.35} style={{ transition: "all 0.4s" }} />;
             })}
             <g style={{ cursor: "pointer" }} onClick={() => setActive(active === "center" ? null : "center")}>
               <circle cx={cx} cy={cy} r={svgW < 380 ? 34 : 44} fill={C.panel} stroke={C.orange} strokeWidth={active === "center" ? 3 : 1.5} filter="url(#hf-glow)" />
@@ -80,7 +80,7 @@ function HartaFortelor() {
               ) : (
                 <>
                   <text x={cx} y={cy - 4} textAnchor="middle" fill="#C0BAFF" fontSize={svgW < 380 ? 9 : 11} fontWeight="bold">Evenimentul</text>
-                  <text x={cx} y={cy + 10} textAnchor="middle" fill="#5A5880" fontSize={8} fontStyle="italic">atinge</text>
+                  <text x={cx} y={cy + 10} textAnchor="middle" fill="#475569" fontSize={8} fontStyle="italic">atinge</text>
                 </>
               )}
             </g>
@@ -101,7 +101,7 @@ function HartaFortelor() {
                   ) : (
                     <>
                       <text x={sx} y={sy - 3} textAnchor="middle" fill={n.color} fontSize={svgW < 380 ? 8 : 10} fontWeight="600">{n.label}</text>
-                      <text x={sx} y={sy + 9} textAnchor="middle" fill="#5A5880" fontSize={7} fontStyle="italic">atinge</text>
+                      <text x={sx} y={sy + 9} textAnchor="middle" fill="#475569" fontSize={7} fontStyle="italic">atinge</text>
                     </>
                   )}
                 </g>
@@ -110,45 +110,45 @@ function HartaFortelor() {
           </svg>
 
           {activeNode && (
-            <div style={{ background: `linear-gradient(160deg, ${C.panel}, #12102A)`, border: `1px solid ${activeNode.color || C.orange}`, borderRadius: 16, padding: "20px", marginTop: 16, boxShadow: `0 0 24px ${activeNode.color || C.orange}22` }}>
+            <div style={{ background: `linear-gradient(160deg, ${C.panel}, #12102A)`, border: `1px solid ${activeNode.color || C.orange}`, borderRadius: 16, padding: "20px", marginTop: 16, boxShadow: `0 8px 24px rgba(15,23,42,0.08)` }}>
               <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
-                <div style={{ width: 8, height: 8, borderRadius: "50%", background: activeNode.color || C.orange, boxShadow: `0 0 6px ${activeNode.color || C.orange}`, flexShrink: 0 }} />
+                <div style={{ width: 8, height: 8, borderRadius: "50%", background: activeNode.color || C.orange, boxShadow: `0 8px 24px rgba(15,23,42,0.08)`, flexShrink: 0 }} />
                 <div style={{ fontSize: 11, letterSpacing: 2, textTransform: "uppercase", color: activeNode.color || C.orange, fontFamily: "monospace" }}>{activeNode.label}</div>
               </div>
               <div style={{ fontSize: 15, color: "#fff", fontWeight: "600", marginBottom: 8 }}>{activeNode.question}</div>
-              <div style={{ fontSize: 12, color: "#9088CC", lineHeight: 1.7, marginBottom: 12, padding: "10px 12px", background: "rgba(0,0,0,0.2)", borderRadius: 8, borderLeft: `2px solid ${activeNode.color || C.orange}44` }}>{activeNode.explanation}</div>
+              <div style={{ fontSize: 12, color: "#9088CC", lineHeight: 1.7, marginBottom: 12, padding: "10px 12px", background: "#F8FAFC", borderRadius: 8, borderLeft: `2px solid ${activeNode.color || C.orange}44` }}>{activeNode.explanation}</div>
               <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 12 }}>
-                {activeNode.hints?.map((h, i) => <div key={i} style={{ fontSize: 10, color: "#8080AA", background: "rgba(255,255,255,0.03)", border: "1px solid #2A2A4A", borderRadius: 20, padding: "3px 10px" }}>{h}</div>)}
+                {activeNode.hints?.map((h, i) => <div key={i} style={{ fontSize: 10, color: "#8080AA", background: "rgba(15,23,42,0.03)", border: "1px solid #E5E7EB", borderRadius: 20, padding: "3px 10px" }}>{h}</div>)}
               </div>
-              <textarea autoFocus value={activeNode.value} onChange={e => update(active, e.target.value)} placeholder={activeNode.placeholder} style={{ width: "100%", minHeight: 80, background: "rgba(0,0,0,0.3)", border: `1px solid ${activeNode.color || C.orange}44`, borderRadius: 10, color: C.text, fontSize: 13, padding: "10px 12px", resize: "vertical", fontFamily: "Georgia, serif", outline: "none", boxSizing: "border-box", lineHeight: 1.6 }} />
-              <button onClick={() => setActive(null)} style={{ marginTop: 10, background: `linear-gradient(135deg, ${activeNode.color || C.orange}, ${C.gold})`, border: "none", borderRadius: 8, color: "#0A0A14", fontWeight: "bold", fontSize: 12, padding: "8px 20px", cursor: "pointer" }}>Salvează ✓</button>
+              <textarea autoFocus value={activeNode.value} onChange={e => update(active, e.target.value)} placeholder={activeNode.placeholder} style={{ width: "100%", minHeight: 80, background: "#F8FAFC", border: `1px solid ${activeNode.color || C.orange}44`, borderRadius: 10, color: C.text, fontSize: 13, padding: "10px 12px", resize: "vertical", fontFamily: "Georgia, serif", outline: "none", boxSizing: "border-box", lineHeight: 1.6 }} />
+              <button onClick={() => setActive(null)} style={{ marginTop: 10, background: `linear-gradient(135deg, ${activeNode.color || C.orange}, ${C.gold})`, border: "none", borderRadius: 8, color: "#F8FAFC", fontWeight: "bold", fontSize: 12, padding: "8px 20px", cursor: "pointer" }}>Salvează ✓</button>
             </div>
           )}
 
           <div style={{ display: "flex", gap: 6, marginTop: 16, alignItems: "center", justifyContent: "center" }}>
-            {["center", ...satIds].map(id => <div key={id} style={{ width: 8, height: 8, borderRadius: "50%", background: nodes[id].value.trim() ? (nodes[id].color || C.orange) : "#2A2A4A", transition: "background 0.3s" }} />)}
-            <span style={{ fontSize: 10, color: "#5A5880", marginLeft: 4, fontFamily: "monospace" }}>{["center", ...satIds].filter(id => nodes[id].value.trim()).length}/5</span>
+            {["center", ...satIds].map(id => <div key={id} style={{ width: 8, height: 8, borderRadius: "50%", background: nodes[id].value.trim() ? (nodes[id].color || C.orange) : "#E5E7EB", transition: "background 0.3s" }} />)}
+            <span style={{ fontSize: 10, color: "#475569", marginLeft: 4, fontFamily: "monospace" }}>{["center", ...satIds].filter(id => nodes[id].value.trim()).length}/5</span>
           </div>
 
           {allFilled && (
-            <div style={{ background: "linear-gradient(135deg, #0F1A0F, #080E08)", border: `1px solid ${C.orange}`, borderRadius: 14, padding: "18px", marginTop: 16, boxShadow: `0 0 24px ${C.orange}22` }}>
+            <div style={{ background: "linear-gradient(135deg, #F3F4F6 0%, #FFF7ED 100%)", border: `1px solid ${C.orange}`, borderRadius: 14, padding: "18px", marginTop: 16, boxShadow: `0 8px 24px rgba(15,23,42,0.08)` }}>
               <div style={{ fontSize: 10, letterSpacing: 3, color: C.orange, textTransform: "uppercase", fontFamily: "monospace", marginBottom: 8 }}>Pasul 3 — Punctul de intervenție</div>
               <p style={{ fontSize: 12, color: "#9088CC", margin: "0 0 10px", fontStyle: "italic" }}>Care element, dacă era diferit, schimba tot rezultatul? Formulează concluzia:</p>
-              <textarea value={intervention} onChange={e => setIntervention(e.target.value)} placeholder="Data viitoare, intervin la [punct structural] prin [acțiune concretă]..." style={{ width: "100%", minHeight: 65, background: "rgba(0,0,0,0.3)", border: `1px solid ${C.orange}44`, borderRadius: 8, color: C.text, fontSize: 13, padding: "10px 12px", resize: "vertical", fontFamily: "Georgia, serif", outline: "none", boxSizing: "border-box", lineHeight: 1.6 }} />
-              {intervention.trim() && <button onClick={() => setPhase("result")} style={{ marginTop: 10, background: `linear-gradient(135deg, ${C.orange}, ${C.gold})`, border: "none", borderRadius: 8, color: "#0A0A14", fontWeight: "bold", fontSize: 13, padding: "10px 24px", cursor: "pointer", boxShadow: `0 4px 16px ${C.orange}44` }}>Vezi analiza →</button>}
+              <textarea value={intervention} onChange={e => setIntervention(e.target.value)} placeholder="Data viitoare, intervin la [punct structural] prin [acțiune concretă]..." style={{ width: "100%", minHeight: 65, background: "#F8FAFC", border: `1px solid ${C.orange}44`, borderRadius: 8, color: C.text, fontSize: 13, padding: "10px 12px", resize: "vertical", fontFamily: "Georgia, serif", outline: "none", boxSizing: "border-box", lineHeight: 1.6 }} />
+              {intervention.trim() && <button onClick={() => setPhase("result")} style={{ marginTop: 10, background: `linear-gradient(135deg, ${C.orange}, ${C.gold})`, border: "none", borderRadius: 8, color: "#F8FAFC", fontWeight: "bold", fontSize: 13, padding: "10px 24px", cursor: "pointer", boxShadow: `0 4px 16px ${C.orange}44` }}>Vezi analiza →</button>}
             </div>
           )}
         </>
       )}
 
       {phase === "result" && (
-        <div style={{ background: `linear-gradient(160deg, ${C.panel}, #12102A)`, borderRadius: 16, padding: "24px", border: `1px solid ${C.orange}`, boxShadow: `0 0 32px ${C.orange}22` }}>
+        <div style={{ background: `linear-gradient(160deg, ${C.panel}, #12102A)`, borderRadius: 16, padding: "24px", border: `1px solid ${C.orange}`, boxShadow: `0 8px 24px rgba(15,23,42,0.08)` }}>
           <div style={{ fontSize: 10, letterSpacing: 4, color: C.orange, textTransform: "uppercase", fontFamily: "monospace", marginBottom: 16 }}>Analiza ta structurală</div>
           <div style={{ fontSize: 14, fontWeight: "bold", color: "#fff", marginBottom: 16, padding: "10px 14px", background: "rgba(255,107,43,0.1)", borderRadius: 8, borderLeft: `3px solid ${C.orange}` }}>"{nodes.center.value}"</div>
           {satIds.map(id => (
             <div key={id} style={{ marginBottom: 12 }}>
               <div style={{ fontSize: 9, letterSpacing: 2, textTransform: "uppercase", color: nodes[id].color, fontFamily: "monospace", marginBottom: 3 }}>{nodes[id].label}</div>
-              <div style={{ fontSize: 12, color: "#A0A0CC", padding: "8px 10px", background: "rgba(0,0,0,0.2)", borderRadius: 6, borderLeft: `2px solid ${nodes[id].color}` }}>{nodes[id].value}</div>
+              <div style={{ fontSize: 12, color: "#A0A0CC", padding: "8px 10px", background: "#F8FAFC", borderRadius: 6, borderLeft: `2px solid ${nodes[id].color}` }}>{nodes[id].value}</div>
             </div>
           ))}
           <div style={{ marginTop: 16, padding: "14px 16px", background: "rgba(255,107,43,0.08)", borderRadius: 10, border: `1px solid ${C.gold}33` }}>
@@ -158,7 +158,7 @@ function HartaFortelor() {
           <div style={{ marginTop: 14, padding: "12px 14px", background: `${C.teal}08`, borderRadius: 8, border: `1px solid ${C.teal}22`, fontSize: 12, color: "#8080AA", fontStyle: "italic", lineHeight: 1.7 }}>
             Tocmai ai folosit Inteligența Structurală. Nu ai căutat un vinovat — ai găsit mecanismul.
           </div>
-          <button onClick={() => { setNodes(initialNodes); setIntervention(""); setPhase("map"); setActive(null); }} style={{ marginTop: 14, width: "100%", background: "rgba(255,255,255,0.04)", border: "1px solid #2A2A4A", borderRadius: 8, color: "#5A5880", fontSize: 12, padding: "10px", cursor: "pointer" }}>← Analizează alt eveniment</button>
+          <button onClick={() => { setNodes(initialNodes); setIntervention(""); setPhase("map"); setActive(null); }} style={{ marginTop: 14, width: "100%", background: "rgba(15,23,42,0.04)", border: "1px solid #E5E7EB", borderRadius: 8, color: "#475569", fontSize: 12, padding: "10px", cursor: "pointer" }}>← Analizează alt eveniment</button>
         </div>
       )}
     </div>
@@ -197,7 +197,7 @@ export default function Lectia1() {
     }}>
       <style>{`
         @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
-        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
+        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity: 0.82} }
         * { box-sizing: border-box; }
       `}</style>
 
@@ -260,7 +260,7 @@ export default function Lectia1() {
                 fontFamily: "monospace", letterSpacing: 1, textTransform: "uppercase",
                 border: isActive ? `1px solid ${C.orange}` : `1px solid ${C.border}`,
                 background: isActive ? `${C.orange}15` : "transparent",
-                color: isActive ? C.orange : isRead ? C.muted : "#3A3A5A",
+                color: isActive ? C.orange : isRead ? C.muted : "#475569",
                 transition: "all 0.2s",
               }}>
                 {isRead && !isActive ? "✓ " : ""}{s.label}
@@ -273,7 +273,7 @@ export default function Lectia1() {
         {activeSection === 0 && (
           <div style={{ animation: "fadeUp 0.4s ease" }}>
             <div style={{
-              background: `linear-gradient(135deg, ${C.panel}, #0E0E20)`,
+              background: `linear-gradient(135deg, #F3F4F6 0%, #FFF7ED 100%)`,
               border: `1px solid ${C.border}`,
               borderRadius: 20, padding: "28px 28px",
               marginBottom: 20,
@@ -303,7 +303,7 @@ export default function Lectia1() {
 
             <button onClick={() => markRead(0)} style={{
               width: "100%", background: `linear-gradient(135deg, ${C.orange}, ${C.gold})`,
-              border: "none", borderRadius: 14, color: "#09090F",
+              border: "none", borderRadius: 14, color: "#F3F4F6",
               fontWeight: "bold", fontSize: 15, padding: "16px",
               cursor: "pointer", boxShadow: `0 6px 24px ${C.orange}44`,
               fontFamily: "Georgia, serif",
@@ -345,7 +345,7 @@ export default function Lectia1() {
               </div>
             </div>
 
-            <button onClick={() => markRead(1)} style={{ width: "100%", background: `linear-gradient(135deg, ${C.orange}, ${C.gold})`, border: "none", borderRadius: 14, color: "#09090F", fontWeight: "bold", fontSize: 15, padding: "16px", cursor: "pointer", boxShadow: `0 6px 24px ${C.orange}44` }}>
+            <button onClick={() => markRead(1)} style={{ width: "100%", background: `linear-gradient(135deg, ${C.orange}, ${C.gold})`, border: "none", borderRadius: 14, color: "#F3F4F6", fontWeight: "bold", fontSize: 15, padding: "16px", cursor: "pointer", boxShadow: `0 6px 24px ${C.orange}44` }}>
               Am înțeles — arată-mi exemplul →
             </button>
           </div>
@@ -383,7 +383,7 @@ export default function Lectia1() {
               <div style={{ fontSize: 13, color: "#9090AA", lineHeight: 1.7 }}>Studentul B nu e mai deștept. Are un instrument diferit în cap.</div>
             </div>
 
-            <button onClick={() => markRead(2)} style={{ width: "100%", background: `linear-gradient(135deg, ${C.orange}, ${C.gold})`, border: "none", borderRadius: 14, color: "#09090F", fontWeight: "bold", fontSize: 15, padding: "16px", cursor: "pointer", boxShadow: `0 6px 24px ${C.orange}44` }}>
+            <button onClick={() => markRead(2)} style={{ width: "100%", background: `linear-gradient(135deg, ${C.orange}, ${C.gold})`, border: "none", borderRadius: 14, color: "#F3F4F6", fontWeight: "bold", fontSize: 15, padding: "16px", cursor: "pointer", boxShadow: `0 6px 24px ${C.orange}44` }}>
               Înțeleg — acum vreau să exersez →
             </button>
           </div>
@@ -413,18 +413,18 @@ export default function Lectia1() {
               </div>
 
               {!showTool ? (
-                <button onClick={goToTool} style={{ width: "100%", background: `linear-gradient(135deg, ${C.orange}, ${C.gold})`, border: "none", borderRadius: 14, color: "#09090F", fontWeight: "bold", fontSize: 15, padding: "16px", cursor: "pointer", boxShadow: `0 6px 24px ${C.orange}44` }}>
+                <button onClick={goToTool} style={{ width: "100%", background: `linear-gradient(135deg, ${C.orange}, ${C.gold})`, border: "none", borderRadius: 14, color: "#F3F4F6", fontWeight: "bold", fontSize: 15, padding: "16px", cursor: "pointer", boxShadow: `0 6px 24px ${C.orange}44` }}>
                   Deschide Harta Forțelor →
                 </button>
               ) : (
-                <button onClick={() => markRead(3)} style={{ width: "100%", background: "rgba(255,255,255,0.04)", border: `1px solid ${C.border}`, borderRadius: 14, color: C.muted, fontSize: 13, padding: "14px", cursor: "pointer" }}>
+                <button onClick={() => markRead(3)} style={{ width: "100%", background: "rgba(15,23,42,0.04)", border: `1px solid ${C.border}`, borderRadius: 14, color: C.muted, fontSize: 13, padding: "14px", cursor: "pointer" }}>
                   Am completat harta — mergi la concluzie →
                 </button>
               )}
             </div>
 
             {showTool && (
-              <div ref={toolRef} style={{ background: C.panel, border: `1px solid ${C.orange}44`, borderRadius: 20, padding: "24px", animation: "fadeUp 0.4s ease", boxShadow: `0 0 40px ${C.orange}11` }}>
+              <div ref={toolRef} style={{ background: C.panel, border: `1px solid ${C.orange}44`, borderRadius: 20, padding: "24px", animation: "fadeUp 0.4s ease", boxShadow: `0 8px 24px rgba(15,23,42,0.08)` }}>
                 <div style={{ fontSize: 10, letterSpacing: 3, color: C.orange, textTransform: "uppercase", fontFamily: "monospace", marginBottom: 20 }}>🐉 Harta Forțelor</div>
                 <HartaFortelor />
               </div>
@@ -437,7 +437,7 @@ export default function Lectia1() {
           <div style={{ animation: "fadeUp 0.4s ease" }}>
             <div style={{ fontSize: 11, letterSpacing: 3, color: C.orange, textTransform: "uppercase", fontFamily: "monospace", marginBottom: 16 }}>Concluzia</div>
 
-            <div style={{ background: `linear-gradient(135deg, ${C.panel}, #0E0820)`, border: `1px solid ${C.orange}55`, borderRadius: 20, padding: "28px", marginBottom: 20, boxShadow: `0 0 40px ${C.orange}11` }}>
+            <div style={{ background: `linear-gradient(135deg, #F3F4F6 0%, #FFF7ED 100%)`, border: `1px solid ${C.orange}55`, borderRadius: 20, padding: "28px", marginBottom: 20, boxShadow: `0 8px 24px rgba(15,23,42,0.08)` }}>
               <p style={{ fontSize: 18, lineHeight: 1.8, color: "#fff", fontStyle: "italic", margin: "0 0 20px", textAlign: "center" }}>
                 "Oamenii care reușesc constant nu sunt mai norocoși. Văd structura din spatele evenimentelor — și o modifică înainte ca ea să îi modifice pe ei."
               </p>
@@ -459,7 +459,7 @@ export default function Lectia1() {
             </div>
 
             {/* Next lesson teaser */}
-            <div style={{ background: `linear-gradient(135deg, #0F1A2A, #0A1020)`, border: `1px solid ${C.teal}33`, borderRadius: 18, padding: "22px", marginBottom: 20 }}>
+            <div style={{ background: `linear-gradient(135deg, #F3F4F6 0%, #FFF7ED 100%)`, border: `1px solid ${C.teal}33`, borderRadius: 18, padding: "22px", marginBottom: 20 }}>
               <div style={{ fontSize: 10, letterSpacing: 3, color: C.teal, textTransform: "uppercase", fontFamily: "monospace", marginBottom: 10 }}>Lecția 2 — ce urmează</div>
               <div style={{ fontSize: 15, fontWeight: "bold", color: "#fff", marginBottom: 8 }}>
                 "De ce școala te-a învățat să reproduci, nu să înțelegi"
@@ -469,7 +469,7 @@ export default function Lectia1() {
               </div>
             </div>
 
-            <button onClick={() => markRead(4)} style={{ width: "100%", background: `linear-gradient(135deg, ${C.teal}, #2DD4BF)`, border: "none", borderRadius: 14, color: "#09090F", fontWeight: "bold", fontSize: 15, padding: "16px", cursor: "pointer", boxShadow: `0 6px 24px ${C.teal}44` }}>
+            <button onClick={() => markRead(4)} style={{ width: "100%", background: `linear-gradient(135deg, ${C.teal}, #2DD4BF)`, border: "none", borderRadius: 14, color: "#F3F4F6", fontWeight: "bold", fontSize: 15, padding: "16px", cursor: "pointer", boxShadow: `0 6px 24px ${C.teal}44` }}>
               Mergi la Lecția 2 →
             </button>
           </div>

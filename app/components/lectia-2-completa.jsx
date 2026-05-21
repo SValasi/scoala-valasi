@@ -1,19 +1,19 @@
 import { useState, useRef, useEffect } from "react";
 
 const C = {
-  bg: "#09090F",
-  bgMid: "#0D0D18",
-  panel: "#111320",
-  border: "#1C1F35",
-  text: "#E2E0F0",
-  muted: "#5A5880",
+  bg: "#F3F4F6",
+  bgMid: "#F8FAFC",
+  panel: "#FFFFFF",
+  border: "#E5E7EB",
+  text: "#111827",
+  muted: "#475569",
   orange: "#FF6B2B",
   gold: "#FFB347",
-  red: "#C0392B",
-  teal: "#4ECDC4",
-  blue: "#3B82F6",
-  purple: "#8B5CF6",
-  green: "#22C55E",
+  red: "#DC2626",
+  teal: "#14B8A6",
+  blue: "#2563EB",
+  purple: "#7C3AED",
+  green: "#16A34A",
   accent: "#FF6B2B",
 };
 
@@ -90,22 +90,22 @@ function DisectiaEmbedded() {
             <div style={{ fontSize: 10, letterSpacing: 2, color: current.color, textTransform: "uppercase", fontFamily: "monospace" }}>{current.label}</div>
           </div>
           <div style={{ fontSize: 16, fontWeight: "700", color: "#fff", marginBottom: 8 }}>{current.question}</div>
-          <div style={{ fontSize: 13, color: "#9090AA", lineHeight: 1.7, marginBottom: 12, padding: "10px 14px", background: "rgba(0,0,0,0.2)", borderRadius: 10, borderLeft: `2px solid ${current.color}44` }}>{current.explanation}</div>
+          <div style={{ fontSize: 13, color: "#9090AA", lineHeight: 1.7, marginBottom: 12, padding: "10px 14px", background: "#F8FAFC", borderRadius: 10, borderLeft: `2px solid ${current.color}44` }}>{current.explanation}</div>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 14 }}>
-            {current.hints.map((h, i) => <div key={i} style={{ fontSize: 10, color: "#8080AA", background: "rgba(255,255,255,0.03)", border: "1px solid #1E293B", borderRadius: 20, padding: "3px 10px" }}>{h}</div>)}
+            {current.hints.map((h, i) => <div key={i} style={{ fontSize: 10, color: "#8080AA", background: "rgba(15,23,42,0.03)", border: "1px solid #F8FAFC", borderRadius: 20, padding: "3px 10px" }}>{h}</div>)}
           </div>
           <textarea
             autoFocus
             value={values[current.id]}
             onChange={e => setValues(v => ({ ...v, [current.id]: e.target.value }))}
             placeholder={current.placeholder}
-            style={{ width: "100%", minHeight: 80, background: "rgba(0,0,0,0.3)", border: `1px solid ${current.color}44`, borderRadius: 10, color: C.text, fontSize: 13, padding: "10px 12px", resize: "vertical", fontFamily: "Georgia, serif", outline: "none", boxSizing: "border-box", lineHeight: 1.6 }}
+            style={{ width: "100%", minHeight: 80, background: "#F8FAFC", border: `1px solid ${current.color}44`, borderRadius: 10, color: C.text, fontSize: 13, padding: "10px 12px", resize: "vertical", fontFamily: "Georgia, serif", outline: "none", boxSizing: "border-box", lineHeight: 1.6 }}
           />
           <div style={{ display: "flex", gap: 10, marginTop: 12 }}>
             {step > 0 && (
-              <button onClick={() => setStep(s => s - 1)} style={{ background: "rgba(255,255,255,0.04)", border: "1px solid #1E293B", borderRadius: 10, color: C.muted, fontSize: 13, padding: "10px 16px", cursor: "pointer" }}>←</button>
+              <button onClick={() => setStep(s => s - 1)} style={{ background: "rgba(15,23,42,0.04)", border: "1px solid #F8FAFC", borderRadius: 10, color: C.muted, fontSize: 13, padding: "10px 16px", cursor: "pointer" }}>←</button>
             )}
-            <button onClick={() => step < STEPS_DATA.length - 1 ? setStep(s => s + 1) : setPhase("gap")} disabled={!canNext} style={{ flex: 1, background: canNext ? `linear-gradient(135deg, ${current.color}, ${current.color}AA)` : C.border, border: "none", borderRadius: 10, color: canNext ? "#09090F" : C.muted, fontWeight: "bold", fontSize: 14, padding: "11px", cursor: canNext ? "pointer" : "default", transition: "all 0.3s" }}>
+            <button onClick={() => step < STEPS_DATA.length - 1 ? setStep(s => s + 1) : setPhase("gap")} disabled={!canNext} style={{ flex: 1, background: canNext ? `linear-gradient(135deg, ${current.color}, ${current.color}AA)` : C.border, border: "none", borderRadius: 10, color: canNext ? "#F3F4F6" : C.muted, fontWeight: "bold", fontSize: 14, padding: "11px", cursor: canNext ? "pointer" : "default", transition: "all 0.3s" }}>
               {step < STEPS_DATA.length - 1 ? "Continuă →" : "Găsește compromisul →"}
             </button>
           </div>
@@ -125,7 +125,7 @@ function DisectiaEmbedded() {
             </div>
           </div>
           <div style={{ fontSize: 15, fontWeight: "700", color: "#fff", marginBottom: 8 }}>Care e compromisul principal?</div>
-          <div style={{ fontSize: 13, color: "#9090AA", lineHeight: 1.7, marginBottom: 12, padding: "10px 14px", background: "rgba(0,0,0,0.2)", borderRadius: 10, borderLeft: `2px solid ${C.orange}44` }}>
+          <div style={{ fontSize: 13, color: "#9090AA", lineHeight: 1.7, marginBottom: 12, padding: "10px 14px", background: "#F8FAFC", borderRadius: 10, borderLeft: `2px solid ${C.orange}44` }}>
             Distanța dintre ce declară și ce produce — aceea e compromisul. Nu e o acuzație. E o constrângere de design. Ce sacrifică sistemul pentru a funcționa la scară?
           </div>
           <textarea
@@ -133,10 +133,10 @@ function DisectiaEmbedded() {
             value={gap}
             onChange={e => setGap(e.target.value)}
             placeholder="Ex: Sistemul sacrifică înțelegerea profundă pentru eficiența evaluării..."
-            style={{ width: "100%", minHeight: 80, background: "rgba(0,0,0,0.3)", border: `1px solid ${C.orange}44`, borderRadius: 10, color: C.text, fontSize: 13, padding: "10px 12px", resize: "vertical", fontFamily: "Georgia, serif", outline: "none", boxSizing: "border-box", lineHeight: 1.6 }}
+            style={{ width: "100%", minHeight: 80, background: "#F8FAFC", border: `1px solid ${C.orange}44`, borderRadius: 10, color: C.text, fontSize: 13, padding: "10px 12px", resize: "vertical", fontFamily: "Georgia, serif", outline: "none", boxSizing: "border-box", lineHeight: 1.6 }}
           />
           <div style={{ display: "flex", gap: 10, marginTop: 12 }}>
-            <button onClick={() => setPhase("steps")} style={{ background: "rgba(255,255,255,0.04)", border: "1px solid #1E293B", borderRadius: 10, color: C.muted, fontSize: 13, padding: "10px 16px", cursor: "pointer" }}>←</button>
+            <button onClick={() => setPhase("steps")} style={{ background: "rgba(15,23,42,0.04)", border: "1px solid #F8FAFC", borderRadius: 10, color: C.muted, fontSize: 13, padding: "10px 16px", cursor: "pointer" }}>←</button>
             {gap.trim() && (
               <div style={{ flex: 1, padding: "11px 16px", background: `${C.green}12`, border: `1px solid ${C.green}33`, borderRadius: 10, fontSize: 13, color: "#70AA88", fontStyle: "italic" }}>
                 Tocmai ai văzut un sistem cu ochii unui gânditor structural.
@@ -144,7 +144,7 @@ function DisectiaEmbedded() {
             )}
           </div>
           {gap.trim() && (
-            <button onClick={() => { setValues({ sistem: "", intrari: "", proces: "", declarate: "", reale: "" }); setGap(""); setStep(0); setPhase("steps"); }} style={{ marginTop: 10, width: "100%", background: "rgba(255,255,255,0.04)", border: "1px solid #1E293B", borderRadius: 10, color: C.muted, fontSize: 12, padding: "10px", cursor: "pointer" }}>← Disecă alt sistem</button>
+            <button onClick={() => { setValues({ sistem: "", intrari: "", proces: "", declarate: "", reale: "" }); setGap(""); setStep(0); setPhase("steps"); }} style={{ marginTop: 10, width: "100%", background: "rgba(15,23,42,0.04)", border: "1px solid #F8FAFC", borderRadius: 10, color: C.muted, fontSize: 12, padding: "10px", cursor: "pointer" }}>← Disecă alt sistem</button>
           )}
         </div>
       )}
@@ -362,7 +362,7 @@ export default function Lectia2() {
                 fontFamily: "monospace", letterSpacing: 1, textTransform: "uppercase",
                 border: isActive ? `1px solid ${C.orange}` : `1px solid ${C.border}`,
                 background: isActive ? `${C.orange}15` : "transparent",
-                color: isActive ? C.orange : isRead ? C.muted : "#3A3A5A",
+                color: isActive ? C.orange : isRead ? C.muted : "#475569",
                 transition: "all 0.2s",
               }}>
                 {isRead && !isActive ? "✓ " : ""}{s.label}
@@ -374,7 +374,7 @@ export default function Lectia2() {
         {/* INTRO */}
         {activeSection === 0 && (
           <div style={{ animation: "fadeUp 0.4s ease" }}>
-            <div style={{ background: `linear-gradient(135deg, ${C.panel}, #0E0E20)`, border: `1px solid ${C.border}`, borderRadius: 20, padding: "28px", marginBottom: 20 }}>
+            <div style={{ background: `linear-gradient(135deg, #F3F4F6 0%, #FFF7ED 100%)`, border: `1px solid ${C.border}`, borderRadius: 20, padding: "28px", marginBottom: 20 }}>
               <p style={{ fontSize: 15, lineHeight: 1.9, color: C.text, margin: "0 0 16px" }}>
                 Ai luat vreodată o notă bună la un test și a doua zi nu mai știai nimic din ce ai învățat?
               </p>
@@ -395,7 +395,7 @@ export default function Lectia2() {
                 </div>
               ))}
             </div>
-            <button onClick={() => markRead(0)} style={{ width: "100%", background: `linear-gradient(135deg, ${C.orange}, ${C.gold})`, border: "none", borderRadius: 14, color: "#09090F", fontWeight: "bold", fontSize: 15, padding: "16px", cursor: "pointer", boxShadow: `0 6px 24px ${C.orange}44` }}>
+            <button onClick={() => markRead(0)} style={{ width: "100%", background: `linear-gradient(135deg, ${C.orange}, ${C.gold})`, border: "none", borderRadius: 14, color: "#F3F4F6", fontWeight: "bold", fontSize: 15, padding: "16px", cursor: "pointer", boxShadow: `0 6px 24px ${C.orange}44` }}>
               Începe lecția →
             </button>
           </div>
@@ -430,7 +430,7 @@ export default function Lectia2() {
                 <div style={{ fontSize: 13, color: "#9090AA", lineHeight: 1.7 }}>Gândire critică, cetățeni educați, pregătire pentru viață.</div>
               </div>
             </div>
-            <button onClick={() => markRead(1)} style={{ width: "100%", background: `linear-gradient(135deg, ${C.orange}, ${C.gold})`, border: "none", borderRadius: 14, color: "#09090F", fontWeight: "bold", fontSize: 15, padding: "16px", cursor: "pointer", boxShadow: `0 6px 24px ${C.orange}44` }}>
+            <button onClick={() => markRead(1)} style={{ width: "100%", background: `linear-gradient(135deg, ${C.orange}, ${C.gold})`, border: "none", borderRadius: 14, color: "#F3F4F6", fontWeight: "bold", fontSize: 15, padding: "16px", cursor: "pointer", boxShadow: `0 6px 24px ${C.orange}44` }}>
               Am înțeles — arată-mi exemplul →
             </button>
           </div>
@@ -457,7 +457,7 @@ export default function Lectia2() {
               <div style={{ fontSize: 13, fontWeight: "bold", color: "#fff", marginBottom: 6 }}>Sistemul l-a recompensat pe primul. Viața îl va recompensa pe al doilea.</div>
               <div style={{ fontSize: 13, color: "#9090AA", lineHeight: 1.7 }}>Nu pentru că viața e corectă — ci pentru că viața nu îți dă teste cu variante. Îți dă situații noi în care trebuie să înțelegi, nu să reproduci.</div>
             </div>
-            <button onClick={() => markRead(2)} style={{ width: "100%", background: `linear-gradient(135deg, ${C.orange}, ${C.gold})`, border: "none", borderRadius: 14, color: "#09090F", fontWeight: "bold", fontSize: 15, padding: "16px", cursor: "pointer", boxShadow: `0 6px 24px ${C.orange}44` }}>
+            <button onClick={() => markRead(2)} style={{ width: "100%", background: `linear-gradient(135deg, ${C.orange}, ${C.gold})`, border: "none", borderRadius: 14, color: "#F3F4F6", fontWeight: "bold", fontSize: 15, padding: "16px", cursor: "pointer", boxShadow: `0 6px 24px ${C.orange}44` }}>
               Înțeleg — disec un sistem →
             </button>
           </div>
@@ -472,11 +472,11 @@ export default function Lectia2() {
                 Aplică cadrul pe orice sistem din viața ta. Identifică ce intră, ce se întâmplă, ce promite și ce produce de fapt. Distanța dintre ultimele două e compromisul sistemului.
               </p>
               {!showTool1 ? (
-                <button onClick={() => { setShowTool1(true); setTimeout(() => tool1Ref.current?.scrollIntoView({ behavior: "smooth" }), 100); }} style={{ width: "100%", background: `linear-gradient(135deg, ${C.orange}, ${C.gold})`, border: "none", borderRadius: 14, color: "#09090F", fontWeight: "bold", fontSize: 15, padding: "16px", cursor: "pointer" }}>
+                <button onClick={() => { setShowTool1(true); setTimeout(() => tool1Ref.current?.scrollIntoView({ behavior: "smooth" }), 100); }} style={{ width: "100%", background: `linear-gradient(135deg, ${C.orange}, ${C.gold})`, border: "none", borderRadius: 14, color: "#F3F4F6", fontWeight: "bold", fontSize: 15, padding: "16px", cursor: "pointer" }}>
                   Deschide Disecția Sistemului →
                 </button>
               ) : (
-                <button onClick={() => markRead(3)} style={{ width: "100%", background: "rgba(255,255,255,0.04)", border: `1px solid ${C.border}`, borderRadius: 14, color: C.muted, fontSize: 13, padding: "14px", cursor: "pointer" }}>
+                <button onClick={() => markRead(3)} style={{ width: "100%", background: "rgba(15,23,42,0.04)", border: `1px solid ${C.border}`, borderRadius: 14, color: C.muted, fontSize: 13, padding: "14px", cursor: "pointer" }}>
                   Am completat disecția — mergi la Simulator →
                 </button>
               )}
@@ -499,11 +499,11 @@ export default function Lectia2() {
                 Acum experimentează. Modifică elementele unui sistem și vezi în timp real cum se propagă efectele. Nu există schimbare fără consecință — și asta e lecția.
               </p>
               {!showTool2 ? (
-                <button onClick={() => { setShowTool2(true); setTimeout(() => tool2Ref.current?.scrollIntoView({ behavior: "smooth" }), 100); }} style={{ width: "100%", background: `linear-gradient(135deg, ${C.orange}, ${C.gold})`, border: "none", borderRadius: 14, color: "#09090F", fontWeight: "bold", fontSize: 15, padding: "16px", cursor: "pointer" }}>
+                <button onClick={() => { setShowTool2(true); setTimeout(() => tool2Ref.current?.scrollIntoView({ behavior: "smooth" }), 100); }} style={{ width: "100%", background: `linear-gradient(135deg, ${C.orange}, ${C.gold})`, border: "none", borderRadius: 14, color: "#F3F4F6", fontWeight: "bold", fontSize: 15, padding: "16px", cursor: "pointer" }}>
                   Deschide Simulatorul →
                 </button>
               ) : (
-                <button onClick={() => markRead(4)} style={{ width: "100%", background: "rgba(255,255,255,0.04)", border: `1px solid ${C.border}`, borderRadius: 14, color: C.muted, fontSize: 13, padding: "14px", cursor: "pointer" }}>
+                <button onClick={() => markRead(4)} style={{ width: "100%", background: "rgba(15,23,42,0.04)", border: `1px solid ${C.border}`, borderRadius: 14, color: C.muted, fontSize: 13, padding: "14px", cursor: "pointer" }}>
                   Am experimentat — mergi la concluzie →
                 </button>
               )}
@@ -521,7 +521,7 @@ export default function Lectia2() {
         {activeSection === 5 && (
           <div style={{ animation: "fadeUp 0.4s ease" }}>
             <div style={{ fontSize: 11, letterSpacing: 3, color: C.orange, textTransform: "uppercase", fontFamily: "monospace", marginBottom: 16 }}>Concluzia</div>
-            <div style={{ background: `linear-gradient(135deg, ${C.panel}, #0E0820)`, border: `1px solid ${C.orange}55`, borderRadius: 20, padding: "28px", marginBottom: 20, boxShadow: `0 0 40px ${C.orange}11` }}>
+            <div style={{ background: `linear-gradient(135deg, #F3F4F6 0%, #FFF7ED 100%)`, border: `1px solid ${C.orange}55`, borderRadius: 20, padding: "28px", marginBottom: 20, boxShadow: `0 8px 24px rgba(15,23,42,0.08)` }}>
               <p style={{ fontSize: 18, lineHeight: 1.8, color: "#fff", fontStyle: "italic", margin: "0 0 20px", textAlign: "center" }}>
                 "Când înveți să vezi distanța dintre ce declară un sistem și ce produce de fapt — nu mai ești niciodată prizonierul lui fără să știi."
               </p>
@@ -542,13 +542,13 @@ export default function Lectia2() {
             </div>
 
             {/* Next lesson */}
-            <div style={{ background: `linear-gradient(135deg, #0F1A2A, #0A1020)`, border: `1px solid ${C.teal}33`, borderRadius: 18, padding: "22px", marginBottom: 20 }}>
+            <div style={{ background: `linear-gradient(135deg, #F3F4F6 0%, #FFF7ED 100%)`, border: `1px solid ${C.teal}33`, borderRadius: 18, padding: "22px", marginBottom: 20 }}>
               <div style={{ fontSize: 10, letterSpacing: 3, color: C.teal, textTransform: "uppercase", fontFamily: "monospace", marginBottom: 10 }}>Lecția 3 — ce urmează</div>
               <div style={{ fontSize: 15, fontWeight: "bold", color: "#fff", marginBottom: 8 }}>Pattern Recognition</div>
               <div style={{ fontSize: 13, color: "#7090AA", lineHeight: 1.7 }}>Cum antrenezi ochiul să vadă ce urmează înainte să se întâmple — în forme, în comportamente, în dinamici sociale.</div>
             </div>
 
-            <button onClick={() => markRead(5)} style={{ width: "100%", background: `linear-gradient(135deg, ${C.teal}, #2DD4BF)`, border: "none", borderRadius: 14, color: "#09090F", fontWeight: "bold", fontSize: 15, padding: "16px", cursor: "pointer", boxShadow: `0 6px 24px ${C.teal}44` }}>
+            <button onClick={() => markRead(5)} style={{ width: "100%", background: `linear-gradient(135deg, ${C.teal}, #2DD4BF)`, border: "none", borderRadius: 14, color: "#F3F4F6", fontWeight: "bold", fontSize: 15, padding: "16px", cursor: "pointer", boxShadow: `0 6px 24px ${C.teal}44` }}>
               Mergi la Lecția 3 →
             </button>
           </div>

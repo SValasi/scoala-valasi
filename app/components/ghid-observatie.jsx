@@ -1,19 +1,19 @@
 import { useState, useEffect } from "react";
 
 const C = {
-  bg: "#08080E",
-  bgDeep: "#050508",
-  panel: "#0E0E18",
-  panelAlt: "#111120",
-  border: "#18182A",
-  text: "#E0DEF0",
-  muted: "#52506A",
-  obs: "#3B82F6",
-  judecata: "#E05A3A",
-  consecvent: "#A855F7",
-  contextual: "#10B981",
+  bg: "#F3F4F6",
+  bgDeep: "#EEF2F7",
+  panel: "#FFFFFF",
+  panelAlt: "#F8FAFC",
+  border: "#E5E7EB",
+  text: "#111827",
+  muted: "#475569",
+  obs: "#2563EB",
+  judecata: "#DC2626",
+  consecvent: "#7C3AED",
+  contextual: "#16A34A",
   gold: "#FFB347",
-  accent: "#3B82F6",
+  accent: "#FF6B2B",
 };
 
 const EXAMPLES = [
@@ -64,7 +64,7 @@ function ExampleCard({ ex, index }) {
       <div style={{
         fontSize: 14, color: C.text, lineHeight: 1.7,
         marginBottom: 16, padding: "12px 14px",
-        background: "rgba(255,255,255,0.03)",
+        background: "rgba(15,23,42,0.03)",
         borderRadius: 10,
         borderLeft: `3px solid ${C.border}`,
         fontStyle: "italic",
@@ -208,7 +208,7 @@ function MyObservation() {
     <div style={{
       background: C.panel, border: `1px solid ${result.tip === "consecvent" ? C.consecvent : result.tip === "contextual" ? C.contextual : C.gold}44`,
       borderRadius: 18, padding: "24px 22px",
-      boxShadow: `0 0 30px ${result.tip === "consecvent" ? C.consecvent : result.tip === "contextual" ? C.contextual : C.gold}11`,
+      boxShadow: `0 8px 24px rgba(15,23,42,0.08)`,
       animation: "fadeUp 0.4s ease",
     }}>
       <div style={{ fontSize: 10, letterSpacing: 3, color: C.muted, textTransform: "uppercase", fontFamily: "monospace", marginBottom: 16 }}>
@@ -260,7 +260,7 @@ function MyObservation() {
 
       <div style={{
         padding: "14px 16px",
-        background: "rgba(255,255,255,0.03)",
+        background: "rgba(15,23,42,0.03)",
         borderRadius: 12, fontSize: 12,
         color: C.muted, fontStyle: "italic", lineHeight: 1.8,
       }}>
@@ -272,7 +272,7 @@ function MyObservation() {
         setResult(null); setStep(0);
       }} style={{
         marginTop: 16, width: "100%",
-        background: "rgba(255,255,255,0.04)", border: `1px solid ${C.border}`,
+        background: "rgba(15,23,42,0.04)", border: `1px solid ${C.border}`,
         borderRadius: 10, color: C.muted, fontSize: 13,
         padding: "12px", cursor: "pointer",
       }}>← Analizează altă situație</button>
@@ -320,7 +320,7 @@ function MyObservation() {
               onChange={e => setForm(f => ({ ...f, persoana: e.target.value }))}
               placeholder="Ex: Colegul X, prietena mea, șeful..."
               style={{
-                width: "100%", background: "rgba(0,0,0,0.3)",
+                width: "100%", background: "#F8FAFC",
                 border: `1px solid ${C.border}`, borderRadius: 10,
                 color: C.text, fontSize: 13, padding: "10px 12px",
                 fontFamily: "Georgia, serif", outline: "none", boxSizing: "border-box",
@@ -335,7 +335,7 @@ function MyObservation() {
               onChange={e => setForm(f => ({ ...f, situatie: e.target.value }))}
               placeholder="Descrie situația concretă — fără interpretare deocamdată..."
               style={{
-                width: "100%", minHeight: 80, background: "rgba(0,0,0,0.3)",
+                width: "100%", minHeight: 80, background: "#F8FAFC",
                 border: `1px solid ${C.border}`, borderRadius: 10,
                 color: C.text, fontSize: 13, padding: "10px 12px",
                 resize: "vertical", fontFamily: "Georgia, serif",
@@ -348,7 +348,7 @@ function MyObservation() {
             width: "100%",
             background: canNext0 ? `linear-gradient(135deg, ${C.obs}, #60A5FA)` : C.border,
             border: "none", borderRadius: 10,
-            color: canNext0 ? "#08080E" : C.muted,
+            color: canNext0 ? "#F3F4F6" : C.muted,
             fontWeight: "bold", fontSize: 14, padding: "12px",
             cursor: canNext0 ? "pointer" : "default", transition: "all 0.3s",
           }}>Continuă →</button>
@@ -414,14 +414,14 @@ function MyObservation() {
 
           <div style={{ display: "flex", gap: 10 }}>
             <button onClick={() => setStep(0)} style={{
-              background: "rgba(255,255,255,0.04)", border: `1px solid ${C.border}`,
+              background: "rgba(15,23,42,0.04)", border: `1px solid ${C.border}`,
               borderRadius: 10, color: C.muted, fontSize: 13, padding: "10px 16px", cursor: "pointer",
             }}>←</button>
             <button onClick={() => setStep(2)} disabled={!canNext1} style={{
               flex: 1,
               background: canNext1 ? `linear-gradient(135deg, ${C.obs}, #60A5FA)` : C.border,
               border: "none", borderRadius: 10,
-              color: canNext1 ? "#08080E" : C.muted,
+              color: canNext1 ? "#F3F4F6" : C.muted,
               fontWeight: "bold", fontSize: 14, padding: "12px",
               cursor: canNext1 ? "pointer" : "default", transition: "all 0.3s",
             }}>Continuă →</button>
@@ -437,7 +437,7 @@ function MyObservation() {
           </div>
           <div style={{
             fontSize: 13, color: "#8080AA", lineHeight: 1.7, marginBottom: 16,
-            padding: "12px 14px", background: "rgba(0,0,0,0.2)",
+            padding: "12px 14px", background: "#F8FAFC",
             borderRadius: 10, borderLeft: `2px solid ${C.contextual}44`,
           }}>
             Prima interpretare vine automat. Aceasta e o practică de a forța mintea să caute o alternativă. Nu trebuie să o crezi — doar să o poți gândi.
@@ -474,14 +474,14 @@ function MyObservation() {
 
           <div style={{ display: "flex", gap: 10 }}>
             <button onClick={() => setStep(1)} style={{
-              background: "rgba(255,255,255,0.04)", border: `1px solid ${C.border}`,
+              background: "rgba(15,23,42,0.04)", border: `1px solid ${C.border}`,
               borderRadius: 10, color: C.muted, fontSize: 13, padding: "10px 16px", cursor: "pointer",
             }}>←</button>
             <button onClick={() => setStep(3)} disabled={!canNext2} style={{
               flex: 1,
               background: canNext2 ? `linear-gradient(135deg, ${C.contextual}, #34D399)` : C.border,
               border: "none", borderRadius: 10,
-              color: canNext2 ? "#08080E" : C.muted,
+              color: canNext2 ? "#F3F4F6" : C.muted,
               fontWeight: "bold", fontSize: 14, padding: "12px",
               cursor: canNext2 ? "pointer" : "default", transition: "all 0.3s",
             }}>Continuă →</button>
@@ -509,7 +509,7 @@ function MyObservation() {
                   style={{
                     display: "flex", gap: 12, alignItems: "center",
                     padding: "12px 16px",
-                    background: selected ? `${C.consecvent}10` : "rgba(0,0,0,0.2)",
+                    background: selected ? `${C.consecvent}10` : "#F8FAFC",
                     border: `1px solid ${selected ? C.consecvent : C.border}`,
                     borderRadius: 12, cursor: "pointer",
                     transition: "all 0.2s",
@@ -554,14 +554,14 @@ function MyObservation() {
 
           <div style={{ display: "flex", gap: 10 }}>
             <button onClick={() => setStep(2)} style={{
-              background: "rgba(255,255,255,0.04)", border: `1px solid ${C.border}`,
+              background: "rgba(15,23,42,0.04)", border: `1px solid ${C.border}`,
               borderRadius: 10, color: C.muted, fontSize: 13, padding: "10px 16px", cursor: "pointer",
             }}>←</button>
             <button onClick={finish} disabled={!canFinish} style={{
               flex: 1,
               background: canFinish ? `linear-gradient(135deg, ${C.gold}, #F97316)` : C.border,
               border: "none", borderRadius: 10,
-              color: canFinish ? "#08080E" : C.muted,
+              color: canFinish ? "#F3F4F6" : C.muted,
               fontWeight: "bold", fontSize: 14, padding: "12px",
               cursor: canFinish ? "pointer" : "default", transition: "all 0.3s",
             }}>Vezi analiza →</button>
@@ -622,7 +622,7 @@ export default function GhidObservatie() {
                 flex: 1, padding: "10px 8px", borderRadius: 10,
                 border: "none", cursor: "pointer",
                 background: tab === t.id ? `linear-gradient(135deg, ${C.obs}, #60A5FA)` : "transparent",
-                color: tab === t.id ? "#08080E" : C.muted,
+                color: tab === t.id ? "#F3F4F6" : C.muted,
                 fontWeight: tab === t.id ? "bold" : "normal",
                 fontSize: 12, fontFamily: "Georgia, serif",
                 transition: "all 0.2s",
@@ -680,7 +680,7 @@ export default function GhidObservatie() {
             <button onClick={() => setTab("exemple")} style={{
               width: "100%", marginTop: 16,
               background: `linear-gradient(135deg, ${C.obs}, #60A5FA)`,
-              border: "none", borderRadius: 14, color: "#08080E",
+              border: "none", borderRadius: 14, color: "#F3F4F6",
               fontWeight: "bold", fontSize: 15, padding: "16px",
               cursor: "pointer", boxShadow: `0 6px 24px ${C.obs}33`,
             }}>Vezi exemple →</button>
@@ -697,7 +697,7 @@ export default function GhidObservatie() {
             <button onClick={() => setTab("practica")} style={{
               width: "100%", marginTop: 8,
               background: `linear-gradient(135deg, ${C.obs}, #60A5FA)`,
-              border: "none", borderRadius: 14, color: "#08080E",
+              border: "none", borderRadius: 14, color: "#F3F4F6",
               fontWeight: "bold", fontSize: 15, padding: "16px",
               cursor: "pointer", boxShadow: `0 6px 24px ${C.obs}33`,
             }}>Încearcă cu situația ta →</button>
