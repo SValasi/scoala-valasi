@@ -1,10 +1,11 @@
 "use client";
+
 import { useState, useEffect } from "react";
 
 const C = {
   bg: "#F3F4F6",
   bgDeep: "#EEF2F7",
-  panel: "#FFFFFF",
+  panel: "#111827FFF",
   panelBorder: "#E5E7EB",
   intrari: "#2563EB",
   proces: "#7C3AED",
@@ -117,7 +118,7 @@ export default function DisectiaSistemului() {
   return (
     <div style={{
       minHeight: "100vh",
-      background: `radial-gradient(ellipse at 20% 10%, #0D1F3C 0%, ${C.bgDeep} 55%)`,
+      background: "linear-gradient(135deg, #F8FAFC 0%, #FFF7ED 100%)",
       fontFamily: "'Georgia', 'Times New Roman', serif",
       color: C.text,
       display: "flex",
@@ -135,7 +136,7 @@ export default function DisectiaSistemului() {
         <h1 style={{
           fontSize: "clamp(20px, 5vw, 30px)",
           fontWeight: 700, margin: 0,
-          background: `linear-gradient(135deg, #fff 0%, ${C.accent} 100%)`,
+          background: "#FFFFFF",
           WebkitBackgroundClip: "text",
           WebkitTextFillColor: "transparent",
           lineHeight: 1.3,
@@ -153,7 +154,7 @@ export default function DisectiaSistemului() {
       }}>
         {/* Sistem bubble */}
         <div style={{
-          fontSize: 10, color: values.sistem ? "#fff" : C.muted,
+          fontSize: 10, color: values.sistem ? "#111827" : C.muted,
           background: values.sistem ? "#F8FAFC" : "transparent",
           border: `1px solid ${values.sistem ? "#CBD5E1" : C.panelBorder}`,
           borderRadius: 20, padding: "4px 10px",
@@ -225,7 +226,7 @@ export default function DisectiaSistemului() {
 
           {/* Card */}
           <div style={{
-            background: `linear-gradient(135deg, #F3F4F6 0%, #FFF7ED 100%)`,
+            background: "#FFFFFF",
             border: `1px solid ${current.color}44`,
             borderRadius: 20,
             padding: "24px 22px",
@@ -233,7 +234,7 @@ export default function DisectiaSistemului() {
           }}>
             {/* Question */}
             <div style={{
-              fontSize: 18, fontWeight: "700", color: "#fff",
+              fontSize: 18, fontWeight: "700", color: "#111827",
               marginBottom: 14, lineHeight: 1.4,
             }}>
               {current.question}
@@ -241,7 +242,7 @@ export default function DisectiaSistemului() {
 
             {/* Explanation */}
             <div style={{
-              fontSize: 13, color: "#94A3B8", lineHeight: 1.8,
+              fontSize: 13, color: "#475569", lineHeight: 1.8,
               marginBottom: 16,
               padding: "12px 14px",
               background: "#F8FAFC",
@@ -260,7 +261,7 @@ export default function DisectiaSistemului() {
               <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
                 {current.hints.map((h, i) => (
                   <div key={i} style={{
-                    fontSize: 11, color: "#94A3B8",
+                    fontSize: 11, color: "#475569",
                     background: "rgba(15,23,42,0.03)",
                     border: "1px solid #F8FAFC",
                     borderRadius: 20, padding: "4px 10px",
@@ -277,13 +278,13 @@ export default function DisectiaSistemului() {
               placeholder={current.placeholder}
               style={{
                 width: "100%", minHeight: 100,
-                background: "rgba(0,0,0,0.4)",
+                background: "#FFFFFF",
                 border: `1px solid ${current.color}44`,
                 borderRadius: 12,
                 color: C.text, fontSize: 14,
                 padding: "12px 14px",
                 resize: "vertical",
-                fontFamily: "Georgia, serif",
+                fontFamily: "'DM Sans', system-ui, sans-serif",
                 outline: "none",
                 boxSizing: "border-box",
                 lineHeight: 1.7,
@@ -327,7 +328,7 @@ export default function DisectiaSistemului() {
       {phase === "gap" && (
         <div style={{ width: "100%", maxWidth: 480 }}>
           <div style={{
-            background: `linear-gradient(135deg, #F3F4F6 0%, #FFF7ED 100%)`,
+            background: "#FFFFFF",
             border: `1px solid ${C.accent}55`,
             borderRadius: 20, padding: "24px 22px",
             boxShadow: `0 8px 24px rgba(15,23,42,0.08)`,
@@ -349,7 +350,7 @@ export default function DisectiaSistemului() {
                   fontSize: 9, letterSpacing: 2, color: C.declarate,
                   textTransform: "uppercase", fontFamily: "monospace", marginBottom: 6,
                 }}>◎ Declară</div>
-                <div style={{ fontSize: 12, color: "#94A3B8", lineHeight: 1.6 }}>
+                <div style={{ fontSize: 12, color: "#475569", lineHeight: 1.6 }}>
                   {values.declarate.slice(0, 120)}{values.declarate.length > 120 ? "…" : ""}
                 </div>
               </div>
@@ -363,7 +364,7 @@ export default function DisectiaSistemului() {
                   fontSize: 9, letterSpacing: 2, color: C.reale,
                   textTransform: "uppercase", fontFamily: "monospace", marginBottom: 6,
                 }}>◉ Produce</div>
-                <div style={{ fontSize: 12, color: "#94A3B8", lineHeight: 1.6 }}>
+                <div style={{ fontSize: 12, color: "#475569", lineHeight: 1.6 }}>
                   {values.reale.slice(0, 120)}{values.reale.length > 120 ? "…" : ""}
                 </div>
               </div>
@@ -381,12 +382,12 @@ export default function DisectiaSistemului() {
             </div>
 
             <div style={{
-              fontSize: 15, fontWeight: "600", color: "#fff",
+              fontSize: 15, fontWeight: "600", color: "#111827",
               marginBottom: 10,
             }}>Care crezi că e compromisul principal?</div>
 
             <div style={{
-              fontSize: 13, color: "#94A3B8", lineHeight: 1.7,
+              fontSize: 13, color: "#475569", lineHeight: 1.7,
               marginBottom: 14,
               padding: "12px 14px",
               background: "#F8FAFC",
@@ -403,12 +404,12 @@ export default function DisectiaSistemului() {
               placeholder="Ex: Sistemul sacrifică înțelegerea profundă pentru eficiența evaluării. Știind asta, voi învăța separat să aplic, nu doar să reproduc..."
               style={{
                 width: "100%", minHeight: 110,
-                background: "rgba(0,0,0,0.4)",
+                background: "#FFFFFF",
                 border: `1px solid ${C.accent}44`,
                 borderRadius: 12,
                 color: C.text, fontSize: 14,
                 padding: "12px 14px", resize: "vertical",
-                fontFamily: "Georgia, serif",
+                fontFamily: "'DM Sans', system-ui, sans-serif",
                 outline: "none", boxSizing: "border-box",
                 lineHeight: 1.7,
               }}
@@ -448,7 +449,7 @@ export default function DisectiaSistemului() {
       {phase === "result" && (
         <div style={{ width: "100%", maxWidth: 480 }}>
           <div style={{
-            background: `linear-gradient(135deg, #F3F4F6 0%, #FFF7ED 100%)`,
+            background: "#FFFFFF",
             border: `1px solid ${C.accent}`,
             borderRadius: 20, padding: "28px 24px",
             boxShadow: `0 8px 24px rgba(15,23,42,0.08)`,
@@ -469,7 +470,7 @@ export default function DisectiaSistemului() {
                   textTransform: "uppercase", fontFamily: "monospace", marginBottom: 4,
                 }}>{item.label}</div>
                 <div style={{
-                  fontSize: 13, color: "#94A3B8", lineHeight: 1.6,
+                  fontSize: 13, color: "#475569", lineHeight: 1.6,
                   padding: "10px 12px",
                   background: "#F8FAFC",
                   borderRadius: 8,
@@ -497,7 +498,7 @@ export default function DisectiaSistemului() {
                     fontSize: 9, letterSpacing: 2, color: item.color,
                     textTransform: "uppercase", fontFamily: "monospace", marginBottom: 6,
                   }}>{item.label}</div>
-                  <div style={{ fontSize: 12, color: "#94A3B8", lineHeight: 1.6 }}>
+                  <div style={{ fontSize: 12, color: "#475569", lineHeight: 1.6 }}>
                     {values[item.id]}
                   </div>
                 </div>
@@ -507,7 +508,7 @@ export default function DisectiaSistemului() {
             {/* Compromise */}
             <div style={{
               padding: "18px 20px",
-              background: `linear-gradient(135deg, rgba(245,158,11,0.12), rgba(249,115,22,0.08))`,
+              background: "#FFFFFF",
               border: `1px solid ${C.accent}55`,
               borderRadius: 14, marginBottom: 20,
             }}>
@@ -516,7 +517,7 @@ export default function DisectiaSistemului() {
                 textTransform: "uppercase", fontFamily: "monospace", marginBottom: 8,
               }}>↕ Compromisul pe care l-ai găsit</div>
               <div style={{
-                fontSize: 14, color: "#fff", fontStyle: "italic", lineHeight: 1.7,
+                fontSize: 14, color: "#111827", fontStyle: "italic", lineHeight: 1.7,
               }}>"{gap}"</div>
             </div>
 
@@ -526,7 +527,7 @@ export default function DisectiaSistemului() {
               background: "rgba(59,130,246,0.06)",
               border: "1px solid rgba(59,130,246,0.2)",
               borderRadius: 10,
-              fontSize: 13, color: "#94A3B8",
+              fontSize: 13, color: "#475569",
               fontStyle: "italic", lineHeight: 1.8,
             }}>
               Tocmai ai văzut un sistem cu ochii unui gânditor structural. Acum aplică același cadru pe orice altceva — un job, o relație, o organizație. Distanța dintre declarat și real este mereu acolo. Cei care o văd iau decizii mai bune.

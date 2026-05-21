@@ -1,10 +1,11 @@
 "use client";
+
 import { useState, useEffect } from "react";
 
 const C = {
   bg: "#F3F4F6",
   bgDeep: "#EEF2F7",
-  panel: "#FFFFFF",
+  panel: "#111827FFF",
   panelAlt: "#F8FAFC",
   border: "#E5E7EB",
   text: "#111827",
@@ -52,7 +53,7 @@ function ExampleCard({ ex, index }) {
 
   return (
     <div style={{
-      background: C.panel, border: `1px solid ${C.border}`,
+      background: "#FFFFFF", border: "1px solid #E5E7EB",
       borderRadius: 18, padding: "22px 22px",
       marginBottom: 14,
       transition: "all 0.3s",
@@ -78,7 +79,7 @@ function ExampleCard({ ex, index }) {
           width: "100%", background: "rgba(59,130,246,0.08)",
           border: `1px solid ${C.obs}33`, borderRadius: 12,
           color: C.obs, fontSize: 13, padding: "12px",
-          cursor: "pointer", fontFamily: "Georgia, serif",
+          cursor: "pointer", fontFamily: "'DM Sans', system-ui, sans-serif",
         }}>
           Ce observă mintea? →
         </button>
@@ -207,7 +208,7 @@ function MyObservation() {
 
   if (result) return (
     <div style={{
-      background: C.panel, border: `1px solid ${result.tip === "consecvent" ? C.consecvent : result.tip === "contextual" ? C.contextual : C.gold}44`,
+      background: "#FFFFFF", border: `1px solid ${result.tip === "consecvent" ? C.consecvent : result.tip === "contextual" ? C.contextual : C.gold}44`,
       borderRadius: 18, padding: "24px 22px",
       boxShadow: `0 8px 24px rgba(15,23,42,0.08)`,
       animation: "fadeUp 0.4s ease",
@@ -223,7 +224,7 @@ function MyObservation() {
       </div>
 
       <div style={{
-        fontSize: 16, fontWeight: "700", color: "#fff",
+        fontSize: 16, fontWeight: "700", color: "#111827",
         textAlign: "center", marginBottom: 12,
       }}>
         {result.tip === "consecvent"
@@ -234,7 +235,7 @@ function MyObservation() {
       </div>
 
       <div style={{
-        fontSize: 13, color: "#9090AA", lineHeight: 1.8,
+        fontSize: 13, color: "#475569", lineHeight: 1.8,
         marginBottom: 20, textAlign: "center",
       }}>
         {result.tip === "consecvent"
@@ -254,7 +255,7 @@ function MyObservation() {
         ].map(item => (
           <div key={item.label}>
             <div style={{ fontSize: 9, letterSpacing: 2, color: item.color, textTransform: "uppercase", fontFamily: "monospace", marginBottom: 4 }}>{item.label}</div>
-            <div style={{ fontSize: 12, color: "#9090AA", padding: "8px 12px", background: `${item.color}08`, borderRadius: 8, borderLeft: `2px solid ${item.color}33`, lineHeight: 1.6 }}>{item.value}</div>
+            <div style={{ fontSize: 12, color: "#475569", padding: "8px 12px", background: `${item.color}08`, borderRadius: 8, borderLeft: `2px solid ${item.color}33`, lineHeight: 1.6 }}>{item.value}</div>
           </div>
         ))}
       </div>
@@ -273,7 +274,7 @@ function MyObservation() {
         setResult(null); setStep(0);
       }} style={{
         marginTop: 16, width: "100%",
-        background: "rgba(15,23,42,0.04)", border: `1px solid ${C.border}`,
+        background: "rgba(15,23,42,0.04)", border: "1px solid #E5E7EB",
         borderRadius: 10, color: C.muted, fontSize: 13,
         padding: "12px", cursor: "pointer",
       }}>← Analizează altă situație</button>
@@ -282,7 +283,7 @@ function MyObservation() {
 
   return (
     <div style={{
-      background: C.panel, border: `1px solid ${C.border}`,
+      background: "#FFFFFF", border: "1px solid #E5E7EB",
       borderRadius: 18, padding: "22px 22px",
     }}>
       <div style={{
@@ -306,10 +307,10 @@ function MyObservation() {
       {/* Step 0 — Person & situation */}
       {step === 0 && (
         <div style={{ animation: "fadeUp 0.3s ease" }}>
-          <div style={{ fontSize: 16, fontWeight: "700", color: "#fff", marginBottom: 8 }}>
+          <div style={{ fontSize: 16, fontWeight: "700", color: "#111827", marginBottom: 8 }}>
             Despre cine și ce situație?
           </div>
-          <div style={{ fontSize: 13, color: "#8080AA", lineHeight: 1.7, marginBottom: 16 }}>
+          <div style={{ fontSize: 13, color: "#475569", lineHeight: 1.7, marginBottom: 16 }}>
             Alege un comportament al cuiva care te-a deranjat, confuzat sau te face să te întrebi ce se întâmplă.
           </div>
 
@@ -322,9 +323,9 @@ function MyObservation() {
               placeholder="Ex: Colegul X, prietena mea, șeful..."
               style={{
                 width: "100%", background: "#F8FAFC",
-                border: `1px solid ${C.border}`, borderRadius: 10,
+                border: "1px solid #E5E7EB", borderRadius: 10,
                 color: C.text, fontSize: 13, padding: "10px 12px",
-                fontFamily: "Georgia, serif", outline: "none", boxSizing: "border-box",
+                fontFamily: "'DM Sans', system-ui, sans-serif", outline: "none", boxSizing: "border-box",
               }}
             />
           </div>
@@ -337,9 +338,9 @@ function MyObservation() {
               placeholder="Descrie situația concretă — fără interpretare deocamdată..."
               style={{
                 width: "100%", minHeight: 80, background: "#F8FAFC",
-                border: `1px solid ${C.border}`, borderRadius: 10,
+                border: "1px solid #E5E7EB", borderRadius: 10,
                 color: C.text, fontSize: 13, padding: "10px 12px",
-                resize: "vertical", fontFamily: "Georgia, serif",
+                resize: "vertical", fontFamily: "'DM Sans', system-ui, sans-serif",
                 outline: "none", boxSizing: "border-box", lineHeight: 1.6,
               }}
             />
@@ -359,10 +360,10 @@ function MyObservation() {
       {/* Step 1 — Observation vs interpretation */}
       {step === 1 && (
         <div style={{ animation: "fadeUp 0.3s ease" }}>
-          <div style={{ fontSize: 16, fontWeight: "700", color: "#fff", marginBottom: 8 }}>
+          <div style={{ fontSize: 16, fontWeight: "700", color: "#111827", marginBottom: 8 }}>
             Separă ce ai văzut de ce ai interpretat
           </div>
-          <div style={{ fontSize: 13, color: "#8080AA", lineHeight: 1.7, marginBottom: 16 }}>
+          <div style={{ fontSize: 13, color: "#475569", lineHeight: 1.7, marginBottom: 16 }}>
             Observația e ce ai perceput cu simțurile. Interpretarea e ce a adăugat mintea automat.
           </div>
 
@@ -384,7 +385,7 @@ function MyObservation() {
                 width: "100%", minHeight: 70, background: `${C.obs}08`,
                 border: `1px solid ${C.obs}33`, borderRadius: 10,
                 color: C.text, fontSize: 13, padding: "10px 12px",
-                resize: "vertical", fontFamily: "Georgia, serif",
+                resize: "vertical", fontFamily: "'DM Sans', system-ui, sans-serif",
                 outline: "none", boxSizing: "border-box", lineHeight: 1.6,
               }}
             />
@@ -407,7 +408,7 @@ function MyObservation() {
                 width: "100%", minHeight: 70, background: `${C.judecata}08`,
                 border: `1px solid ${C.judecata}33`, borderRadius: 10,
                 color: C.text, fontSize: 13, padding: "10px 12px",
-                resize: "vertical", fontFamily: "Georgia, serif",
+                resize: "vertical", fontFamily: "'DM Sans', system-ui, sans-serif",
                 outline: "none", boxSizing: "border-box", lineHeight: 1.6,
               }}
             />
@@ -415,7 +416,7 @@ function MyObservation() {
 
           <div style={{ display: "flex", gap: 10 }}>
             <button onClick={() => setStep(0)} style={{
-              background: "rgba(15,23,42,0.04)", border: `1px solid ${C.border}`,
+              background: "rgba(15,23,42,0.04)", border: "1px solid #E5E7EB",
               borderRadius: 10, color: C.muted, fontSize: 13, padding: "10px 16px", cursor: "pointer",
             }}>←</button>
             <button onClick={() => setStep(2)} disabled={!canNext1} style={{
@@ -433,11 +434,11 @@ function MyObservation() {
       {/* Step 2 — Alternative interpretation */}
       {step === 2 && (
         <div style={{ animation: "fadeUp 0.3s ease" }}>
-          <div style={{ fontSize: 16, fontWeight: "700", color: "#fff", marginBottom: 8 }}>
+          <div style={{ fontSize: 16, fontWeight: "700", color: "#111827", marginBottom: 8 }}>
             Ce altă explicație ar putea exista?
           </div>
           <div style={{
-            fontSize: 13, color: "#8080AA", lineHeight: 1.7, marginBottom: 16,
+            fontSize: 13, color: "#475569", lineHeight: 1.7, marginBottom: 16,
             padding: "12px 14px", background: "#F8FAFC",
             borderRadius: 10, borderLeft: `2px solid ${C.contextual}44`,
           }}>
@@ -467,7 +468,7 @@ function MyObservation() {
                 width: "100%", minHeight: 80, background: `${C.contextual}08`,
                 border: `1px solid ${C.contextual}33`, borderRadius: 10,
                 color: C.text, fontSize: 13, padding: "10px 12px",
-                resize: "vertical", fontFamily: "Georgia, serif",
+                resize: "vertical", fontFamily: "'DM Sans', system-ui, sans-serif",
                 outline: "none", boxSizing: "border-box", lineHeight: 1.6,
               }}
             />
@@ -475,7 +476,7 @@ function MyObservation() {
 
           <div style={{ display: "flex", gap: 10 }}>
             <button onClick={() => setStep(1)} style={{
-              background: "rgba(15,23,42,0.04)", border: `1px solid ${C.border}`,
+              background: "rgba(15,23,42,0.04)", border: "1px solid #E5E7EB",
               borderRadius: 10, color: C.muted, fontSize: 13, padding: "10px 16px", cursor: "pointer",
             }}>←</button>
             <button onClick={() => setStep(3)} disabled={!canNext2} style={{
@@ -493,10 +494,10 @@ function MyObservation() {
       {/* Step 3 — Consistent vs contextual */}
       {step === 3 && (
         <div style={{ animation: "fadeUp 0.3s ease" }}>
-          <div style={{ fontSize: 16, fontWeight: "700", color: "#fff", marginBottom: 8 }}>
+          <div style={{ fontSize: 16, fontWeight: "700", color: "#111827", marginBottom: 8 }}>
             Consecvent sau contextual?
           </div>
-          <div style={{ fontSize: 13, color: "#8080AA", lineHeight: 1.7, marginBottom: 16 }}>
+          <div style={{ fontSize: 13, color: "#475569", lineHeight: 1.7, marginBottom: 16 }}>
             Bifează ce se potrivește pentru comportamentul observat. Asta te ajută să înțelegi dacă e un tipar al persoanei sau un răspuns la o situație.
           </div>
 
@@ -518,7 +519,7 @@ function MyObservation() {
                 >
                   <div style={{ fontSize: 20, flexShrink: 0 }}>{ctx.emoji}</div>
                   <div style={{ flex: 1 }}>
-                    <div style={{ fontSize: 13, fontWeight: "600", color: selected ? "#fff" : C.text, marginBottom: 2 }}>{ctx.label}</div>
+                    <div style={{ fontSize: 13, fontWeight: "600", color: selected ? "#111827" : C.text, marginBottom: 2 }}>{ctx.label}</div>
                     <div style={{ fontSize: 11, color: C.muted, lineHeight: 1.5 }}>{ctx.desc}</div>
                   </div>
                   <div style={{
@@ -528,7 +529,7 @@ function MyObservation() {
                     display: "flex", alignItems: "center", justifyContent: "center",
                     transition: "all 0.2s",
                   }}>
-                    {selected && <div style={{ fontSize: 10, color: "#fff" }}>✓</div>}
+                    {selected && <div style={{ fontSize: 10, color: "#111827" }}>✓</div>}
                   </div>
                 </div>
               );
@@ -547,7 +548,7 @@ function MyObservation() {
                 width: "100%", minHeight: 80, background: `${C.gold}08`,
                 border: `1px solid ${C.gold}33`, borderRadius: 10,
                 color: C.text, fontSize: 13, padding: "10px 12px",
-                resize: "vertical", fontFamily: "Georgia, serif",
+                resize: "vertical", fontFamily: "'DM Sans', system-ui, sans-serif",
                 outline: "none", boxSizing: "border-box", lineHeight: 1.6,
               }}
             />
@@ -555,7 +556,7 @@ function MyObservation() {
 
           <div style={{ display: "flex", gap: 10 }}>
             <button onClick={() => setStep(2)} style={{
-              background: "rgba(15,23,42,0.04)", border: `1px solid ${C.border}`,
+              background: "rgba(15,23,42,0.04)", border: "1px solid #E5E7EB",
               borderRadius: 10, color: C.muted, fontSize: 13, padding: "10px 16px", cursor: "pointer",
             }}>←</button>
             <button onClick={finish} disabled={!canFinish} style={{
@@ -579,7 +580,7 @@ export default function GhidObservatie() {
   return (
     <div style={{
       minHeight: "100vh",
-      background: `radial-gradient(ellipse at 20% 10%, #080820 0%, ${C.bgDeep} 60%)`,
+      background: "linear-gradient(135deg, #F8FAFC 0%, #FFF7ED 100%)",
       fontFamily: "'Georgia', serif", color: C.text,
       padding: "28px 16px 80px",
     }}>
@@ -597,7 +598,7 @@ export default function GhidObservatie() {
           </div>
           <h1 style={{
             fontSize: "clamp(20px, 5vw, 30px)", fontWeight: 700, margin: "0 0 8px",
-            background: `linear-gradient(135deg, #fff 0%, #93C5FD 100%)`,
+            background: "#FFFFFF",
             WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
           }}>Ghidul de Observație</h1>
           <p style={{ fontSize: 12, color: C.muted, margin: 0, fontStyle: "italic" }}>
@@ -608,8 +609,8 @@ export default function GhidObservatie() {
         {/* Tabs */}
         <div style={{
           display: "flex", gap: 6, marginBottom: 24,
-          background: C.panel, borderRadius: 14, padding: 6,
-          border: `1px solid ${C.border}`,
+          background: "#FFFFFF", borderRadius: 14, padding: 6,
+          border: "1px solid #E5E7EB",
         }}>
           {[
             { id: "intro", label: "Conceptul" },
@@ -625,7 +626,7 @@ export default function GhidObservatie() {
                 background: tab === t.id ? `linear-gradient(135deg, ${C.obs}, #60A5FA)` : "transparent",
                 color: tab === t.id ? "#F3F4F6" : C.muted,
                 fontWeight: tab === t.id ? "bold" : "normal",
-                fontSize: 12, fontFamily: "Georgia, serif",
+                fontSize: 12, fontFamily: "'DM Sans', system-ui, sans-serif",
                 transition: "all 0.2s",
               }}>{t.label}</button>
           ))}
@@ -634,11 +635,11 @@ export default function GhidObservatie() {
         {/* INTRO */}
         {tab === "intro" && (
           <div style={{ animation: "fadeUp 0.4s ease" }}>
-            <div style={{ background: C.panel, border: `1px solid ${C.border}`, borderRadius: 18, padding: "24px", marginBottom: 14 }}>
+            <div style={{ background: "#FFFFFF", border: "1px solid #E5E7EB", borderRadius: 18, padding: "24px", marginBottom: 14 }}>
               <p style={{ fontSize: 15, lineHeight: 1.9, color: C.text, margin: "0 0 20px" }}>
                 Creierul nu separă observația de interpretare. Le face simultan, în fracțiuni de secundă, fără să te întrebe.
               </p>
-              <p style={{ fontSize: 15, lineHeight: 1.9, color: "#9090BB", margin: 0 }}>
+              <p style={{ fontSize: 15, lineHeight: 1.9, color: "#475569", margin: 0 }}>
                 Cineva întârzie → creierul înregistrează direct <em style={{ color: C.judecata }}>"nu îi pasă de mine"</em>, nu <em style={{ color: C.obs }}>"a întârziat 15 minute."</em>
               </p>
             </div>
@@ -654,7 +655,7 @@ export default function GhidObservatie() {
               </div>
             </div>
 
-            <div style={{ background: C.panel, border: `1px solid ${C.border}`, borderRadius: 18, padding: "22px", marginBottom: 14 }}>
+            <div style={{ background: "#FFFFFF", border: "1px solid #E5E7EB", borderRadius: 18, padding: "22px", marginBottom: 14 }}>
               <div style={{ fontSize: 11, letterSpacing: 2, color: C.muted, textTransform: "uppercase", fontFamily: "monospace", marginBottom: 16 }}>
                 Consecvent vs. contextual
               </div>
@@ -680,7 +681,7 @@ export default function GhidObservatie() {
 
             <button onClick={() => setTab("exemple")} style={{
               width: "100%", marginTop: 16,
-              background: `linear-gradient(135deg, ${C.obs}, #60A5FA)`,
+              background: "#FFFFFF",
               border: "none", borderRadius: 14, color: "#F3F4F6",
               fontWeight: "bold", fontSize: 15, padding: "16px",
               cursor: "pointer", boxShadow: `0 6px 24px ${C.obs}33`,
@@ -697,7 +698,7 @@ export default function GhidObservatie() {
             {EXAMPLES.map((ex, i) => <ExampleCard key={i} ex={ex} index={i} />)}
             <button onClick={() => setTab("practica")} style={{
               width: "100%", marginTop: 8,
-              background: `linear-gradient(135deg, ${C.obs}, #60A5FA)`,
+              background: "#FFFFFF",
               border: "none", borderRadius: 14, color: "#F3F4F6",
               fontWeight: "bold", fontSize: 15, padding: "16px",
               cursor: "pointer", boxShadow: `0 6px 24px ${C.obs}33`,

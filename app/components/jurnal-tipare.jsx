@@ -1,11 +1,12 @@
 "use client";
+
 import { useState, useEffect, useRef } from "react";
 
 const C = {
   bg: "#F3F4F6",
-  bgWarm: "#FFF7ED",
-  panel: "#FFFFFF",
-  panelWarm: "#FFFFFF",
+  bgWarm: "#1118277ED",
+  panel: "#111827FFF",
+  panelWarm: "#111827FFF",
   border: "#E5E7EB",
   borderWarm: "#FED7AA",
   text: "#111827",
@@ -70,7 +71,7 @@ function PrivacyScreen({ onContinue }) {
   return (
     <div style={{
       minHeight: "100vh",
-      background: `radial-gradient(ellipse at 30% 20%, #1A0F05 0%, ${C.bg} 60%)`,
+      background: "linear-gradient(135deg, #F8FAFC 0%, #FFF7ED 100%)",
       display: "flex", flexDirection: "column", alignItems: "center",
       justifyContent: "center", padding: "32px 20px",
       fontFamily: "'Georgia', serif", color: C.text,
@@ -84,21 +85,21 @@ function PrivacyScreen({ onContinue }) {
           </div>
           <h1 style={{
             fontSize: "clamp(22px, 5vw, 32px)", fontWeight: 700, margin: 0,
-            background: `linear-gradient(135deg, #fff 0%, ${C.gold} 100%)`,
+            background: "#FFFFFF",
             WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
             lineHeight: 1.3,
           }}>Jurnalul de Tipare</h1>
         </div>
 
         <div style={{
-          background: C.panelWarm,
+          background: "#FFFFFF"Warm,
           border: `1px solid ${C.borderWarm}`,
           borderRadius: 24, padding: "32px 28px",
           marginBottom: 20,
           boxShadow: `0 8px 24px rgba(15,23,42,0.08)`,
         }}>
           <p style={{
-            fontSize: 18, fontWeight: "700", color: "#fff",
+            fontSize: 18, fontWeight: "700", color: "#111827",
             margin: "0 0 20px", lineHeight: 1.5, textAlign: "center",
           }}>
             Jurnalul tău e al tău. Complet.
@@ -163,12 +164,12 @@ function PrivacyScreen({ onContinue }) {
           onClick={onContinue}
           style={{
             width: "100%",
-            background: `linear-gradient(135deg, ${C.orange}, ${C.gold})`,
+            background: "#FFFFFF",
             border: "none", borderRadius: 16,
             color: "#F3F4F6", fontWeight: "bold", fontSize: 16,
             padding: "18px", cursor: "pointer",
             boxShadow: `0 6px 28px ${C.orange}44`,
-            fontFamily: "Georgia, serif",
+            fontFamily: "'DM Sans', system-ui, sans-serif",
           }}>
           Înțeleg — deschide jurnalul →
         </button>
@@ -235,7 +236,7 @@ function NewEntryForm({ onSave, onCancel }) {
 
   return (
     <div style={{
-      background: C.panelWarm, border: `1px solid ${C.borderWarm}`,
+      background: "#FFFFFF"Warm, border: `1px solid ${C.borderWarm}`,
       borderRadius: 20, padding: "24px 22px",
       boxShadow: `0 8px 24px rgba(15,23,42,0.08)`,
     }}>
@@ -263,7 +264,7 @@ function NewEntryForm({ onSave, onCancel }) {
       {/* Steps 0-2 */}
       {step <= 2 && current && (
         <div style={{ animation: "fadeUp 0.3s ease" }}>
-          <div style={{ fontSize: 17, fontWeight: "700", color: "#fff", marginBottom: 8, lineHeight: 1.4 }}>
+          <div style={{ fontSize: 17, fontWeight: "700", color: "#111827", marginBottom: 8, lineHeight: 1.4 }}>
             {current.title}
           </div>
           <div style={{ fontSize: 13, color: "#9088AA", lineHeight: 1.7, marginBottom: 12 }}>
@@ -288,7 +289,7 @@ function NewEntryForm({ onSave, onCancel }) {
               border: `1px solid ${C.borderWarm}`,
               borderRadius: 12, color: C.text, fontSize: 14,
               padding: "12px 14px", resize: "vertical",
-              fontFamily: "Georgia, serif", outline: "none",
+              fontFamily: "'DM Sans', system-ui, sans-serif", outline: "none",
               boxSizing: "border-box", lineHeight: 1.7,
               caretColor: C.orange,
             }}
@@ -296,7 +297,7 @@ function NewEntryForm({ onSave, onCancel }) {
           <div style={{ display: "flex", gap: 10, marginTop: 14 }}>
             {step > 0 && (
               <button onClick={() => setStep(s => s - 1)} style={{
-                background: "rgba(15,23,42,0.04)", border: `1px solid ${C.border}`,
+                background: "rgba(15,23,42,0.04)", border: "1px solid #E5E7EB",
                 borderRadius: 10, color: C.muted, fontSize: 13,
                 padding: "10px 18px", cursor: "pointer",
               }}>← Înapoi</button>
@@ -322,7 +323,7 @@ function NewEntryForm({ onSave, onCancel }) {
       {/* Step 3 — Pattern selection */}
       {step === 3 && (
         <div style={{ animation: "fadeUp 0.3s ease" }}>
-          <div style={{ fontSize: 17, fontWeight: "700", color: "#fff", marginBottom: 8 }}>
+          <div style={{ fontSize: 17, fontWeight: "700", color: "#111827", marginBottom: 8 }}>
             Recunoști un tipar?
           </div>
           <div style={{ fontSize: 13, color: "#9088AA", lineHeight: 1.7, marginBottom: 16 }}>
@@ -362,7 +363,7 @@ function NewEntryForm({ onSave, onCancel }) {
                 width: "100%", background: "#F8FAFC",
                 border: `1px solid ${C.borderWarm}`, borderRadius: 10,
                 color: C.text, fontSize: 13, padding: "10px 12px",
-                fontFamily: "Georgia, serif", outline: "none",
+                fontFamily: "'DM Sans', system-ui, sans-serif", outline: "none",
                 boxSizing: "border-box", marginBottom: 12,
               }}
             />
@@ -379,9 +380,9 @@ function NewEntryForm({ onSave, onCancel }) {
               style={{
                 width: "100%", minHeight: 60,
                 background: "#F8FAFC",
-                border: `1px solid ${C.border}`, borderRadius: 10,
+                border: "1px solid #E5E7EB", borderRadius: 10,
                 color: C.text, fontSize: 13, padding: "10px 12px",
-                resize: "vertical", fontFamily: "Georgia, serif",
+                resize: "vertical", fontFamily: "'DM Sans', system-ui, sans-serif",
                 outline: "none", boxSizing: "border-box", lineHeight: 1.6,
               }}
             />
@@ -389,7 +390,7 @@ function NewEntryForm({ onSave, onCancel }) {
 
           <div style={{ display: "flex", gap: 10 }}>
             <button onClick={() => setStep(2)} style={{
-              background: "rgba(15,23,42,0.04)", border: `1px solid ${C.border}`,
+              background: "rgba(15,23,42,0.04)", border: "1px solid #E5E7EB",
               borderRadius: 10, color: C.muted, fontSize: 13,
               padding: "10px 18px", cursor: "pointer",
             }}>← Înapoi</button>
@@ -420,7 +421,7 @@ function EntryCard({ entry, onDelete }) {
 
   return (
     <div style={{
-      background: C.panelWarm, border: `1px solid ${C.borderWarm}`,
+      background: "#FFFFFF"Warm, border: `1px solid ${C.borderWarm}`,
       borderRadius: 16, padding: "18px 20px",
       transition: "all 0.2s",
     }}>
@@ -458,7 +459,7 @@ function EntryCard({ entry, onDelete }) {
           ].map(item => (
             <div key={item.label} style={{ marginBottom: 12 }}>
               <div style={{ fontSize: 9, letterSpacing: 2, color: item.color, textTransform: "uppercase", fontFamily: "monospace", marginBottom: 4 }}>{item.label}</div>
-              <div style={{ fontSize: 13, color: "#9090AA", lineHeight: 1.6, padding: "8px 12px", background: "#F8FAFC", borderRadius: 8, borderLeft: `2px solid ${item.color}44` }}>{item.value}</div>
+              <div style={{ fontSize: 13, color: "#475569", lineHeight: 1.6, padding: "8px 12px", background: "#F8FAFC", borderRadius: 8, borderLeft: `2px solid ${item.color}44` }}>{item.value}</div>
             </div>
           ))}
           <button onClick={() => onDelete(entry.id)} style={{
@@ -487,7 +488,7 @@ function PatternInsight({ entries }) {
 
   return (
     <div style={{
-      background: `linear-gradient(135deg, ${cat.color}12, ${C.panelWarm})`,
+      background: "#FFFFFF",
       border: `1px solid ${cat.color}44`,
       borderRadius: 18, padding: "22px 22px",
       marginBottom: 16,
@@ -497,7 +498,7 @@ function PatternInsight({ entries }) {
       <div style={{ fontSize: 10, letterSpacing: 3, color: cat.color, textTransform: "uppercase", fontFamily: "monospace", marginBottom: 12 }}>
         🔍 Tipar identificat
       </div>
-      <div style={{ fontSize: 16, fontWeight: "700", color: "#fff", marginBottom: 10, lineHeight: 1.4 }}>
+      <div style={{ fontSize: 16, fontWeight: "700", color: "#111827", marginBottom: 10, lineHeight: 1.4 }}>
         {cat.emoji} {cat.label} — apare de {dominant[1]} ori în jurnalul tău
       </div>
       <div style={{ fontSize: 13, color: "#A09888", lineHeight: 1.7, marginBottom: 16 }}>
@@ -507,7 +508,7 @@ function PatternInsight({ entries }) {
         padding: "12px 16px",
         background: "#F8FAFC",
         borderRadius: 12,
-        fontSize: 13, color: "#8080AA", fontStyle: "italic", lineHeight: 1.7,
+        fontSize: 13, color: "#475569", fontStyle: "italic", lineHeight: 1.7,
       }}>
         {communityPct}% dintre cei care au folosit jurnalul au găsit același tipar de cel puțin două ori. Nu ești singur în asta.
       </div>
@@ -538,7 +539,7 @@ export default function JurnalTipare() {
   return (
     <div style={{
       minHeight: "100vh",
-      background: `radial-gradient(ellipse at 25% 15%, #150A03 0%, ${C.bg} 55%)`,
+      background: "linear-gradient(135deg, #F8FAFC 0%, #FFF7ED 100%)",
       fontFamily: "'Georgia', serif", color: C.text,
       padding: "24px 16px 80px",
     }}>
@@ -556,7 +557,7 @@ export default function JurnalTipare() {
           </div>
           <h1 style={{
             fontSize: "clamp(22px, 5vw, 32px)", fontWeight: 700, margin: "0 0 6px",
-            background: `linear-gradient(135deg, #fff 0%, ${C.gold} 100%)`,
+            background: "#FFFFFF",
             WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
           }}>Jurnalul de Tipare</h1>
           <p style={{ fontSize: 12, color: C.muted, margin: 0, fontStyle: "italic" }}>
@@ -570,12 +571,12 @@ export default function JurnalTipare() {
         {/* Empty state */}
         {entries.length === 0 && !showForm && (
           <div style={{
-            background: C.panelWarm, border: `1px solid ${C.borderWarm}`,
+            background: "#FFFFFF"Warm, border: `1px solid ${C.borderWarm}`,
             borderRadius: 20, padding: "36px 28px", textAlign: "center",
             marginBottom: 16, animation: "fadeUp 0.4s ease",
           }}>
             <div style={{ fontSize: 40, marginBottom: 16 }}>📖</div>
-            <div style={{ fontSize: 15, fontWeight: "600", color: "#fff", marginBottom: 10 }}>
+            <div style={{ fontSize: 15, fontWeight: "600", color: "#111827", marginBottom: 10 }}>
               Jurnalul tău e gol — deocamdată
             </div>
             <div style={{ fontSize: 13, color: "#9088AA", lineHeight: 1.8, marginBottom: 20 }}>
@@ -612,7 +613,7 @@ export default function JurnalTipare() {
             onClick={handleNewEntry}
             style={{
               width: "100%",
-              background: `linear-gradient(135deg, ${C.orange}, ${C.gold})`,
+              background: "#FFFFFF",
               border: "none", borderRadius: 16,
               color: "#F3F4F6", fontWeight: "bold", fontSize: 15,
               padding: "16px", cursor: "pointer",
@@ -657,7 +658,7 @@ export default function JurnalTipare() {
                   Sigur vrei să ștergi toate intrările? Această acțiune nu poate fi anulată.
                 </div>
                 <div style={{ display: "flex", gap: 8, justifyContent: "center" }}>
-                  <button onClick={() => setShowClearConfirm(false)} style={{ background: "rgba(15,23,42,0.05)", border: `1px solid ${C.border}`, borderRadius: 8, color: C.muted, fontSize: 12, padding: "8px 16px", cursor: "pointer" }}>
+                  <button onClick={() => setShowClearConfirm(false)} style={{ background: "rgba(15,23,42,0.05)", border: "1px solid #E5E7EB", borderRadius: 8, color: C.muted, fontSize: 12, padding: "8px 16px", cursor: "pointer" }}>
                     Anulează
                   </button>
                   <button onClick={() => { clearAll(); setShowClearConfirm(false); }} style={{ background: `${C.red}22`, border: `1px solid ${C.red}44`, borderRadius: 8, color: C.red, fontSize: 12, padding: "8px 16px", cursor: "pointer" }}>
