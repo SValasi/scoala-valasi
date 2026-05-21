@@ -1,9 +1,5 @@
-import dynamic from "next/dynamic";
-
-const HartaFortelor = dynamic(() => import("./components/harta-fortelor"), {
-  ssr: false,
-});
+import ClientHome from "./ClientHome";
 
 export default function Home() {
-  return <HartaFortelor />;
+  return <ClientHome />;
 }
