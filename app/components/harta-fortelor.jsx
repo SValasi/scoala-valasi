@@ -1,3 +1,4 @@
+"use client";
 import { useState, useRef, useEffect } from "react";
 
 const DRAGON_ORANGE = "#FF6B2B";
