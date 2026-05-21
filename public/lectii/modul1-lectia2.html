@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lecția 2 — Inteligență Structurală · Școala Valasi</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #09090F;
+    --panel: #111320;
+    --border: #1C1F35;
+    --text: #E2E0F0;
+    --muted: #5A5880;
+    --orange: #FF6B2B;
+    --gold: #FFB347;
+    --teal: #4ECDC4;
+    --red: #EF4444;
+    --blue: #3B82F6;
+    --purple: #8B5CF6;
+    --green: #22C55E;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    background-image: radial-gradient(ellipse at 25% 10%, #1A0A2E 0%, var(--bg) 55%);
+  }
+
+  /* ── NAV ── */
+  .top-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(9,9,15,0.92); backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 20px; display: flex; align-items: center; gap: 12px;
+  }
+  .nav-label { font-size: 9px; letter-spacing: 3px; color: var(--muted); text-transform: uppercase; font-family: monospace; flex-shrink: 0; }
+  .progress-bar { flex: 1; height: 3px; border-radius: 2px; background: var(--border); overflow: hidden; }
+  .progress-fill { height: 100%; border-radius: 2px; background: linear-gradient(90deg, var(--orange), var(--gold)); transition: width 0.5s; width: 0%; }
+  .progress-pct { font-size: 10px; color: var(--muted); font-family: monospace; flex-shrink: 0; }
+
+  /* ── LAYOUT ── */
+  .page { max-width: 640px; margin: 0 auto; padding: 0 20px 80px; }
+
+  /* ── HERO ── */
+  .hero { padding: 48px 0 32px; }
+  .tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+  .tag { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; font-family: monospace; padding: 3px 10px; border-radius: 20px; border: 1px solid var(--border); color: var(--muted); }
+  .tag.active { border-color: rgba(255,107,43,0.4); color: var(--orange); }
+  .hero-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(22px,5vw,38px); font-weight: 300; line-height: 1.2; letter-spacing: -0.02em; margin-bottom: 16px; background: linear-gradient(135deg, #fff 0%, var(--gold) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .hero-sub { font-family: 'Cormorant Garamond', serif; font-size: 18px; color: #8888BB; line-height: 1.8; }
+
+  /* ── TABS ── */
+  .section-tabs { display: flex; gap: 6px; margin-bottom: 32px; flex-wrap: wrap; }
+  .tab-btn { font-size: 10px; padding: 5px 12px; border-radius: 20px; cursor: pointer; font-family: monospace; letter-spacing: 1px; text-transform: uppercase; border: 1px solid var(--border); background: transparent; color: #3A3A5A; transition: all 0.2s; }
+  .tab-btn.active { border-color: var(--orange); background: rgba(255,107,43,0.1); color: var(--orange); }
+  .tab-btn.done { color: var(--muted); }
+
+  /* ── SECTIONS ── */
+  .section { display: none; animation: fadeUp 0.4s ease; }
+  .section.visible { display: block; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ── CARDS ── */
+  .card { background: linear-gradient(135deg, var(--panel), #0E0E20); border: 1px solid var(--border); border-radius: 18px; padding: 24px; margin-bottom: 16px; }
+  .card p { font-family: 'Cormorant Garamond', serif; font-size: 17px; line-height: 1.9; color: var(--text); margin-bottom: 16px; }
+  .card p:last-child { margin-bottom: 0; }
+  .card p.dim { color: #9090BB; }
+  .card p strong { color: #fff; }
+  .card p em { color: var(--orange); font-style: normal; font-weight: 600; }
+
+  .highlight-card { background: rgba(255,107,43,0.06); border: 1px solid rgba(255,107,43,0.2); border-radius: 14px; padding: 18px; margin-bottom: 16px; }
+  .highlight-card p { font-family: 'Cormorant Garamond', serif; font-size: 15px; color: #B0B0CC; line-height: 1.8; margin: 0; }
+  .highlight-card p strong { color: #fff; }
+
+  .grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-bottom: 24px; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+  .grid-card { background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 16px 14px; text-align: center; }
+  .grid-card .icon { font-size: 22px; margin-bottom: 6px; }
+  .grid-card .label { font-size: 13px; font-weight: 500; color: #fff; margin-bottom: 3px; }
+  .grid-card .desc { font-size: 11px; color: var(--muted); }
+
+  .half-card { background: var(--panel); border-radius: 14px; padding: 16px; }
+  .half-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; font-family: monospace; margin-bottom: 8px; }
+  .half-text { font-family: 'Cormorant Garamond', serif; font-size: 14px; color: #9090AA; line-height: 1.7; }
+
+  /* ── BUTTONS ── */
+  .btn-primary { width: 100%; padding: 16px; background: linear-gradient(135deg, var(--orange), var(--gold)); border: none; border-radius: 14px; color: #09090F; font-weight: 700; font-size: 15px; cursor: pointer; font-family: 'DM Sans', sans-serif; box-shadow: 0 6px 24px rgba(255,107,43,0.35); transition: all 0.2s; }
+  .btn-primary:hover { transform: translateY(-1px); }
+  .btn-teal { width: 100%; padding: 16px; background: linear-gradient(135deg, var(--teal), #2DD4BF); border: none; border-radius: 14px; color: #09090F; font-weight: 700; font-size: 15px; cursor: pointer; font-family: 'DM Sans', sans-serif; box-shadow: 0 6px 24px rgba(78,205,196,0.35); transition: all 0.2s; }
+  .btn-ghost { width: 100%; padding: 14px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 14px; color: var(--muted); font-size: 13px; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.2s; }
+  .btn-small { padding: 8px 20px; border: none; border-radius: 8px; color: #09090F; font-weight: 700; font-size: 12px; cursor: pointer; font-family: 'DM Sans', sans-serif; }
+  .btn-back { padding: 10px 16px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 10px; color: var(--muted); font-size: 13px; cursor: pointer; font-family: 'DM Sans', sans-serif; }
+
+  /* ── CHECKLIST ── */
+  .checklist { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+  .check-item { display: flex; gap: 10px; align-items: flex-start; }
+  .check-icon { color: var(--orange); font-size: 14px; flex-shrink: 0; margin-top: 2px; }
+  .check-text { font-family: 'Cormorant Garamond', serif; font-size: 15px; color: #9090AA; line-height: 1.6; }
+
+  /* ── QUOTE ── */
+  .quote-card { background: linear-gradient(135deg, var(--panel), #0E0820); border: 1px solid rgba(255,107,43,0.35); border-radius: 20px; padding: 28px; margin-bottom: 20px; text-align: center; box-shadow: 0 0 40px rgba(255,107,43,0.07); }
+  .quote-card p { font-family: 'Cormorant Garamond', serif; font-size: 20px; line-height: 1.8; color: #fff; font-style: italic; margin-bottom: 20px; }
+  .quote-line { width: 40px; height: 2px; margin: 0 auto; background: linear-gradient(90deg, var(--orange), var(--gold)); }
+
+  .next-card { background: linear-gradient(135deg, #0F1A2A, #0A1020); border: 1px solid rgba(78,205,196,0.2); border-radius: 18px; padding: 22px; margin-bottom: 20px; }
+  .next-label { font-size: 10px; letter-spacing: 3px; color: var(--teal); text-transform: uppercase; font-family: monospace; margin-bottom: 10px; }
+  .next-title { font-size: 15px; font-weight: 600; color: #fff; margin-bottom: 8px; }
+  .next-desc { font-family: 'Cormorant Garamond', serif; font-size: 15px; color: #7090AA; line-height: 1.7; }
+
+  .completion { margin-top: 32px; background: linear-gradient(135deg, rgba(255,107,43,0.1), rgba(255,179,71,0.05)); border: 1px solid rgba(255,179,71,0.3); border-radius: 18px; padding: 28px; text-align: center; display: none; }
+  .completion.visible { display: block; animation: fadeUp 0.4s ease; }
+
+  /* ── TOOL WRAP ── */
+  .tool-wrap { background: var(--panel); border: 1px solid rgba(255,107,43,0.3); border-radius: 20px; padding: 24px; margin-top: 16px; display: none; animation: fadeUp 0.4s ease; }
+  .tool-wrap.visible { display: block; }
+  .tool-title { font-size: 10px; letter-spacing: 3px; color: var(--orange); text-transform: uppercase; font-family: monospace; margin-bottom: 20px; }
+
+  /* ── DISECTIA ── */
+  .step-progress { display: flex; gap: 6px; margin-bottom: 20px; }
+  .step-bar { flex: 1; height: 4px; border-radius: 2px; background: var(--border); transition: all 0.3s; }
+
+  .step-header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+  .step-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .step-question { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+  .step-explanation { font-size: 13px; color: #9090AA; line-height: 1.7; margin-bottom: 12px; padding: 10px 14px; background: rgba(0,0,0,0.2); border-radius: 10px; }
+  .hints { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+  .hint-chip { font-size: 10px; color: #8080AA; background: rgba(255,255,255,0.03); border: 1px solid #1E293B; border-radius: 20px; padding: 3px 10px; }
+  .step-textarea { width: 100%; min-height: 90px; background: rgba(0,0,0,0.3); border-radius: 10px; color: var(--text); font-size: 13px; padding: 10px 12px; resize: vertical; font-family: Georgia, serif; outline: none; line-height: 1.6; margin-bottom: 12px; }
+  .step-nav { display: flex; gap: 10px; }
+
+  .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+  .compare-card { border-radius: 12px; padding: 12px 14px; }
+  .compare-label { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; font-family: monospace; margin-bottom: 6px; }
+  .compare-text { font-size: 12px; color: #94A3B8; line-height: 1.6; }
+
+  .gap-result { padding: 14px 16px; background: rgba(34,197,94,0.06); border: 1px solid rgba(34,197,94,0.2); border-radius: 12px; font-size: 13px; color: #70AA88; font-style: italic; font-family: 'Cormorant Garamond', serif; line-height: 1.7; }
+
+  /* ── SIMULATOR ── */
+  .sim-preset-grid { display: flex; gap: 10px; margin-bottom: 16px; }
+  .sim-preset-card { flex: 1; background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 18px 16px; cursor: pointer; text-align: center; transition: all 0.2s; }
+  .sim-preset-card:hover { border-color: var(--orange); }
+  .sim-preset-emoji { font-size: 28px; margin-bottom: 8px; }
+  .sim-preset-name { font-size: 13px; font-weight: 600; color: #fff; }
+
+  .sim-gap-bar-wrap { margin-bottom: 20px; }
+  .sim-gap-header { display: flex; justify-content: space-between; margin-bottom: 6px; }
+  .sim-gap-label { font-size: 10px; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; font-family: monospace; }
+  .sim-gap-pct { font-size: 12px; font-family: monospace; font-weight: 700; }
+  .sim-gap-bar { height: 8px; border-radius: 4px; background: var(--border); overflow: hidden; }
+  .sim-gap-fill { height: 100%; border-radius: 4px; transition: width 0.5s, background 0.3s; }
+
+  .sim-output { margin-bottom: 10px; }
+  .sim-output-header { display: flex; justify-content: space-between; margin-bottom: 4px; }
+  .sim-output-label { font-size: 12px; color: var(--text); }
+  .sim-output-val { font-size: 12px; font-family: monospace; }
+  .sim-output-bar { height: 5px; border-radius: 3px; background: var(--border); overflow: hidden; }
+  .sim-output-fill { height: 100%; border-radius: 3px; transition: width 0.4s; }
+
+  .sim-insight { margin: 16px 0; padding: 12px 14px; background: rgba(255,107,43,0.06); border: 1px solid rgba(255,107,43,0.2); border-radius: 10px; font-size: 12px; color: #94A3B8; font-style: italic; line-height: 1.7; }
+
+  .sim-slider-section { margin-bottom: 16px; }
+  .sim-slider-header { display: flex; justify-content: space-between; margin-bottom: 6px; }
+  .sim-slider-label { font-size: 12px; color: var(--text); }
+  .sim-slider-val { font-size: 12px; font-family: monospace; color: var(--orange); font-weight: 700; }
+  input[type=range] { width: 100%; -webkit-appearance: none; height: 3px; border-radius: 2px; background: var(--border); cursor: pointer; }
+  input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; border-radius: 50%; background: var(--orange); cursor: pointer; }
+
+  @media (max-width: 480px) {
+    .grid-3 { grid-template-columns: 1fr; }
+    .grid-2 { grid-template-columns: 1fr; }
+    .compare-grid { grid-template-columns: 1fr; }
+    .sim-preset-grid { flex-direction: column; }
+  }
+</style>
+
+<style id="valasi-light-module1-lesson-theme">
+/* VALASI LIGHT THEME — Lecții Modul 1 */
+:root {
+  --bg:#F3F4F6 !important;
+  --panel:#FFFFFF !important;
+  --border:#E5E7EB !important;
+  --text:#111827 !important;
+  --muted:#475569 !important;
+  --orange:#FF6B2B !important;
+  --gold:#FFB347 !important;
+  --teal:#14B8A6 !important;
+  --red:#DC2626 !important;
+  --blue:#2563EB !important;
+  --purple:#7C3AED !important;
+  --green:#16A34A !important;
+}
+
+html, body {
+  background:#F3F4F6 !important;
+  color:#111827 !important;
+}
+
+body {
+  font-family:'DM Sans',sans-serif !important;
+  font-weight:400 !important;
+  background-image:
+    radial-gradient(circle at 20% 0%, rgba(255,107,43,0.08), transparent 32%),
+    radial-gradient(circle at 80% 10%, rgba(255,179,71,0.07), transparent 28%) !important;
+}
+
+.top-nav {
+  min-height:64px !important;
+  padding:10px 20px !important;
+  display:grid !important;
+  grid-template-columns:auto minmax(80px,1fr) auto auto !important;
+  align-items:center !important;
+  gap:14px !important;
+  background:rgba(255,255,255,0.94) !important;
+  border-bottom:1px solid #E5E7EB !important;
+  backdrop-filter:blur(14px) !important;
+}
+
+.valasi-logo {
+  display:inline-flex !important;
+  align-items:center !important;
+  gap:10px !important;
+  color:#111827 !important;
+  text-decoration:none !important;
+  white-space:nowrap !important;
+}
+
+.valasi-mark {
+  width:34px !important;
+  height:34px !important;
+  border-radius:50% !important;
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  background:linear-gradient(135deg,#FF6B2B,#FFB347) !important;
+  color:#FFFFFF !important;
+  font-family:'Cormorant Garamond',serif !important;
+  font-size:20px !important;
+  font-weight:600 !important;
+  line-height:1 !important;
+  box-shadow:0 8px 18px rgba(255,107,43,0.18) !important;
+}
+
+.valasi-logo-text {
+  display:flex !important;
+  flex-direction:column !important;
+  gap:1px !important;
+  line-height:1.05 !important;
+}
+
+.valasi-logo-small {
+  font-family:'DM Mono',monospace !important;
+  font-size:9px !important;
+  letter-spacing:0.16em !important;
+  text-transform:uppercase !important;
+  color:#64748B !important;
+}
+
+.valasi-logo-main {
+  font-family:'Cormorant Garamond',serif !important;
+  font-size:19px !important;
+  font-weight:600 !important;
+  color:#111827 !important;
+}
+
+.back-module {
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  padding:9px 13px !important;
+  border:1px solid #E5E7EB !important;
+  border-radius:999px !important;
+  background:#FFFFFF !important;
+  color:#334155 !important;
+  text-decoration:none !important;
+  font-family:'DM Sans',sans-serif !important;
+  font-size:13px !important;
+  font-weight:700 !important;
+  white-space:nowrap !important;
+  box-shadow:0 4px 14px rgba(15,23,42,0.04) !important;
+}
+
+.back-module:hover {
+  border-color:#FF6B2B !important;
+  background:#FFF7ED !important;
+  color:#EA580C !important;
+}
+
+.nav-label {
+  color:#64748B !important;
+}
+
+.progress-bar {
+  background:#E5E7EB !important;
+}
+
+.progress-pct {
+  color:#64748B !important;
+  font-weight:700 !important;
+}
+
+.hero-title {
+  color:#111827 !important;
+  -webkit-text-fill-color:#111827 !important;
+  background:none !important;
+}
+
+.hero-sub {
+  color:#475569 !important;
+  font-family:'DM Sans',sans-serif !important;
+  font-weight:400 !important;
+}
+
+.tag {
+  background:#FFFFFF !important;
+  color:#64748B !important;
+  border:1px solid #E5E7EB !important;
+}
+
+.tag.active {
+  color:#EA580C !important;
+  border-color:#FED7AA !important;
+  background:#FFF7ED !important;
+}
+
+.tab-btn {
+  background:#FFFFFF !important;
+  color:#64748B !important;
+  border:1px solid #E5E7EB !important;
+}
+
+.tab-btn.active {
+  background:#FFF7ED !important;
+  color:#EA580C !important;
+  border-color:#FF6B2B !important;
+}
+
+.tab-btn.done {
+  color:#475569 !important;
+}
+
+.card,
+.grid-card,
+.half-card,
+.highlight-card,
+.quote-card,
+.next-card,
+.completion,
+.tool-wrap,
+.node-panel,
+.intervention-card,
+.result-card,
+.sim-preset-card,
+.compare-card {
+  background:#FFFFFF !important;
+  border:1px solid #E5E7EB !important;
+  box-shadow:0 8px 30px rgba(15,23,42,0.045) !important;
+}
+
+.card p,
+.highlight-card p,
+.half-text,
+.half-card p,
+.check-text,
+.check-item p,
+.next-desc,
+.grid-card .desc,
+.step-explanation,
+.node-explanation,
+.result-item-text,
+.compare-text,
+.sim-insight,
+.gap-result {
+  color:#475569 !important;
+  font-family:'DM Sans',sans-serif !important;
+  font-weight:400 !important;
+}
+
+.card p,
+.highlight-card p {
+  font-size:16.5px !important;
+  line-height:1.85 !important;
+}
+
+.card p.dim {
+  color:#475569 !important;
+}
+
+.card p strong,
+.highlight-card p strong,
+.grid-card .label,
+.node-question,
+.step-question,
+.sim-preset-name,
+.next-title,
+.completion h3 {
+  color:#111827 !important;
+}
+
+.card p em,
+.section-label,
+.next-label,
+.tool-title {
+  color:#EA580C !important;
+}
+
+.btn-primary,
+.btn-teal,
+.btn-small,
+.btn-save {
+  color:#FFFFFF !important;
+  font-weight:700 !important;
+}
+
+.btn-ghost,
+.btn-back {
+  background:#FFFFFF !important;
+  border:1px solid #CBD5E1 !important;
+  color:#334155 !important;
+  font-weight:600 !important;
+}
+
+.btn-ghost:hover,
+.btn-back:hover {
+  background:#FFF7ED !important;
+  border-color:#FF6B2B !important;
+  color:#EA580C !important;
+}
+
+.quote-card p,
+blockquote {
+  color:#111827 !important;
+  font-family:'Cormorant Garamond',serif !important;
+}
+
+.next-card {
+  background:#FFFFFF !important;
+}
+
+.next-label {
+  color:#EA580C !important;
+  font-weight:700 !important;
+}
+
+.next-title {
+  color:#111827 !important;
+}
+
+.next-desc {
+  color:#475569 !important;
+  font-family:'DM Sans',sans-serif !important;
+}
+
+textarea,
+.node-textarea,
+.step-textarea {
+  background:#F8FAFC !important;
+  border:1px solid #CBD5E1 !important;
+  color:#111827 !important;
+  font-family:'DM Sans',sans-serif !important;
+}
+
+textarea::placeholder,
+.node-textarea::placeholder,
+.step-textarea::placeholder {
+  color:#94A3B8 !important;
+}
+
+.hint-chip {
+  color:#475569 !important;
+  background:#F8FAFC !important;
+  border:1px solid #CBD5E1 !important;
+}
+
+#harta-svg circle {
+  fill:#FFFFFF !important;
+}
+
+#harta-svg text {
+  fill:#111827 !important;
+}
+
+.result-event,
+.result-intervention,
+.result-success,
+.gap-result {
+  background:#FFF7ED !important;
+  border:1px solid #FED7AA !important;
+  color:#334155 !important;
+}
+
+.sim-output-label,
+.sim-slider-label,
+.sim-gap-label {
+  color:#334155 !important;
+}
+
+input[type=range] {
+  background:#CBD5E1 !important;
+}
+
+@media (max-width:720px) {
+  .top-nav {
+    grid-template-columns:1fr auto !important;
+  }
+  .top-nav .progress-bar,
+  .progress-pct {
+    display:none !important;
+  }
+  .valasi-logo-small {
+    display:none !important;
+  }
+}
+</style>
+
+</head>
+<body>
+
+<!-- NAV -->
+<div class="top-nav">
+  <a href="https://valasi.aydasist.ro/" class="valasi-logo" aria-label="Școala Valasi">
+    <span class="valasi-mark">V</span>
+    <span class="valasi-logo-text">
+      <span class="valasi-logo-small">Școala</span>
+      <span class="valasi-logo-main">Valasi</span>
+    </span>
+  </a>
+  <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+  <span class="progress-pct" id="progress-pct">0%</span>
+  <a href="https://valasi.aydasist.ro/module/modul-1/" class="back-module">← Înapoi la Modul 1</a>
+</div>
+
+<div class="page">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="tags">
+      <span class="tag active">Modul 1</span>
+      <span class="tag">Inteligență Structurală</span>
+      <span class="tag">Lecția 2 din 3</span>
+    </div>
+    <h1 class="hero-title">De ce școala te-a învățat să reproduci, nu să înțelegi</h1>
+    <p class="hero-sub">Orice sistem face un compromis între ce e valoros și ce e măsurabil. Dacă înțelegi asta, nu mai ești prizonierul niciunui sistem fără să știi.</p>
+  </div>
+
+  <!-- TABS -->
+  <div class="section-tabs">
+    <button class="tab-btn active" onclick="goTo(0)">Introducere</button>
+    <button class="tab-btn" onclick="goTo(1)">Conceptul</button>
+    <button class="tab-btn" onclick="goTo(2)">Exemplul</button>
+    <button class="tab-btn" onclick="goTo(3)">Disecția</button>
+    <button class="tab-btn" onclick="goTo(4)">Simulatorul</button>
+    <button class="tab-btn" onclick="goTo(5)">Concluzia</button>
+  </div>
+
+  <!-- SECTION 0: INTRO -->
+  <div class="section visible" id="sec-0">
+    <div class="card">
+      <p>Ai luat vreodată o notă bună la un test și a doua zi nu mai știai nimic din ce ai învățat?</p>
+      <p class="dim">Nu e vina ta. <strong>E designul sistemului.</strong></p>
+    </div>
+    <div class="grid-3">
+      <div class="grid-card"><div class="icon">📖</div><div class="label">5 minute</div><div class="desc">să citești lecția</div></div>
+      <div class="grid-card"><div class="icon">⚙️</div><div class="label">2 instrumente</div><div class="desc">să diseci și să simulezi</div></div>
+      <div class="grid-card"><div class="icon">🐉</div><div class="label">1 principiu</div><div class="desc">valoros vs. măsurabil</div></div>
+    </div>
+    <button class="btn-primary" onclick="markRead(0)">Începe lecția →</button>
+  </div>
+
+  <!-- SECTION 1: CONCEPT -->
+  <div class="section" id="sec-1">
+    <div style="font-size:11px;letter-spacing:3px;color:var(--orange);text-transform:uppercase;font-family:monospace;margin-bottom:16px">Conceptul</div>
+    <div class="card">
+      <p>Orice sistem face un compromis între <em>ce e valoros</em> și <strong>ce e măsurabil.</strong></p>
+      <p class="dim">Școala și-a dorit să producă oameni care gândesc. Dar a trebuit să evalueze milioane de elevi, în mod egal, cu resurse limitate. Și a găsit soluția ei: <strong>testul cu răspuns corect.</strong></p>
+      <p class="dim">Problema e că înțelegerea reală nu are un singur răspuns corect. E greu de notat. Deci sistemul a ales ce putea măsura — memorarea — și a optimizat pentru asta.</p>
+    </div>
+    <div class="highlight-card">
+      <p><strong>Prima lege a sistemelor pe care școala nu ți-a predat-o:</strong></p>
+      <p style="margin-top:8px;font-style:italic">Orice sistem tinde să optimizeze pentru ce poate măsura, nu pentru ce contează cu adevărat.</p>
+    </div>
+    <div class="grid-2">
+      <div class="half-card" style="border:1px solid rgba(239,68,68,0.25)">
+        <div class="half-label" style="color:var(--red)">Ce măsoară</div>
+        <div class="half-text">Reproducerea informației în condiții de stres și timp limitat.</div>
+      </div>
+      <div class="half-card" style="border:1px solid rgba(78,205,196,0.25)">
+        <div class="half-label" style="color:var(--teal)">Ce promite</div>
+        <div class="half-text">Gândire critică, cetățeni educați, pregătire pentru viață.</div>
+      </div>
+    </div>
+    <button class="btn-primary" onclick="markRead(1)">Am înțeles — arată-mi exemplul →</button>
+  </div>
+
+  <!-- SECTION 2: EXEMPLU -->
+  <div class="section" id="sec-2">
+    <div style="font-size:11px;letter-spacing:3px;color:var(--orange);text-transform:uppercase;font-family:monospace;margin-bottom:16px">Exemplul real</div>
+    <div class="card">
+      <p class="dim" style="font-style:italic">Doi studenți învață același capitol de istorie.</p>
+      <div style="background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.2);border-radius:12px;padding:16px;margin-bottom:12px">
+        <div style="font-size:10px;letter-spacing:2px;color:var(--red);text-transform:uppercase;font-family:monospace;margin-bottom:8px">Studentul A</div>
+        <p style="margin:0;color:#9090AA;font-family:'Cormorant Garamond',serif;font-size:15px;line-height:1.7">Memorează datele, numele, evenimentele. Ia 10. Uită totul în trei săptămâni.</p>
+      </div>
+      <div style="background:rgba(78,205,196,0.06);border:1px solid rgba(78,205,196,0.2);border-radius:12px;padding:16px">
+        <div style="font-size:10px;letter-spacing:2px;color:var(--teal);text-transform:uppercase;font-family:monospace;margin-bottom:8px">Studentul B</div>
+        <p style="margin:0;color:#9090AA;font-family:'Cormorant Garamond',serif;font-size:15px;line-height:1.7">Înțelege de ce s-a întâmplat acel eveniment, ce forțe l-au produs. Ia 7. Nu uită niciodată.</p>
+      </div>
+    </div>
+    <div class="highlight-card">
+      <p><strong>Sistemul l-a recompensat pe primul. Viața îl va recompensa pe al doilea.</strong></p>
+      <p style="margin-top:8px">Nu pentru că viața e corectă — ci pentru că viața nu îți dă teste cu variante. Îți dă situații noi în care trebuie să înțelegi, nu să reproduci.</p>
+    </div>
+    <button class="btn-primary" onclick="markRead(2)">Înțeleg — disec un sistem →</button>
+  </div>
+
+  <!-- SECTION 3: DISECTIA -->
+  <div class="section" id="sec-3">
+    <div style="font-size:11px;letter-spacing:3px;color:var(--orange);text-transform:uppercase;font-family:monospace;margin-bottom:16px">Instrumentul 1 — Disecția Sistemului</div>
+    <div class="card">
+      <p class="dim">Aplică cadrul pe orice sistem din viața ta. Identifică ce intră, ce se întâmplă, ce promite și ce produce de fapt. Distanța dintre ultimele două e compromisul sistemului.</p>
+      <button class="btn-primary" id="open-disectia-btn" onclick="openDisectia()">Deschide Disecția Sistemului →</button>
+    </div>
+
+    <div class="tool-wrap" id="disectia-wrap">
+      <div class="tool-title">Disecția Sistemului</div>
+      <div id="disectia-content"></div>
+    </div>
+
+    <div style="margin-top:16px">
+      <button class="btn-ghost" onclick="markRead(3)">Am completat disecția — mergi la Simulator →</button>
+    </div>
+  </div>
+
+  <!-- SECTION 4: SIMULATOR -->
+  <div class="section" id="sec-4">
+    <div style="font-size:11px;letter-spacing:3px;color:var(--orange);text-transform:uppercase;font-family:monospace;margin-bottom:16px">Instrumentul 2 — Simulatorul de Sisteme</div>
+    <div class="card">
+      <p class="dim">Modifică elementele unui sistem și vezi în timp real cum se propagă efectele. Nu există schimbare fără consecință — și asta e lecția.</p>
+      <button class="btn-primary" id="open-sim-btn" onclick="openSimulator()">Deschide Simulatorul →</button>
+    </div>
+
+    <div class="tool-wrap" id="sim-wrap">
+      <div class="tool-title">Simulatorul de Sisteme</div>
+      <div id="sim-content"></div>
+    </div>
+
+    <div style="margin-top:16px">
+      <button class="btn-ghost" onclick="markRead(4)">Am experimentat — mergi la concluzie →</button>
+    </div>
+  </div>
+
+  <!-- SECTION 5: CONCLUZIE -->
+  <div class="section" id="sec-5">
+    <div style="font-size:11px;letter-spacing:3px;color:var(--orange);text-transform:uppercase;font-family:monospace;margin-bottom:16px">Concluzia</div>
+    <div class="quote-card">
+      <p>"Când înveți să vezi distanța dintre ce declară un sistem și ce produce de fapt — nu mai ești niciodată prizonierul lui fără să știi."</p>
+      <div class="quote-line"></div>
+    </div>
+    <div class="card" style="padding:20px">
+      <div style="font-size:11px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;font-family:monospace;margin-bottom:14px">Ce ai învățat</div>
+      <div class="checklist">
+        <div class="check-item"><span class="check-icon">✓</span><span class="check-text">De ce orice sistem face un compromis între ce e valoros și ce e măsurabil</span></div>
+        <div class="check-item"><span class="check-icon">✓</span><span class="check-text">Cum să diseci orice sistem — intrări, proces, ieșiri declarate vs. reale</span></div>
+        <div class="check-item"><span class="check-icon">✓</span><span class="check-text">Că înțelegând compromisul unui sistem poți naviga în el mai inteligent</span></div>
+      </div>
+    </div>
+    <div class="next-card">
+      <div class="next-label">Lecția 3 — ce urmează</div>
+      <div class="next-title">Pattern Recognition</div>
+      <div class="next-desc">Cum antrenezi ochiul să vadă ce urmează înainte să se întâmple — în forme, în comportamente, în dinamici sociale.</div>
+    </div>
+    <button class="btn-teal" onclick="markRead(5); window.location.href='modul1-lectia3.html'">Mergi la Lecția 3 →</button>
+  </div>
+
+  <!-- COMPLETION -->
+  <div class="completion" id="completion">
+    <div style="font-size:48px;margin-bottom:12px">🐉</div>
+    <h3 style="font-size:18px;font-weight:700;color:#fff;margin-bottom:8px">Lecția 2 completată</h3>
+    <p style="font-family:'Cormorant Garamond',serif;font-size:15px;color:#9090AA;line-height:1.7">Dragonul tău vede acum compromisurile sistemelor. Nimeni nu îl mai poate ține prizonier fără să știe.</p>
+  </div>
+
+</div>
+
+<script>
+// ── NAV ──────────────────────────────────────────────────────────────────────
+const TOTAL = 6;
+const readSections = new Set([0]);
+
+function goTo(i) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('visible'));
+  document.getElementById('sec-' + i).classList.add('visible');
+  document.querySelectorAll('.tab-btn').forEach((b, idx) => {
+    b.classList.remove('active', 'done');
+    if (idx === i) b.classList.add('active');
+    else if (readSections.has(idx)) b.classList.add('done');
+  });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function markRead(i) {
+  readSections.add(i);
+  updateProgress();
+  if (i < TOTAL - 1) goTo(i + 1);
+  if (readSections.size === TOTAL) document.getElementById('completion').classList.add('visible');
+}
+
+function updateProgress() {
+  const pct = Math.round((readSections.size / TOTAL) * 100);
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-pct').textContent = pct + '%';
+}
+
+// ── DISECTIA ─────────────────────────────────────────────────────────────────
+const STEPS = [
+  { id: 'sistem', label: 'Sistemul', color: '#CBD5E1', question: 'Ce sistem vrei să diseci?', explanation: 'Poți analiza orice — școala, un loc de muncă, o echipă, o instituție. Un sistem e orice structură care produce același tip de rezultat, indiferent de cine e înăuntru.', hints: ['Școala / universitatea', 'Locul meu de muncă', 'O echipă din care fac parte', 'O instituție cu care interacționez'], placeholder: 'Ex: Sistemul de învățământ...' },
+  { id: 'intrari', label: 'Intrări', color: '#3B82F6', question: 'Ce primește sistemul?', explanation: 'Tot ce consumă sistemul pentru a funcționa — oameni, timp, bani, energie, informații. Fără acestea, sistemul s-ar opri.', hints: ['Oameni — elevi, angajați', 'Timp și energie', 'Bani și resurse', 'Informații și cunoștințe'], placeholder: 'Ex: Elevi, profesori, ore de curs, manuale...' },
+  { id: 'proces', label: 'Proces', color: '#8B5CF6', question: 'Ce face sistemul cu ele?', explanation: 'Ce se întâmplă efectiv cu intrările. Nu ce ar trebui să se întâmple — ce se întâmplă de fapt.', hints: ['Care sunt activitățile zilnice?', 'Cum se iau deciziile?', 'Ce reguli guvernează comportamentul?'], placeholder: 'Ex: Predare frontală, memorare, teste, notare...' },
+  { id: 'declarate', label: 'Ieșiri declarate', color: '#22C55E', question: 'Ce spune sistemul că produce?', explanation: 'Promisiunile oficiale ale sistemului — ce scrie în misiune, în discursuri, pe site-ul oficial.', hints: ['Ce promite oficial?', 'Care e misiunea declarată?', 'Ce beneficii sunt promise?'], placeholder: 'Ex: Gândire critică, cetățeni educați, pregătire pentru viață...' },
+  { id: 'reale', label: 'Ieșiri reale', color: '#FF6B2B', question: 'Ce produce sistemul de fapt?', explanation: 'Ce observi efectiv la oamenii care trec prin sistem. Nu judecăți — observații.', hints: ['Ce abilități au oamenii care ies?', 'Ce comportamente produce?', 'Ce rezultate apar constant?'], placeholder: 'Ex: Abilitate de memorare pe termen scurt, conformism...' },
+];
+
+let disStep = 0;
+const disVals = { sistem: '', intrari: '', proces: '', declarate: '', reale: '' };
+let disPhase = 'steps'; // steps | gap | done
+let disGap = '';
+
+function openDisectia() {
+  document.getElementById('disectia-wrap').classList.add('visible');
+  document.getElementById('open-disectia-btn').style.display = 'none';
+  renderDisectia();
+}
+
+function renderDisectia() {
+  const el = document.getElementById('disectia-content');
+  if (disPhase === 'steps') {
+    const s = STEPS[disStep];
+    const canNext = disVals[s.id].trim() !== '';
+    el.innerHTML = `
+      <div class="step-progress">${STEPS.map((st, i) => `<div class="step-bar" style="background:${i <= disStep ? st.color : 'var(--border)'}; opacity:${i < disStep ? 0.5 : 1}"></div>`).join('')}</div>
+      <div class="step-header">
+        <div class="step-dot" style="background:${s.color}"></div>
+        <div style="font-size:10px;letter-spacing:2px;color:${s.color};text-transform:uppercase;font-family:monospace">${s.label}</div>
+      </div>
+      <div class="step-question">${s.question}</div>
+      <div class="step-explanation" style="border-left:2px solid ${s.color}44">${s.explanation}</div>
+      <div class="hints">${s.hints.map(h => `<span class="hint-chip">${h}</span>`).join('')}</div>
+      <textarea class="step-textarea" id="dis-ta" placeholder="${s.placeholder}" style="border:1px solid ${s.color}44" oninput="disVals['${s.id}']=this.value;renderDisectia()">${disVals[s.id]}</textarea>
+      <div class="step-nav">
+        ${disStep > 0 ? `<button class="btn-back" onclick="disStep--;renderDisectia()">←</button>` : ''}
+        <button class="btn-primary" ${canNext ? '' : 'disabled style="opacity:0.4;cursor:default"'} onclick="${disStep < STEPS.length - 1 ? 'disStep++;renderDisectia()' : 'disPhase=\"gap\";renderDisectia()'}">${disStep < STEPS.length - 1 ? 'Continuă →' : 'Găsește compromisul →'}</button>
+      </div>`;
+    setTimeout(() => { const ta = document.getElementById('dis-ta'); if (ta) ta.focus(); }, 50);
+  } else if (disPhase === 'gap') {
+    const canShow = disGap.trim() !== '';
+    el.innerHTML = `
+      <div class="compare-grid">
+        <div class="compare-card" style="background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.2)">
+          <div class="compare-label" style="color:var(--green)">Declară</div>
+          <div class="compare-text">${disVals.declarate.slice(0, 100)}${disVals.declarate.length > 100 ? '…' : ''}</div>
+        </div>
+        <div class="compare-card" style="background:rgba(255,107,43,0.06);border:1px solid rgba(255,107,43,0.2)">
+          <div class="compare-label" style="color:var(--orange)">Produce</div>
+          <div class="compare-text">${disVals.reale.slice(0, 100)}${disVals.reale.length > 100 ? '…' : ''}</div>
+        </div>
+      </div>
+      <div class="step-question">Care e compromisul principal?</div>
+      <div class="step-explanation" style="border-left:2px solid rgba(255,107,43,0.3)">Distanța dintre ce declară și ce produce — aceea e compromisul. Nu e o acuzație. E o constrângere de design. Ce sacrifică sistemul pentru a funcționa la scară?</div>
+      <textarea class="step-textarea" id="gap-ta" placeholder="Ex: Sistemul sacrifică înțelegerea profundă pentru eficiența evaluării..." style="border:1px solid rgba(255,107,43,0.3)" oninput="disGap=this.value;renderDisectia()">${disGap}</textarea>
+      <div class="step-nav">
+        <button class="btn-back" onclick="disPhase='steps';renderDisectia()">←</button>
+        <button class="btn-primary" ${canShow ? '' : 'disabled style="opacity:0.4;cursor:default"'} onclick="disPhase='done';renderDisectia()">Finalizează →</button>
+      </div>`;
+    setTimeout(() => { const ta = document.getElementById('gap-ta'); if (ta) ta.focus(); }, 50);
+  } else {
+    el.innerHTML = `
+      <div class="gap-result" style="margin-bottom:14px">Tocmai ai văzut un sistem cu ochii unui gânditor structural. Nu ai judecat — ai observat distanța.</div>
+      ${['intrari','proces'].map(id => {
+        const s = STEPS.find(st => st.id === id);
+        return `<div style="margin-bottom:10px"><div style="font-size:9px;letter-spacing:2px;color:${s.color};text-transform:uppercase;font-family:monospace;margin-bottom:3px">${s.label}</div><div style="font-family:'Cormorant Garamond',serif;font-size:13px;color:#9090AA;padding:8px 12px;background:rgba(0,0,0,0.2);border-radius:8px;border-left:2px solid ${s.color}33;line-height:1.6">${disVals[id]}</div></div>`;
+      }).join('')}
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0">
+        ${['declarate','reale'].map(id => {
+          const s = STEPS.find(st => st.id === id);
+          return `<div style="background:${id==='declarate'?'rgba(34,197,94,0.06)':'rgba(255,107,43,0.06)'};border:1px solid ${id==='declarate'?'rgba(34,197,94,0.2)':'rgba(255,107,43,0.2)'};border-radius:12px;padding:12px"><div style="font-size:9px;letter-spacing:2px;color:${s.color};text-transform:uppercase;font-family:monospace;margin-bottom:6px">${s.label}</div><div style="font-size:12px;color:#94A3B8;line-height:1.6">${disVals[id]}</div></div>`;
+        }).join('')}
+      </div>
+      <div style="padding:14px;background:rgba(255,107,43,0.06);border:1px solid rgba(255,107,43,0.2);border-radius:10px;margin-bottom:14px">
+        <div style="font-size:9px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;font-family:monospace;margin-bottom:6px">Compromisul găsit</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:14px;color:#fff;font-style:italic;line-height:1.6">"${disGap}"</div>
+      </div>
+      <button class="btn-ghost" onclick="resetDisectia()">← Disecă alt sistem</button>`;
+  }
+}
+
+function resetDisectia() {
+  disStep = 0; disPhase = 'steps'; disGap = '';
+  Object.keys(disVals).forEach(k => { disVals[k] = ''; });
+  renderDisectia();
+}
+
+// ── SIMULATOR ────────────────────────────────────────────────────────────────
+const PRESETS = [
+  {
+    id: 'scoala', name: 'Școala', emoji: '📚',
+    sliders: [
+      { id: 'memorare', label: 'Memorare vs. Înțelegere', val: 80, min: 0, max: 100, unit: '% memorare' },
+      { id: 'proiecte', label: 'Proiecte practice', val: 20, min: 0, max: 100, unit: '%' },
+      { id: 'elevi', label: 'Elevi per clasă', val: 30, min: 5, max: 40, unit: 'elevi' },
+    ],
+    compute(v) {
+      const gandire = Math.min(100, Math.max(0, Math.round(100 - v.memorare * 0.6 + v.proiecte * 0.4)));
+      const stres = Math.min(100, Math.max(0, Math.round(v.elevi * 0.8 + v.memorare * 0.2)));
+      return { gap: Math.round(100 - gandire), outputs: [{ label: 'Gândire critică', val: gandire, good: true }, { label: 'Nivel de stres', val: stres, good: false }] };
+    },
+    insight(v) { return v.memorare > 70 ? 'Memorarea ridicată comprimă gândirea critică. Crește proiectele pentru a apropia ce se face de ce se promite.' : 'Echilibru mai bun. Proiectele practice fac diferența.'; }
+  },
+  {
+    id: 'startup', name: 'Startup', emoji: '🚀',
+    sliders: [
+      { id: 'viteza', label: 'Viteză vs. Calitate', val: 70, min: 0, max: 100, unit: '% viteză' },
+      { id: 'procese', label: 'Procese interne', val: 20, min: 0, max: 100, unit: '%' },
+      { id: 'energie', label: 'Energia echipei', val: 90, min: 0, max: 100, unit: '%' },
+    ],
+    compute(v) {
+      const cal = Math.min(100, Math.max(0, Math.round((100 - v.viteza) * 0.5 + v.procese * 0.3)));
+      const burnout = Math.min(100, Math.max(0, Math.round(v.energie * 0.4 + v.viteza * 0.3)));
+      return { gap: Math.round(100 - cal), outputs: [{ label: 'Calitatea produsului', val: cal, good: true }, { label: 'Risc de burnout', val: burnout, good: false }] };
+    },
+    insight(v) { return v.energie > 80 && v.viteza > 70 ? 'Energie mare + viteză mare = burnout rapid. Sistemul consumă oamenii înainte să producă impactul promis.' : 'Echilibru sustenabil.'; }
+  },
+  {
+    id: 'retea', name: 'Rețea socială', emoji: '📱',
+    sliders: [
+      { id: 'algoritm', label: 'Optimizare engagement', val: 90, min: 0, max: 100, unit: '%' },
+      { id: 'moderare', label: 'Moderare conținut', val: 30, min: 0, max: 100, unit: '%' },
+      { id: 'timp', label: 'Timp petrecut / zi', val: 70, min: 0, max: 100, unit: '%' },
+    ],
+    compute(v) {
+      const conectare = Math.min(100, Math.max(0, Math.round((100 - v.algoritm) * 0.4 + v.moderare * 0.3)));
+      const dependenta = Math.min(100, Math.max(0, Math.round(v.algoritm * 0.5 + v.timp * 0.3)));
+      return { gap: Math.round(100 - conectare), outputs: [{ label: 'Conectare autentică', val: conectare, good: true }, { label: 'Dependență digitală', val: dependenta, good: false }] };
+    },
+    insight(v) { return v.algoritm > 80 ? 'Algoritmul optimizat pentru timp petrecut produce conținut extrem. Nu distinge între util și adictiv.' : 'Moderarea ridicată ajută — dar limitează și exprimarea liberă.'; }
+  },
+];
+
+let simPreset = null;
+let simVals = {};
+
+function openSimulator() {
+  document.getElementById('sim-wrap').classList.add('visible');
+  document.getElementById('open-sim-btn').style.display = 'none';
+  renderSim();
+}
+
+function renderSim() {
+  const el = document.getElementById('sim-content');
+  if (!simPreset) {
+    el.innerHTML = `<div style="font-size:13px;color:var(--muted);margin-bottom:16px;font-style:italic">Alege un sistem pentru a experimenta:</div>
+      <div class="sim-preset-grid">${PRESETS.map(p => `<div class="sim-preset-card" onclick="selectPreset('${p.id}')"><div class="sim-preset-emoji">${p.emoji}</div><div class="sim-preset-name">${p.name}</div></div>`).join('')}</div>`;
+    return;
+  }
+  const p = PRESETS.find(pr => pr.id === simPreset);
+  const result = p.compute(simVals);
+  const gapColor = result.gap < 30 ? '#22C55E' : result.gap < 60 ? '#FFB347' : '#EF4444';
+
+  el.innerHTML = `
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+      <div style="font-size:14px;font-weight:700;color:#fff">${p.emoji} ${p.name}</div>
+      <button style="background:none;border:none;color:var(--muted);font-size:12px;cursor:pointer;font-family:monospace" onclick="simPreset=null;renderSim()">← înapoi</button>
+    </div>
+    <div class="sim-gap-bar-wrap">
+      <div class="sim-gap-header">
+        <span class="sim-gap-label">Distanța față de promisiune</span>
+        <span class="sim-gap-pct" style="color:${gapColor}">${result.gap}%</span>
+      </div>
+      <div class="sim-gap-bar"><div class="sim-gap-fill" style="width:${result.gap}%;background:${gapColor}"></div></div>
+    </div>
+    ${result.outputs.map(o => {
+      const c = o.good ? (o.val > 50 ? '#22C55E' : '#5A5880') : (o.val > 50 ? '#EF4444' : '#22C55E');
+      return `<div class="sim-output"><div class="sim-output-header"><span class="sim-output-label">${o.label}</span><span class="sim-output-val" style="color:${c}">${o.val}%</span></div><div class="sim-output-bar"><div class="sim-output-fill" style="width:${o.val}%;background:${c}"></div></div></div>`;
+    }).join('')}
+    <div class="sim-insight">${p.insight(simVals)}</div>
+    <div style="font-size:9px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;font-family:monospace;margin-bottom:14px">Modifică elementele</div>
+    ${p.sliders.map(sl => `
+      <div class="sim-slider-section">
+        <div class="sim-slider-header">
+          <span class="sim-slider-label">${sl.label}</span>
+          <span class="sim-slider-val">${simVals[sl.id]} ${sl.unit}</span>
+        </div>
+        <input type="range" min="${sl.min}" max="${sl.max}" value="${simVals[sl.id]}" oninput="simVals['${sl.id}']=Number(this.value);renderSim()">
+      </div>`).join('')}
+    <button class="btn-ghost" style="margin-top:8px" onclick="resetSim()">↺ Reset</button>`;
+}
+
+function selectPreset(id) {
+  simPreset = id;
+  const p = PRESETS.find(pr => pr.id === id);
+  simVals = {};
+  p.sliders.forEach(sl => { simVals[sl.id] = sl.val; });
+  renderSim();
+}
+
+function resetSim() {
+  const p = PRESETS.find(pr => pr.id === simPreset);
+  p.sliders.forEach(sl => { simVals[sl.id] = sl.val; });
+  renderSim();
+}
+
+// ── INIT ─────────────────────────────────────────────────────────────────────
+updateProgress();
+</script>
+</body>
+</html>
