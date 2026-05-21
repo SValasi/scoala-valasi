@@ -4,14 +4,14 @@ import { useState, useEffect, useRef } from "react";
 
 const C = {
   bg: "#F3F4F6",
-  bgWarm: "#1118277ED",
-  panel: "#111827FFF",
-  panelWarm: "#111827FFF",
+  bgWarm: "#FFF7ED",
+  panel: "#FFFFFF",
+  panelWarm: "#FFFFFF",
   border: "#E5E7EB",
   borderWarm: "#FED7AA",
   text: "#111827",
   muted: "#475569",
-  faint: "#F8FAFC",
+  faint: "#64748B",
   orange: "#FF6B2B",
   gold: "#FFB347",
   teal: "#14B8A6",
@@ -37,12 +37,18 @@ function getRandomPercent() {
 }
 
 function useLocalEntries() {
-  const [entries, setEntries] = useState(() => {
-    try {
-      const raw = localStorage.getItem("sv_jurnal_entries");
-      return raw ? JSON.parse(raw) : [];
-    } catch { return []; }
-  });
+const [entries, setEntries] = useState([]);
+
+useEffect(() => {
+  try {
+    const raw = localStorage.getItem("sv_jurnal_entries");
+    if (raw) {
+      setEntries(JSON.parse(raw));
+    }
+  } catch (e) {
+    console.error(e);
+  }
+}, []);
 
   function save(newEntries) {
     setEntries(newEntries);
@@ -71,7 +77,7 @@ function PrivacyScreen({ onContinue }) {
   return (
     <div style={{
       minHeight: "100vh",
-      background: "linear-gradient(135deg, #F8FAFC 0%, #FFF7ED 100%)",
+      background: C.bg,
       display: "flex", flexDirection: "column", alignItems: "center",
       justifyContent: "center", padding: "32px 20px",
       fontFamily: "'Georgia', serif", color: C.text,
@@ -85,21 +91,21 @@ function PrivacyScreen({ onContinue }) {
           </div>
           <h1 style={{
             fontSize: "clamp(22px, 5vw, 32px)", fontWeight: 700, margin: 0,
-            background: "#FFFFFF",
+            background: C.accent || C.orange,
             WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
             lineHeight: 1.3,
           }}>Jurnalul de Tipare</h1>
         </div>
 
         <div style={{
-          background: "#FFFFFF"Warm,
+          background: C.panelWarm,
           border: `1px solid ${C.borderWarm}`,
           borderRadius: 24, padding: "32px 28px",
           marginBottom: 20,
-          boxShadow: `0 8px 24px rgba(15,23,42,0.08)`,
+          boxShadow: `0 0 60px ${C.orange}08`,
         }}>
           <p style={{
-            fontSize: 18, fontWeight: "700", color: "#111827",
+            fontSize: 18, fontWeight: "700", color: C.text,
             margin: "0 0 20px", lineHeight: 1.5, textAlign: "center",
           }}>
             Jurnalul tău e al tău. Complet.
@@ -141,7 +147,7 @@ function PrivacyScreen({ onContinue }) {
           borderRadius: 16, padding: "18px 20px",
           marginBottom: 16,
         }}>
-          <div style={{ fontSize: 11, letterSpacing: 2, color: C.gold, textTransform: "uppercase", fontFamily: "monospace", marginBottom: 10 }}>
+          <div style={{ fontSize: 12, letterSpacing: 2, color: C.gold, textTransform: "uppercase", fontFamily: "monospace", marginBottom: 10 }}>
             Ce putem garanta — și ce nu
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
@@ -164,7 +170,7 @@ function PrivacyScreen({ onContinue }) {
           onClick={onContinue}
           style={{
             width: "100%",
-            background: "#FFFFFF",
+            background: C.accent,
             border: "none", borderRadius: 16,
             color: "#F3F4F6", fontWeight: "bold", fontSize: 16,
             padding: "18px", cursor: "pointer",
@@ -236,15 +242,15 @@ function NewEntryForm({ onSave, onCancel }) {
 
   return (
     <div style={{
-      background: "#FFFFFF"Warm, border: `1px solid ${C.borderWarm}`,
+      background: C.panelWarm, border: `1px solid ${C.borderWarm}`,
       borderRadius: 20, padding: "24px 22px",
-      boxShadow: `0 8px 24px rgba(15,23,42,0.08)`,
+      boxShadow: `0 0 40px ${C.orange}08`,
     }}>
       <div style={{
         display: "flex", justifyContent: "space-between",
         alignItems: "center", marginBottom: 20,
       }}>
-        <div style={{ fontSize: 10, letterSpacing: 3, color: C.orange, textTransform: "uppercase", fontFamily: "monospace" }}>
+        <div style={{ fontSize: 12, letterSpacing: 2, color: C.orange, textTransform: "uppercase", fontFamily: "monospace" }}>
           Intrare nouă
         </div>
         <button onClick={onCancel} style={{ background: "none", border: "none", color: C.muted, fontSize: 18, cursor: "pointer" }}>×</button>
@@ -264,14 +270,14 @@ function NewEntryForm({ onSave, onCancel }) {
       {/* Steps 0-2 */}
       {step <= 2 && current && (
         <div style={{ animation: "fadeUp 0.3s ease" }}>
-          <div style={{ fontSize: 17, fontWeight: "700", color: "#111827", marginBottom: 8, lineHeight: 1.4 }}>
+          <div style={{ fontSize: 17, fontWeight: "700", color: C.text, marginBottom: 8, lineHeight: 1.4 }}>
             {current.title}
           </div>
           <div style={{ fontSize: 13, color: "#9088AA", lineHeight: 1.7, marginBottom: 12 }}>
             {current.subtitle}
           </div>
           <div style={{
-            fontSize: 11, color: C.muted, fontStyle: "italic",
+            fontSize: 12, color: C.muted, fontStyle: "italic",
             padding: "8px 12px", background: `${C.orange}08`,
             borderRadius: 8, borderLeft: `2px solid ${C.orange}33`,
             marginBottom: 14, lineHeight: 1.6,
@@ -285,7 +291,7 @@ function NewEntryForm({ onSave, onCancel }) {
             placeholder={current.placeholder}
             style={{
               width: "100%", minHeight: 100,
-              background: "#F8FAFC",
+              background: "#FFFFFF",
               border: `1px solid ${C.borderWarm}`,
               borderRadius: 12, color: C.text, fontSize: 14,
               padding: "12px 14px", resize: "vertical",
@@ -297,7 +303,7 @@ function NewEntryForm({ onSave, onCancel }) {
           <div style={{ display: "flex", gap: 10, marginTop: 14 }}>
             {step > 0 && (
               <button onClick={() => setStep(s => s - 1)} style={{
-                background: "rgba(15,23,42,0.04)", border: "1px solid #E5E7EB",
+                background: "#FFFFFF", border: `1px solid ${C.border}`,
                 borderRadius: 10, color: C.muted, fontSize: 13,
                 padding: "10px 18px", cursor: "pointer",
               }}>← Înapoi</button>
@@ -307,7 +313,7 @@ function NewEntryForm({ onSave, onCancel }) {
               disabled={!canNext}
               style={{
                 flex: 1,
-                background: canNext ? `linear-gradient(135deg, ${C.orange}, ${C.gold})` : C.border,
+                background: canNext ? C.accent : C.border,
                 border: "none", borderRadius: 10,
                 color: canNext ? "#F3F4F6" : C.muted,
                 fontWeight: "bold", fontSize: 14,
@@ -323,7 +329,7 @@ function NewEntryForm({ onSave, onCancel }) {
       {/* Step 3 — Pattern selection */}
       {step === 3 && (
         <div style={{ animation: "fadeUp 0.3s ease" }}>
-          <div style={{ fontSize: 17, fontWeight: "700", color: "#111827", marginBottom: 8 }}>
+          <div style={{ fontSize: 17, fontWeight: "700", color: C.text, marginBottom: 8 }}>
             Recunoști un tipar?
           </div>
           <div style={{ fontSize: 13, color: "#9088AA", lineHeight: 1.7, marginBottom: 16 }}>
@@ -338,7 +344,7 @@ function NewEntryForm({ onSave, onCancel }) {
                   key={cat.id}
                   onClick={() => selectPattern(cat.id)}
                   style={{
-                    background: selected ? `${cat.color}18` : "#F8FAFC",
+                    background: selected ? `${cat.color}18` : "#FFFFFF",
                     border: `1px solid ${selected ? cat.color : C.border}`,
                     borderRadius: 12, padding: "12px",
                     cursor: "pointer", transition: "all 0.2s",
@@ -360,7 +366,7 @@ function NewEntryForm({ onSave, onCancel }) {
               onChange={e => setForm(f => ({ ...f, tiparCustom: e.target.value }))}
               placeholder="Descrie tiparele pe scurt..."
               style={{
-                width: "100%", background: "#F8FAFC",
+                width: "100%", background: "#FFFFFF",
                 border: `1px solid ${C.borderWarm}`, borderRadius: 10,
                 color: C.text, fontSize: 13, padding: "10px 12px",
                 fontFamily: "'DM Sans', system-ui, sans-serif", outline: "none",
@@ -370,7 +376,7 @@ function NewEntryForm({ onSave, onCancel }) {
           )}
 
           <div style={{ marginBottom: 14 }}>
-            <div style={{ fontSize: 11, color: C.muted, fontFamily: "monospace", letterSpacing: 1, marginBottom: 6, textTransform: "uppercase" }}>
+            <div style={{ fontSize: 12, color: C.muted, fontFamily: "monospace", letterSpacing: 1, marginBottom: 6, textTransform: "uppercase" }}>
               O notă pentru tine (opțional)
             </div>
             <textarea
@@ -379,8 +385,8 @@ function NewEntryForm({ onSave, onCancel }) {
               placeholder="Orice altceva vrei să reții despre această situație..."
               style={{
                 width: "100%", minHeight: 60,
-                background: "#F8FAFC",
-                border: "1px solid #E5E7EB", borderRadius: 10,
+                background: "#FFFFFF",
+                border: `1px solid ${C.border}`, borderRadius: 10,
                 color: C.text, fontSize: 13, padding: "10px 12px",
                 resize: "vertical", fontFamily: "'DM Sans', system-ui, sans-serif",
                 outline: "none", boxSizing: "border-box", lineHeight: 1.6,
@@ -390,7 +396,7 @@ function NewEntryForm({ onSave, onCancel }) {
 
           <div style={{ display: "flex", gap: 10 }}>
             <button onClick={() => setStep(2)} style={{
-              background: "rgba(15,23,42,0.04)", border: "1px solid #E5E7EB",
+              background: "#FFFFFF", border: `1px solid ${C.border}`,
               borderRadius: 10, color: C.muted, fontSize: 13,
               padding: "10px 18px", cursor: "pointer",
             }}>← Înapoi</button>
@@ -399,7 +405,7 @@ function NewEntryForm({ onSave, onCancel }) {
               disabled={!form.tipar || (form.tipar === "altul" && !form.tiparCustom.trim())}
               style={{
                 flex: 1,
-                background: form.tipar ? `linear-gradient(135deg, ${C.green}, #2ECC71)` : C.border,
+                background: form.tipar ? C.green : C.border,
                 border: "none", borderRadius: 10,
                 color: form.tipar ? "#F3F4F6" : C.muted,
                 fontWeight: "bold", fontSize: 14,
@@ -421,7 +427,7 @@ function EntryCard({ entry, onDelete }) {
 
   return (
     <div style={{
-      background: "#FFFFFF"Warm, border: `1px solid ${C.borderWarm}`,
+      background: C.panelWarm, border: `1px solid ${C.borderWarm}`,
       borderRadius: 16, padding: "18px 20px",
       transition: "all 0.2s",
     }}>
@@ -459,12 +465,12 @@ function EntryCard({ entry, onDelete }) {
           ].map(item => (
             <div key={item.label} style={{ marginBottom: 12 }}>
               <div style={{ fontSize: 9, letterSpacing: 2, color: item.color, textTransform: "uppercase", fontFamily: "monospace", marginBottom: 4 }}>{item.label}</div>
-              <div style={{ fontSize: 13, color: "#475569", lineHeight: 1.6, padding: "8px 12px", background: "#F8FAFC", borderRadius: 8, borderLeft: `2px solid ${item.color}44` }}>{item.value}</div>
+              <div style={{ fontSize: 13, color: "#475569", lineHeight: 1.6, padding: "8px 12px", background: "#FFFFFF", borderRadius: 8, borderLeft: `2px solid ${item.color}44` }}>{item.value}</div>
             </div>
           ))}
           <button onClick={() => onDelete(entry.id)} style={{
             background: "none", border: `1px solid ${C.red}33`,
-            borderRadius: 8, color: C.red + "88", fontSize: 11,
+            borderRadius: 8, color: C.red + "88", fontSize: 12,
             padding: "6px 14px", cursor: "pointer", marginTop: 4,
             fontFamily: "monospace",
           }}>Șterge această intrare</button>
@@ -488,17 +494,17 @@ function PatternInsight({ entries }) {
 
   return (
     <div style={{
-      background: "#FFFFFF",
+      background: C.panelWarm,
       border: `1px solid ${cat.color}44`,
       borderRadius: 18, padding: "22px 22px",
       marginBottom: 16,
-      boxShadow: `0 8px 24px rgba(15,23,42,0.08)`,
+      boxShadow: `0 0 30px ${cat.color}11`,
       animation: "fadeUp 0.5s ease",
     }}>
-      <div style={{ fontSize: 10, letterSpacing: 3, color: cat.color, textTransform: "uppercase", fontFamily: "monospace", marginBottom: 12 }}>
+      <div style={{ fontSize: 12, letterSpacing: 2, color: cat.color, textTransform: "uppercase", fontFamily: "monospace", marginBottom: 12 }}>
         🔍 Tipar identificat
       </div>
-      <div style={{ fontSize: 16, fontWeight: "700", color: "#111827", marginBottom: 10, lineHeight: 1.4 }}>
+      <div style={{ fontSize: 16, fontWeight: "700", color: C.text, marginBottom: 10, lineHeight: 1.4 }}>
         {cat.emoji} {cat.label} — apare de {dominant[1]} ori în jurnalul tău
       </div>
       <div style={{ fontSize: 13, color: "#A09888", lineHeight: 1.7, marginBottom: 16 }}>
@@ -506,7 +512,7 @@ function PatternInsight({ entries }) {
       </div>
       <div style={{
         padding: "12px 16px",
-        background: "#F8FAFC",
+        background: "#FFFFFF",
         borderRadius: 12,
         fontSize: 13, color: "#475569", fontStyle: "italic", lineHeight: 1.7,
       }}>
@@ -539,7 +545,7 @@ export default function JurnalTipare() {
   return (
     <div style={{
       minHeight: "100vh",
-      background: "linear-gradient(135deg, #F8FAFC 0%, #FFF7ED 100%)",
+      background: C.bg,
       fontFamily: "'Georgia', serif", color: C.text,
       padding: "24px 16px 80px",
     }}>
@@ -557,7 +563,7 @@ export default function JurnalTipare() {
           </div>
           <h1 style={{
             fontSize: "clamp(22px, 5vw, 32px)", fontWeight: 700, margin: "0 0 6px",
-            background: "#FFFFFF",
+            background: C.accent || C.orange,
             WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
           }}>Jurnalul de Tipare</h1>
           <p style={{ fontSize: 12, color: C.muted, margin: 0, fontStyle: "italic" }}>
@@ -571,12 +577,12 @@ export default function JurnalTipare() {
         {/* Empty state */}
         {entries.length === 0 && !showForm && (
           <div style={{
-            background: "#FFFFFF"Warm, border: `1px solid ${C.borderWarm}`,
+            background: C.panelWarm, border: `1px solid ${C.borderWarm}`,
             borderRadius: 20, padding: "36px 28px", textAlign: "center",
             marginBottom: 16, animation: "fadeUp 0.4s ease",
           }}>
             <div style={{ fontSize: 40, marginBottom: 16 }}>📖</div>
-            <div style={{ fontSize: 15, fontWeight: "600", color: "#111827", marginBottom: 10 }}>
+            <div style={{ fontSize: 15, fontWeight: "600", color: C.text, marginBottom: 10 }}>
               Jurnalul tău e gol — deocamdată
             </div>
             <div style={{ fontSize: 13, color: "#9088AA", lineHeight: 1.8, marginBottom: 20 }}>
@@ -613,7 +619,7 @@ export default function JurnalTipare() {
             onClick={handleNewEntry}
             style={{
               width: "100%",
-              background: "#FFFFFF",
+              background: C.accent,
               border: "none", borderRadius: 16,
               color: "#F3F4F6", fontWeight: "bold", fontSize: 15,
               padding: "16px", cursor: "pointer",
@@ -633,7 +639,7 @@ export default function JurnalTipare() {
             borderRadius: 12, marginBottom: 16,
           }}>
             <div style={{ fontSize: 14 }}>🔒</div>
-            <div style={{ fontSize: 11, color: "#5A7A60", lineHeight: 1.5 }}>
+            <div style={{ fontSize: 12, color: "#5A7A60", lineHeight: 1.5 }}>
               Salvat local pe acest dispozitiv. Noi nu vedem nimic. Dacă ștergi cache-ul browserului, jurnalul dispare — e în controlul tău.
             </div>
           </div>
@@ -645,7 +651,7 @@ export default function JurnalTipare() {
             {!showClearConfirm ? (
               <button onClick={() => setShowClearConfirm(true)} style={{
                 background: "none", border: "none",
-                color: C.muted, fontSize: 11, cursor: "pointer",
+                color: C.muted, fontSize: 12, cursor: "pointer",
                 fontFamily: "monospace", letterSpacing: 1,
                 textDecoration: "underline",
               }}>Șterge tot jurnalul</button>
@@ -658,7 +664,7 @@ export default function JurnalTipare() {
                   Sigur vrei să ștergi toate intrările? Această acțiune nu poate fi anulată.
                 </div>
                 <div style={{ display: "flex", gap: 8, justifyContent: "center" }}>
-                  <button onClick={() => setShowClearConfirm(false)} style={{ background: "rgba(15,23,42,0.05)", border: "1px solid #E5E7EB", borderRadius: 8, color: C.muted, fontSize: 12, padding: "8px 16px", cursor: "pointer" }}>
+                  <button onClick={() => setShowClearConfirm(false)} style={{ background: "#FFFFFF", border: `1px solid ${C.border}`, borderRadius: 8, color: C.muted, fontSize: 12, padding: "8px 16px", cursor: "pointer" }}>
                     Anulează
                   </button>
                   <button onClick={() => { clearAll(); setShowClearConfirm(false); }} style={{ background: `${C.red}22`, border: `1px solid ${C.red}44`, borderRadius: 8, color: C.red, fontSize: 12, padding: "8px 16px", cursor: "pointer" }}>

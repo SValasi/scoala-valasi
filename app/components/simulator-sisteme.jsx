@@ -4,11 +4,11 @@ import { useState, useEffect } from "react";
 
 const C = {
   bg: "#F3F4F6",
-  panel: "#111827FFF",
+  panel: "#FFFFFF",
   panelBorder: "#E5E7EB",
   text: "#111827",
   muted: "#475569",
-  faint: "#F8FAFC",
+  faint: "#64748B",
   intrari: "#2563EB",
   proces: "#7C3AED",
   declarate: "#16A34A",
@@ -178,7 +178,7 @@ function GapBar({ gap, prev }) {
         display: "flex", justifyContent: "space-between",
         alignItems: "center", marginBottom: 6,
       }}>
-        <div style={{ fontSize: 10, letterSpacing: 2, color: C.muted, textTransform: "uppercase", fontFamily: "monospace" }}>
+        <div style={{ fontSize: 12, letterSpacing: 2, color: C.muted, textTransform: "uppercase", fontFamily: "monospace" }}>
           Distanța față de promisiune
         </div>
         <div style={{
@@ -192,7 +192,7 @@ function GapBar({ gap, prev }) {
       </div>
       <div style={{
         height: 8, borderRadius: 4,
-        background: "#FFFFFF"Border, overflow: "hidden",
+        background: C.panelBorder, overflow: "hidden",
       }}>
         <div style={{
           height: "100%", borderRadius: 4,
@@ -224,7 +224,7 @@ function OutputBar({ label, value, good }) {
             : (value > 50 ? C.danger : C.good),
         }}>{value}%</div>
       </div>
-      <div style={{ height: 5, borderRadius: 3, background: "#FFFFFF"Border, overflow: "hidden" }}>
+      <div style={{ height: 5, borderRadius: 3, background: C.panelBorder, overflow: "hidden" }}>
         <div style={{
           height: "100%", borderRadius: 3,
           width: `${value}%`,
@@ -337,7 +337,7 @@ export default function SimulatorSisteme() {
   if (mode === "intro") return (
     <div style={{
       minHeight: "100vh",
-      background: "linear-gradient(135deg, #F8FAFC 0%, #FFF7ED 100%)",
+      background: C.bg,
       fontFamily: "'Georgia', serif",
       color: C.text,
       display: "flex", flexDirection: "column", alignItems: "center",
@@ -349,10 +349,10 @@ export default function SimulatorSisteme() {
         </div>
         <h1 style={{
           fontSize: "clamp(22px, 5vw, 36px)", fontWeight: 700, margin: "0 0 10px",
-          background: "#FFFFFF",
+          background: C.accent,
           WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
         }}>Simulatorul de Sisteme</h1>
-        <p style={{ fontSize: 14, color: "#475569", maxWidth: 400, margin: "0 auto", lineHeight: 1.7 }}>
+        <p style={{ fontSize: 14, color: "#64748B", maxWidth: 400, margin: "0 auto", lineHeight: 1.7 }}>
           Orice sistem face compromisuri. Dar ce se întâmplă dacă schimbi un element?
           Experimentează și vezi cum se propagă efectele.
         </p>
@@ -363,7 +363,7 @@ export default function SimulatorSisteme() {
         <div
           onClick={() => setMode("preset")}
           style={{
-            background: "#FFFFFF", border: `1px solid ${C.intrari}44`,
+            background: C.panel, border: `1px solid ${C.intrari}44`,
             borderRadius: 18, padding: "22px 24px", cursor: "pointer",
             transition: "all 0.2s",
           }}
@@ -371,14 +371,14 @@ export default function SimulatorSisteme() {
           onMouseLeave={e => e.currentTarget.style.borderColor = `${C.intrari}44`}
         >
           <div style={{ fontSize: 28, marginBottom: 8 }}>🎮</div>
-          <div style={{ fontSize: 16, fontWeight: "bold", color: "#111827", marginBottom: 6 }}>
+          <div style={{ fontSize: 16, fontWeight: "bold", color: C.text, marginBottom: 6 }}>
             Sisteme gata construite
           </div>
           <div style={{ fontSize: 13, color: C.muted, lineHeight: 1.6 }}>
             Experimentează cu sisteme cunoscute — Școala, Startup, Rețea socială. Înțelege logica înainte să o aplici pe situația ta.
           </div>
           <div style={{
-            marginTop: 14, fontSize: 11, color: C.intrari,
+            marginTop: 14, fontSize: 12, color: C.intrari,
             fontFamily: "monospace", letterSpacing: 1,
           }}>Recomandat pentru început →</div>
         </div>
@@ -387,7 +387,7 @@ export default function SimulatorSisteme() {
         <div
           onClick={() => setMode("custom")}
           style={{
-            background: "#FFFFFF", border: `1px solid ${C.accent}44`,
+            background: C.panel, border: `1px solid ${C.accent}44`,
             borderRadius: 18, padding: "22px 24px", cursor: "pointer",
             transition: "all 0.2s",
           }}
@@ -395,20 +395,20 @@ export default function SimulatorSisteme() {
           onMouseLeave={e => e.currentTarget.style.borderColor = `${C.accent}44`}
         >
           <div style={{ fontSize: 28, marginBottom: 8 }}>⚡</div>
-          <div style={{ fontSize: 16, fontWeight: "bold", color: "#111827", marginBottom: 6 }}>
+          <div style={{ fontSize: 16, fontWeight: "bold", color: C.text, marginBottom: 6 }}>
             Sistemul meu
           </div>
           <div style={{ fontSize: 13, color: C.muted, lineHeight: 1.6 }}>
             Introdu un sistem din viața ta și simulează ce se întâmplă când schimbi elementele lui. Cel mai personal și relevant mod de a învăța.
           </div>
           <div style={{
-            marginTop: 14, fontSize: 11, color: C.accent,
+            marginTop: 14, fontSize: 12, color: C.accent,
             fontFamily: "monospace", letterSpacing: 1,
           }}>Cel mai util pe termen lung →</div>
         </div>
       </div>
 
-      <div style={{ marginTop: 40, fontSize: 9, color: "#F8FAFC", letterSpacing: 3, textTransform: "uppercase", fontFamily: "monospace" }}>
+      <div style={{ marginTop: 40, fontSize: 9, color: "#E5E7EB", letterSpacing: 3, textTransform: "uppercase", fontFamily: "monospace" }}>
         Structural Intelligence · Simulatorul de Sisteme
       </div>
     </div>
@@ -418,7 +418,7 @@ export default function SimulatorSisteme() {
   if (mode === "preset" && !selectedPreset) return (
     <div style={{
       minHeight: "100vh",
-      background: "linear-gradient(135deg, #F8FAFC 0%, #FFF7ED 100%)",
+      background: C.bg,
       fontFamily: "'Georgia', serif", color: C.text,
       display: "flex", flexDirection: "column", alignItems: "center",
       padding: "28px 16px 60px",
@@ -440,7 +440,7 @@ export default function SimulatorSisteme() {
       <div style={{ width: "100%", maxWidth: 480, display: "flex", flexDirection: "column", gap: 12 }}>
         {PRESETS.map(p => (
           <div key={p.id} onClick={() => setSelectedPreset(p.id)} style={{
-            background: "#FFFFFF", border: "1px solid #E5E7EB",
+            background: C.panel, border: `1px solid ${C.panelBorder}`,
             borderRadius: 16, padding: "18px 20px", cursor: "pointer",
             display: "flex", alignItems: "center", gap: 16,
             transition: "all 0.2s",
@@ -450,7 +450,7 @@ export default function SimulatorSisteme() {
           >
             <div style={{ fontSize: 32 }}>{p.emoji}</div>
             <div>
-              <div style={{ fontSize: 16, fontWeight: "bold", color: "#111827", marginBottom: 4 }}>{p.name}</div>
+              <div style={{ fontSize: 16, fontWeight: "bold", color: C.text, marginBottom: 4 }}>{p.name}</div>
               <div style={{ fontSize: 12, color: C.muted }}>{p.description}</div>
             </div>
           </div>
@@ -463,7 +463,7 @@ export default function SimulatorSisteme() {
   if (mode === "preset" && preset) return (
     <div style={{
       minHeight: "100vh",
-      background: "linear-gradient(135deg, #F8FAFC 0%, #FFF7ED 100%)",
+      background: C.bg,
       fontFamily: "'Georgia', serif", color: C.text,
       display: "flex", flexDirection: "column", alignItems: "center",
       padding: "24px 16px 60px",
@@ -476,8 +476,8 @@ export default function SimulatorSisteme() {
         }}>← sisteme</button>
         <div style={{ textAlign: "center", marginTop: 8 }}>
           <div style={{ fontSize: 32, marginBottom: 4 }}>{preset.emoji}</div>
-          <h2 style={{ margin: 0, fontSize: 22, fontWeight: "bold", color: "#111827" }}>{preset.name}</h2>
-          <div style={{ fontSize: 11, color: C.muted, fontFamily: "monospace", letterSpacing: 1, marginTop: 4 }}>
+          <h2 style={{ margin: 0, fontSize: 22, fontWeight: "bold", color: C.text }}>{preset.name}</h2>
+          <div style={{ fontSize: 12, color: C.muted, fontFamily: "monospace", letterSpacing: 1, marginTop: 4 }}>
             Modifică elementele și observă efectele
           </div>
         </div>
@@ -491,11 +491,11 @@ export default function SimulatorSisteme() {
           borderRadius: 14, padding: "14px 16px",
         }}>
           <div style={{ fontSize: 9, letterSpacing: 2, color: C.declarate, textTransform: "uppercase", fontFamily: "monospace", marginBottom: 6 }}>◎ Ce declară sistemul</div>
-          <div style={{ fontSize: 13, color: "#475569", lineHeight: 1.6 }}>{preset.declared}</div>
+          <div style={{ fontSize: 13, color: "#94A3B8", lineHeight: 1.6 }}>{preset.declared}</div>
         </div>
 
         {/* Gap bar */}
-        <div style={{ background: "#FFFFFF", border: "1px solid #E5E7EB", borderRadius: 14, padding: "16px 18px" }}>
+        <div style={{ background: C.panel, border: `1px solid ${C.panelBorder}`, borderRadius: 14, padding: "16px 18px" }}>
           <GapBar gap={gap} prev={prevGap} />
 
           {/* Outputs */}
@@ -507,13 +507,13 @@ export default function SimulatorSisteme() {
         <div style={{
           background: `${C.accent}0D`, border: `1px solid ${C.accent}33`,
           borderRadius: 14, padding: "14px 16px",
-          fontSize: 13, color: "#475569", lineHeight: 1.7, fontStyle: "italic",
+          fontSize: 13, color: "#94A3B8", lineHeight: 1.7, fontStyle: "italic",
         }}>
           💡 {insight}
         </div>
 
         {/* Sliders — Intrări */}
-        <div style={{ background: "#FFFFFF", border: `1px solid ${C.intrari}33`, borderRadius: 14, padding: "18px 18px" }}>
+        <div style={{ background: C.panel, border: `1px solid ${C.intrari}33`, borderRadius: 14, padding: "18px 18px" }}>
           <div style={{ fontSize: 9, letterSpacing: 2, color: C.intrari, textTransform: "uppercase", fontFamily: "monospace", marginBottom: 16 }}>→ Modifică intrările</div>
           {preset.elements.intrari.map(el => (
             <Slider key={el.id} item={el} value={sliderVals[el.id] ?? el.value} onChange={v => handleSlider(el.id, v)} />
@@ -521,7 +521,7 @@ export default function SimulatorSisteme() {
         </div>
 
         {/* Sliders — Proces */}
-        <div style={{ background: "#FFFFFF", border: `1px solid ${C.proces}33`, borderRadius: 14, padding: "18px 18px" }}>
+        <div style={{ background: C.panel, border: `1px solid ${C.proces}33`, borderRadius: 14, padding: "18px 18px" }}>
           <div style={{ fontSize: 9, letterSpacing: 2, color: C.proces, textTransform: "uppercase", fontFamily: "monospace", marginBottom: 16 }}>⟳ Modifică procesul</div>
           {preset.elements.proces.map(el => (
             <Slider key={el.id} item={el} value={sliderVals[el.id] ?? el.value} onChange={v => handleSlider(el.id, v)} />
@@ -535,14 +535,14 @@ export default function SimulatorSisteme() {
             [...preset.elements.intrari, ...preset.elements.proces].forEach(el => { init[el.id] = el.value; });
             setSliderVals(init); setPrevGap(null);
           }} style={{
-            flex: 1, background: "rgba(15,23,42,0.04)", border: "1px solid #F8FAFC",
+            flex: 1, background: "#FFFFFF", border: "1px solid #E5E7EB",
             borderRadius: 10, color: C.muted, fontSize: 13, padding: "10px", cursor: "pointer",
           }}>↺ Reset</button>
           <button onClick={() => { setMode("custom"); setSelectedPreset(null); }} style={{
             flex: 2,
-            background: "#FFFFFF",
+            background: C.accent,
             border: "none", borderRadius: 10,
-            color: "#F3F4F6", fontWeight: "bold", fontSize: 13,
+            color: "#F8FAFC", fontWeight: "bold", fontSize: 13,
             padding: "10px 16px", cursor: "pointer",
           }}>Simulează sistemul meu →</button>
         </div>
@@ -554,7 +554,7 @@ export default function SimulatorSisteme() {
   if (mode === "custom") return (
     <div style={{
       minHeight: "100vh",
-      background: "linear-gradient(135deg, #F8FAFC 0%, #FFF7ED 100%)",
+      background: C.bg,
       fontFamily: "'Georgia', serif", color: C.text,
       display: "flex", flexDirection: "column", alignItems: "center",
       padding: "24px 16px 60px",
@@ -567,7 +567,7 @@ export default function SimulatorSisteme() {
 
         <div style={{ textAlign: "center", marginBottom: 24 }}>
           <div style={{ fontSize: 10, letterSpacing: 4, color: C.accent, textTransform: "uppercase", fontFamily: "monospace", marginBottom: 8 }}>Sistemul meu</div>
-          <h2 style={{ margin: 0, fontSize: 22, color: "#111827" }}>Simulează realitatea ta</h2>
+          <h2 style={{ margin: 0, fontSize: 22, color: C.text }}>Simulează realitatea ta</h2>
         </div>
 
         {customPhase === "setup" && (
@@ -577,8 +577,8 @@ export default function SimulatorSisteme() {
               { id: "declarat", label: "Ce declară că produce?", placeholder: "Ex: Colaborare, creștere profesională, rezultate bune...", explanation: "Ce promite oficial sistemul? Ce spun cei care îl conduc că vei obține?" },
               { id: "real", label: "Ce produce de fapt?", placeholder: "Ex: Competiție, stres, rezultate mediocre...", explanation: "Ce observi efectiv că se întâmplă? Fii sincer — nu e o acuzație, e o observație." },
             ].map(f => (
-              <div key={f.id} style={{ background: "#FFFFFF", border: "1px solid #E5E7EB", borderRadius: 14, padding: "18px 18px" }}>
-                <div style={{ fontSize: 14, fontWeight: "600", color: "#111827", marginBottom: 6 }}>{f.label}</div>
+              <div key={f.id} style={{ background: C.panel, border: `1px solid ${C.panelBorder}`, borderRadius: 14, padding: "18px 18px" }}>
+                <div style={{ fontSize: 14, fontWeight: "600", color: C.text, marginBottom: 6 }}>{f.label}</div>
                 <div style={{ fontSize: 12, color: C.muted, lineHeight: 1.6, marginBottom: 10 }}>{f.explanation}</div>
                 <textarea
                   value={customTexts[f.id]}
@@ -586,7 +586,7 @@ export default function SimulatorSisteme() {
                   placeholder={f.placeholder}
                   style={{
                     width: "100%", minHeight: 70,
-                    background: "#F8FAFC", border: `1px solid ${C.accent}33`,
+                    background: "#FFFFFF", border: `1px solid ${C.accent}33`,
                     borderRadius: 10, color: C.text, fontSize: 13,
                     padding: "10px 12px", resize: "vertical",
                     fontFamily: "'DM Sans', system-ui, sans-serif", outline: "none", boxSizing: "border-box", lineHeight: 1.6,
@@ -600,9 +600,9 @@ export default function SimulatorSisteme() {
               disabled={!customTexts.sistem.trim() || !customTexts.declarat.trim() || !customTexts.real.trim()}
               style={{
                 background: customTexts.sistem && customTexts.declarat && customTexts.real
-                  ? `linear-gradient(135deg, ${C.accent}, #F97316)` : "#F8FAFC",
+                  ? C.accent : "#E5E7EB",
                 border: "none", borderRadius: 12,
-                color: customTexts.sistem && customTexts.declarat && customTexts.real ? "#F3F4F6" : C.muted,
+                color: customTexts.sistem && customTexts.declarat && customTexts.real ? "#F8FAFC" : C.muted,
                 fontWeight: "bold", fontSize: 15,
                 padding: "14px", cursor: "pointer",
                 transition: "all 0.3s",
@@ -623,11 +623,11 @@ export default function SimulatorSisteme() {
             }}>
               <div>
                 <div style={{ fontSize: 9, letterSpacing: 2, color: C.accent, textTransform: "uppercase", fontFamily: "monospace", marginBottom: 4 }}>Sistemul tău</div>
-                <div style={{ fontSize: 14, color: "#111827", fontWeight: "600" }}>{customTexts.sistem}</div>
+                <div style={{ fontSize: 14, color: C.text, fontWeight: "600" }}>{customTexts.sistem}</div>
               </div>
               <button onClick={() => setCustomPhase("setup")} style={{
-                background: "none", border: "1px solid #F8FAFC", borderRadius: 8,
-                color: C.muted, fontSize: 11, padding: "6px 12px", cursor: "pointer",
+                background: "none", border: "1px solid #E5E7EB", borderRadius: 8,
+                color: C.muted, fontSize: 12, padding: "6px 12px", cursor: "pointer",
               }}>Editează</button>
             </div>
 
@@ -635,16 +635,16 @@ export default function SimulatorSisteme() {
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
               <div style={{ background: `${C.declarate}0D`, border: `1px solid ${C.declarate}33`, borderRadius: 12, padding: "12px 14px" }}>
                 <div style={{ fontSize: 9, letterSpacing: 1, color: C.declarate, textTransform: "uppercase", fontFamily: "monospace", marginBottom: 6 }}>◎ Declară</div>
-                <div style={{ fontSize: 12, color: "#475569", lineHeight: 1.6 }}>{customTexts.declarat}</div>
+                <div style={{ fontSize: 12, color: "#94A3B8", lineHeight: 1.6 }}>{customTexts.declarat}</div>
               </div>
               <div style={{ background: `${C.reale}0D`, border: `1px solid ${C.reale}33`, borderRadius: 12, padding: "12px 14px" }}>
                 <div style={{ fontSize: 9, letterSpacing: 1, color: C.reale, textTransform: "uppercase", fontFamily: "monospace", marginBottom: 6 }}>◉ Produce</div>
-                <div style={{ fontSize: 12, color: "#475569", lineHeight: 1.6 }}>{customTexts.real}</div>
+                <div style={{ fontSize: 12, color: "#94A3B8", lineHeight: 1.6 }}>{customTexts.real}</div>
               </div>
             </div>
 
             {/* Results */}
-            <div style={{ background: "#FFFFFF", border: "1px solid #E5E7EB", borderRadius: 14, padding: "18px 18px" }}>
+            <div style={{ background: C.panel, border: `1px solid ${C.panelBorder}`, borderRadius: 14, padding: "18px 18px" }}>
               <GapBar gap={customResult.gap} prev={null} />
               <div style={{ fontSize: 9, letterSpacing: 2, color: C.muted, textTransform: "uppercase", fontFamily: "monospace", marginBottom: 12 }}>Indicatori estimați</div>
               <OutputBar label="Performanță generală" value={customResult.performance} good={true} />
@@ -653,7 +653,7 @@ export default function SimulatorSisteme() {
             </div>
 
             {/* Custom sliders */}
-            <div style={{ background: "#FFFFFF", border: `1px solid ${C.proces}33`, borderRadius: 14, padding: "18px 18px" }}>
+            <div style={{ background: C.panel, border: `1px solid ${C.proces}33`, borderRadius: 14, padding: "18px 18px" }}>
               <div style={{ fontSize: 9, letterSpacing: 2, color: C.proces, textTransform: "uppercase", fontFamily: "monospace", marginBottom: 6 }}>Ce se întâmplă dacă schimbi...</div>
               <div style={{ fontSize: 12, color: C.muted, marginBottom: 16, lineHeight: 1.6 }}>
                 Modifică fiecare element și observă cum se schimbă distanța față de promisiune.
@@ -668,7 +668,7 @@ export default function SimulatorSisteme() {
             <div style={{
               background: `${C.accent}0D`, border: `1px solid ${C.accent}33`,
               borderRadius: 14, padding: "14px 16px",
-              fontSize: 13, color: "#475569", lineHeight: 1.7, fontStyle: "italic",
+              fontSize: 13, color: "#94A3B8", lineHeight: 1.7, fontStyle: "italic",
             }}>
               💡 {customResult.gap < 25
                 ? "Sistemul tău funcționează aproape de promisiunile lui. Distanța e mică — fie sistemul e bine construit, fie așteptările sunt realiste."
@@ -680,14 +680,14 @@ export default function SimulatorSisteme() {
             <button onClick={() => {
               setCustomVals({ resurse: 50, calitate_proces: 50, transparenta: 50, flexibilitate: 50, presiune: 50 });
             }} style={{
-              background: "rgba(15,23,42,0.04)", border: "1px solid #F8FAFC",
+              background: "#FFFFFF", border: "1px solid #E5E7EB",
               borderRadius: 10, color: C.muted, fontSize: 13, padding: "10px", cursor: "pointer",
             }}>↺ Reset slidere</button>
           </div>
         )}
       </div>
 
-      <div style={{ marginTop: 40, fontSize: 9, color: "#F8FAFC", letterSpacing: 3, textTransform: "uppercase", fontFamily: "monospace" }}>
+      <div style={{ marginTop: 40, fontSize: 9, color: "#E5E7EB", letterSpacing: 3, textTransform: "uppercase", fontFamily: "monospace" }}>
         Structural Intelligence · Simulatorul de Sisteme
       </div>
     </div>

@@ -4,12 +4,12 @@ import { useState, useEffect, useRef } from "react";
 
 const C = {
   bg: "#F3F4F6",
-  bgGlow: "#1118277ED",
-  panel: "#111827FFF",
+  bgGlow: "#FFF7ED",
+  panel: "#FFFFFF",
   border: "#E5E7EB",
   text: "#111827",
   muted: "#475569",
-  faint: "#F8FAFC",
+  faint: "#64748B",
   red: "#DC2626",
   orange: "#FF6B2B",
   yellow: "#EAB308",
@@ -69,7 +69,7 @@ function TypewriterText({ text, speed = 18, onDone }) {
     return () => clearInterval(interval);
   }, [text]);
 
-  return <span>{displayed}{!done && <span style={{ opacity: 0.82 }}>▌</span>}</span>;
+  return <span>{displayed}{!done && <span style={{ opacity: 0.86 }}>▌</span>}</span>;
 }
 
 function PulsingDot({ color }) {
@@ -77,7 +77,7 @@ function PulsingDot({ color }) {
     <span style={{
       display: "inline-block", width: 8, height: 8, borderRadius: "50%",
       background: color, marginRight: 8, flexShrink: 0,
-      boxShadow: `0 8px 24px rgba(15,23,42,0.08)`,
+      boxShadow: `0 0 6px ${color}`,
       animation: "pulse 1.5s ease-in-out infinite",
     }} />
   );
@@ -87,15 +87,15 @@ function ScoreBar({ value, color, label }) {
   return (
     <div style={{ marginBottom: 8 }}>
       <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
-        <span style={{ fontSize: 11, color: C.muted }}>{label}</span>
-        <span style={{ fontSize: 11, color, fontFamily: "monospace" }}>{value}%</span>
+        <span style={{ fontSize: 12, color: C.muted }}>{label}</span>
+        <span style={{ fontSize: 12, color, fontFamily: "monospace" }}>{value}%</span>
       </div>
       <div style={{ height: 4, borderRadius: 2, background: C.border, overflow: "hidden" }}>
         <div style={{
           height: "100%", borderRadius: 2, width: `${value}%`,
-          background: "#FFFFFF",
+          background: color,
           transition: "width 0.8s cubic-bezier(0.4,0,0.2,1)",
-          boxShadow: `0 8px 24px rgba(15,23,42,0.08)`,
+          boxShadow: `0 0 8px ${color}55`,
         }} />
       </div>
     </div>
@@ -180,13 +180,13 @@ Fii direct, nu moralizator. Scopul nu e să judeci sursa, ci să explici mecanis
     <div style={{
       minHeight: "100vh",
       background: C.bg,
-      fontFamily: "'Georgia', 'Times New Roman', serif",
+      fontFamily: "Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
       color: C.text,
       display: "flex", flexDirection: "column", alignItems: "center",
       padding: "28px 16px 80px",
     }}>
       <style>{`
-        @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity: 0.88;transform:scale(0.85)} }
+        @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.6;transform:scale(0.85)} }
         @keyframes fadeSlideIn { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
         @keyframes scanline { 0%{transform:translateY(-100%)} 100%{transform:translateY(100vh)} }
         @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
@@ -199,7 +199,7 @@ Fii direct, nu moralizator. Scopul nu e să judeci sursa, ci să explici mecanis
       <div style={{
         position: "fixed", top: 0, left: 0, right: 0, bottom: 0,
         pointerEvents: "none", zIndex: 0, overflow: "hidden",
-        background: "repeating-linear-gradient(0deg, transparent, transparent 2px, #FFFFFF 2px, #FFFFFF 4px)",
+        display: "none",
       }} />
 
       <div style={{ position: "relative", zIndex: 1, width: "100%", maxWidth: 520 }}>
@@ -207,7 +207,7 @@ Fii direct, nu moralizator. Scopul nu e să judeci sursa, ci să explici mecanis
         {/* Header */}
         <div style={{ textAlign: "center", marginBottom: 32 }}>
           <div style={{
-            fontSize: 9, letterSpacing: 6, color: C.accent,
+            fontSize: 12, letterSpacing: 3, color: C.accent,
             textTransform: "uppercase", fontFamily: "monospace", marginBottom: 10,
             opacity: 0.8,
           }}>Young Dragons Academy · Lecția 3C</div>
@@ -217,14 +217,14 @@ Fii direct, nu moralizator. Scopul nu e să judeci sursa, ci să explici mecanis
               fontSize: "clamp(26px, 6vw, 42px)",
               fontWeight: 700, margin: 0,
               letterSpacing: "-0.02em",
-              color: "#111827",
+              color: C.text,
               textShadow: "none",
             }}>Decodorul</h1>
             <h1 style={{
               fontSize: "clamp(26px, 6vw, 42px)",
               fontWeight: 700, margin: 0,
               letterSpacing: "-0.02em",
-              background: "#FFFFFF",
+              background: C.accent,
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
             }}>de Mesaje</h1>
@@ -240,7 +240,7 @@ Fii direct, nu moralizator. Scopul nu e să judeci sursa, ci să explici mecanis
 
         {/* Input area */}
         <div style={{
-          background: "#FFFFFF",
+          background: C.panel,
           border: `1px solid ${input.trim() ? C.accent + "55" : C.border}`,
           borderRadius: 20, padding: "20px 20px 16px",
           marginBottom: 14,
@@ -272,7 +272,7 @@ Fii direct, nu moralizator. Scopul nu e să judeci sursa, ci să explici mecanis
             alignItems: "center", marginTop: 12, paddingTop: 12,
             borderTop: `1px solid ${C.border}`,
           }}>
-            <span style={{ fontSize: 11, color: C.muted, fontFamily: "monospace" }}>
+            <span style={{ fontSize: 12, color: C.muted, fontFamily: "monospace" }}>
               {input.length} caractere
             </span>
             <button
@@ -280,10 +280,10 @@ Fii direct, nu moralizator. Scopul nu e să judeci sursa, ci să explici mecanis
               disabled={!input.trim() || phase === "loading"}
               style={{
                 background: input.trim() && phase !== "loading"
-                  ? `linear-gradient(135deg, ${C.orange}, ${C.red})`
+                  ? C.accent
                   : C.border,
                 border: "none", borderRadius: 12,
-                color: input.trim() && phase !== "loading" ? "#111827" : C.muted,
+                color: input.trim() && phase !== "loading" ? "#FFFFFF" : C.muted,
                 fontWeight: "bold", fontSize: 13,
                 padding: "10px 24px", cursor: input.trim() && phase !== "loading" ? "pointer" : "default",
                 transition: "all 0.3s",
@@ -309,7 +309,7 @@ Fii direct, nu moralizator. Scopul nu e să judeci sursa, ci să explici mecanis
                   key={i}
                   onClick={() => setInput(ex.text)}
                   style={{
-                    background: "#FFFFFF", border: "1px solid #E5E7EB",
+                    background: C.panel, border: `1px solid ${C.border}`,
                     borderRadius: 12, padding: "12px 16px", cursor: "pointer",
                     transition: "all 0.2s",
                     display: "flex", alignItems: "flex-start", gap: 12,
@@ -357,17 +357,17 @@ Fii direct, nu moralizator. Scopul nu e să judeci sursa, ci să explici mecanis
 
             {/* Title bar */}
             <div style={{
-              background: "#FFFFFF",
+              background: C.panel,
               border: `1px solid ${C.accent}44`,
               borderRadius: 18, padding: "20px 22px",
               marginBottom: 12,
-              boxShadow: `0 8px 24px rgba(15,23,42,0.08)`,
+              boxShadow: `0 0 40px ${C.accent}11`,
             }}>
               <div style={{
                 fontSize: 9, letterSpacing: 3, color: C.accent,
                 textTransform: "uppercase", fontFamily: "monospace", marginBottom: 8,
               }}>Mesajul tău în esență</div>
-              <div style={{ fontSize: 17, fontWeight: "700", color: "#111827", lineHeight: 1.4 }}>
+              <div style={{ fontSize: 17, fontWeight: "700", color: C.text, lineHeight: 1.4 }}>
                 {activeSection >= 0 ? (
                   <TypewriterText text={result.titlu} onDone={() => markSectionReady(0)} />
                 ) : null}
@@ -383,9 +383,9 @@ Fii direct, nu moralizator. Scopul nu e să judeci sursa, ci să explici mecanis
               }}>
                 {/* Emotion */}
                 <div style={{
-                  background: "#FFFFFF", border: `1px solid ${emotionData?.color}44`,
+                  background: C.panel, border: `1px solid ${emotionData?.color}44`,
                   borderRadius: 16, padding: "16px 16px",
-                  boxShadow: `0 8px 24px rgba(15,23,42,0.08)`,
+                  boxShadow: `0 0 20px ${emotionData?.color}11`,
                 }}>
                   <div style={{ fontSize: 9, letterSpacing: 2, color: C.muted, textTransform: "uppercase", fontFamily: "monospace", marginBottom: 10 }}>Emoția activată</div>
                   <div style={{ fontSize: 28, marginBottom: 6 }}>{emotionData?.emoji}</div>
@@ -393,16 +393,16 @@ Fii direct, nu moralizator. Scopul nu e să judeci sursa, ci să explici mecanis
                     {emotionData?.label}
                   </div>
                   <ScoreBar value={result.intensitate_emotie} color={emotionData?.color} label="Intensitate" />
-                  <div style={{ fontSize: 11, color: C.muted, lineHeight: 1.6, marginTop: 8 }}>
+                  <div style={{ fontSize: 12, color: C.muted, lineHeight: 1.6, marginTop: 8 }}>
                     {emotionData?.desc}
                   </div>
                 </div>
 
                 {/* Honesty */}
                 <div style={{
-                  background: "#FFFFFF", border: `1px solid ${honestyColor}44`,
+                  background: C.panel, border: `1px solid ${honestyColor}44`,
                   borderRadius: 16, padding: "16px 16px",
-                  boxShadow: `0 8px 24px rgba(15,23,42,0.08)`,
+                  boxShadow: `0 0 20px ${honestyColor}11`,
                 }}>
                   <div style={{ fontSize: 9, letterSpacing: 2, color: C.muted, textTransform: "uppercase", fontFamily: "monospace", marginBottom: 10 }}>Scor de onestitate</div>
                   <div style={{
@@ -411,7 +411,7 @@ Fii direct, nu moralizator. Scopul nu e să judeci sursa, ci să explici mecanis
                     textShadow: "none",
                     marginBottom: 6,
                   }}>{result.onestitate_scor}</div>
-                  <div style={{ fontSize: 11, color: honestyColor, fontFamily: "monospace", marginBottom: 10 }}>
+                  <div style={{ fontSize: 12, color: honestyColor, fontFamily: "monospace", marginBottom: 10 }}>
                     {result.onestitate_scor > 65 ? "Predominant onest" : result.onestitate_scor > 35 ? "Parțial manipulativ" : "Puternic manipulativ"}
                   </div>
                   <ScoreBar value={result.onestitate_scor} color={honestyColor} label="Transparență" />
@@ -422,7 +422,7 @@ Fii direct, nu moralizator. Scopul nu e să judeci sursa, ci să explici mecanis
             {/* Patterns */}
             {sectionsReady.includes(0) && result.tipare?.length > 0 && (
               <div style={{
-                background: "#FFFFFF", border: "1px solid #E5E7EB",
+                background: C.panel, border: `1px solid ${C.border}`,
                 borderRadius: 16, padding: "18px 20px", marginBottom: 12,
                 animation: "fadeSlideIn 0.4s ease",
               }}>
@@ -444,7 +444,7 @@ Fii direct, nu moralizator. Scopul nu e să judeci sursa, ci să explici mecanis
                         <PulsingDot color={pd.color} />
                         <div>
                           <div style={{ fontSize: 12, fontWeight: "bold", color: pd.color, marginBottom: 3 }}>{pd.label}</div>
-                          <div style={{ fontSize: 11, color: C.muted, lineHeight: 1.6 }}>{pd.desc}</div>
+                          <div style={{ fontSize: 12, color: C.muted, lineHeight: 1.6 }}>{pd.desc}</div>
                         </div>
                       </div>
                     );
@@ -456,14 +456,14 @@ Fii direct, nu moralizator. Scopul nu e să judeci sursa, ci să explici mecanis
             {/* How it works */}
             {sectionsReady.includes(0) && (
               <div style={{
-                background: "#FFFFFF", border: `1px solid ${C.blue}33`,
+                background: C.panel, border: `1px solid ${C.blue}33`,
                 borderRadius: 16, padding: "18px 20px", marginBottom: 12,
                 animation: "fadeSlideIn 0.5s ease",
               }}>
                 <div style={{ fontSize: 9, letterSpacing: 3, color: C.blue, textTransform: "uppercase", fontFamily: "monospace", marginBottom: 10 }}>
                   Cum funcționează
                 </div>
-                <div style={{ fontSize: 13, color: "#475569", lineHeight: 1.8 }}>
+                <div style={{ fontSize: 13, color: "#94A3B8", lineHeight: 1.8 }}>
                   <TypewriterText text={result.cum_functioneaza} speed={12} onDone={() => markSectionReady(1)} />
                 </div>
               </div>
@@ -472,14 +472,14 @@ Fii direct, nu moralizator. Scopul nu e să judeci sursa, ci să explici mecanis
             {/* What it wants */}
             {sectionsReady.includes(1) && (
               <div style={{
-                background: "#FFFFFF", border: `1px solid ${C.purple}33`,
+                background: C.panel, border: `1px solid ${C.purple}33`,
                 borderRadius: 16, padding: "18px 20px", marginBottom: 12,
                 animation: "fadeSlideIn 0.4s ease",
               }}>
                 <div style={{ fontSize: 9, letterSpacing: 3, color: C.purple, textTransform: "uppercase", fontFamily: "monospace", marginBottom: 10 }}>
                   Ce vrea să producă în tine
                 </div>
-                <div style={{ fontSize: 14, color: "#111827", lineHeight: 1.7, fontWeight: "500" }}>
+                <div style={{ fontSize: 14, color: C.text, lineHeight: 1.7, fontWeight: "500" }}>
                   <TypewriterText text={result.ce_vrea_sa_produca} speed={15} onDone={() => markSectionReady(2)} />
                 </div>
               </div>
@@ -488,14 +488,14 @@ Fii direct, nu moralizator. Scopul nu e să judeci sursa, ci să explici mecanis
             {/* What's missing */}
             {sectionsReady.includes(2) && (
               <div style={{
-                background: "#FFFFFF", border: `1px solid ${C.yellow}33`,
+                background: C.panel, border: `1px solid ${C.yellow}33`,
                 borderRadius: 16, padding: "18px 20px", marginBottom: 12,
                 animation: "fadeSlideIn 0.4s ease",
               }}>
                 <div style={{ fontSize: 9, letterSpacing: 3, color: C.yellow, textTransform: "uppercase", fontFamily: "monospace", marginBottom: 10 }}>
                   Ce lipsește din mesaj
                 </div>
-                <div style={{ fontSize: 13, color: "#475569", lineHeight: 1.7 }}>
+                <div style={{ fontSize: 13, color: "#94A3B8", lineHeight: 1.7 }}>
                   <TypewriterText text={result.ce_lipseste} speed={14} onDone={() => markSectionReady(3)} />
                 </div>
               </div>
@@ -504,18 +504,18 @@ Fii direct, nu moralizator. Scopul nu e să judeci sursa, ci să explici mecanis
             {/* The question */}
             {sectionsReady.includes(3) && (
               <div style={{
-                background: "#FFFFFF",
+                background: C.panel,
                 border: `1px solid ${C.accent}55`,
                 borderRadius: 18, padding: "22px 22px",
                 marginBottom: 12,
-                boxShadow: `0 8px 24px rgba(15,23,42,0.08)`,
+                boxShadow: `0 0 30px ${C.accent}15`,
                 animation: "fadeSlideIn 0.4s ease",
               }}>
                 <div style={{ fontSize: 9, letterSpacing: 3, color: C.accent, textTransform: "uppercase", fontFamily: "monospace", marginBottom: 12 }}>
                   Întrebarea pe care să o pui
                 </div>
                 <div style={{
-                  fontSize: 16, color: "#111827", lineHeight: 1.6,
+                  fontSize: 16, color: C.text, lineHeight: 1.6,
                   fontStyle: "italic", fontWeight: "600",
                 }}>
                   "<TypewriterText text={result.intrebare_de_verificat} speed={16} onDone={() => markSectionReady(4)} />"
@@ -526,7 +526,7 @@ Fii direct, nu moralizator. Scopul nu e să judeci sursa, ci să explici mecanis
             {/* Context */}
             {sectionsReady.includes(4) && (
               <div style={{
-                background: "#FFFFFF", border: `1px solid ${C.green}22`,
+                background: C.panel, border: `1px solid ${C.green}22`,
                 borderRadius: 16, padding: "16px 20px", marginBottom: 20,
                 animation: "fadeSlideIn 0.4s ease",
               }}>
@@ -545,8 +545,8 @@ Fii direct, nu moralizator. Scopul nu e să judeci sursa, ci să explici mecanis
                 <button
                   onClick={() => { setPhase("idle"); setInput(""); setResult(null); setSectionsReady([]); setActiveSection(0); }}
                   style={{
-                    flex: 1, background: "rgba(15,23,42,0.03)",
-                    border: "1px solid #F8FAFC", borderRadius: 12,
+                    flex: 1, background: "#FFFFFF",
+                    border: "1px solid #E5E7EB", borderRadius: 12,
                     color: C.muted, fontSize: 13, padding: "12px",
                     cursor: "pointer", fontFamily: "monospace",
                   }}>← Analizează alt mesaj</button>
@@ -554,9 +554,9 @@ Fii direct, nu moralizator. Scopul nu e să judeci sursa, ci să explici mecanis
                   onClick={() => { setInput(""); setPhase("idle"); setResult(null); setSectionsReady([]); }}
                   style={{
                     flex: 1,
-                    background: "#FFFFFF",
+                    background: C.accent,
                     border: "none", borderRadius: 12,
-                    color: "#111827", fontWeight: "bold", fontSize: 13,
+                    color: C.text, fontWeight: "bold", fontSize: 13,
                     padding: "12px", cursor: "pointer",
                     boxShadow: `0 4px 20px ${C.orange}33`,
                     fontFamily: "monospace",
