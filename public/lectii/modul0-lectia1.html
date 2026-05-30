@@ -531,20 +531,116 @@ body{
 }
 </style>
 
+<style>
+
+/* VALASI REFINEMENT — progress, contrast, no logo/back */
+body{
+  background:#FAF7F1 !important;
+  background-image:
+    radial-gradient(circle at 16% 0%, rgba(255,107,43,0.08), transparent 32%),
+    radial-gradient(circle at 84% 8%, rgba(255,179,71,0.08), transparent 30%),
+    linear-gradient(180deg, rgba(255,255,255,0.55), transparent 460px) !important;
+}
+.top-nav.valasi-progress-only{
+  position: sticky !important;
+  top:0 !important;
+  z-index:1000 !important;
+  background:rgba(250,247,241,0.94) !important;
+  backdrop-filter:blur(14px) !important;
+  border-bottom:1px solid rgba(99,34,0,0.10) !important;
+  padding:14px 22px 12px !important;
+  display:grid !important;
+  grid-template-columns:auto minmax(160px,1fr) auto !important;
+  gap:14px !important;
+  align-items:center !important;
+}
+.top-nav.valasi-progress-only .nav-label{
+  color:#8A5B39 !important;
+  opacity:.9 !important;
+  font-family:'DM Mono',monospace !important;
+  font-size:9px !important;
+  letter-spacing:2.2px !important;
+}
+.top-nav.valasi-progress-only .progress-bar{
+  position:relative !important;
+  height:7px !important;
+  border-radius:999px !important;
+  background:#E8DED2 !important;
+  overflow:hidden !important;
+  box-shadow: inset 0 0 0 1px rgba(99,34,0,0.04) !important;
+}
+.top-nav.valasi-progress-only .progress-fill{
+  height:100% !important;
+  border-radius:999px !important;
+  background:linear-gradient(90deg,#A43A08,#D28A22) !important;
+}
+.top-nav.valasi-progress-only .progress-inside{
+  position:absolute !important;
+  right:8px !important;
+  top:50% !important;
+  transform:translateY(-50%) !important;
+  font-family:'DM Mono',monospace !important;
+  font-size:8px !important;
+  line-height:1 !important;
+  color:#632200 !important;
+  opacity:.9 !important;
+  pointer-events:none !important;
+}
+.top-nav.valasi-progress-only .progress-pct{
+  color:#632200 !important;
+  font-family:'DM Mono',monospace !important;
+  font-size:10px !important;
+  font-weight:600 !important;
+  min-width:34px !important;
+  text-align:right !important;
+}
+.valasi-logo,.back-module,.nav-logo,.nav-back{
+  display:none !important;
+}
+@media(max-width:560px){
+  .top-nav.valasi-progress-only{
+    grid-template-columns:1fr auto !important;
+    gap:10px !important;
+    padding:12px 14px 10px !important;
+  }
+  .top-nav.valasi-progress-only .nav-label{display:none !important;}
+  .top-nav.valasi-progress-only .progress-bar{height:6px !important;}
+}
+
+/* high-contrast interactive recap / thinker cards */
+.thinker-card{
+  border-left-width:4px !important;
+  border-left-style:solid !important;
+}
+.thinker-name,
+.q-opt-name,
+.recap-name{
+  color:#111827 !important;
+  font-weight:800 !important;
+}
+.thinker-text,
+.recap-desc{
+  color:#374151 !important;
+}
+.thinker-idea a,
+.recap-link{
+  color:inherit !important;
+  text-decoration:underline !important;
+  text-underline-offset:3px !important;
+  font-weight:700 !important;
+}
+
+</style>
 </head>
 <body>
 
-<div class="top-nav">
-  <a href="https://valasi.aydasist.ro/" class="valasi-logo" aria-label="Școala Valasi">
-    <span class="valasi-mark">V</span>
-    <span class="valasi-logo-text">
-      <span class="valasi-logo-small">Școala</span>
-      <span class="valasi-logo-main">Valasi</span>
-    </span>
-  </a>
-  <div class="progress-bar"><div class="progress-fill" id="pfill"></div></div>
+<div class="top-nav valasi-progress-only">
+  <span class="nav-label">Progres Modul 0</span>
+  <div class="progress-bar">
+    <div class="progress-fill" id="pfill"></div>
+    <span class="progress-inside" id="pinside">0%</span>
+  </div>
   <span class="progress-pct" id="ppct">0%</span>
-  <a href="https://valasi.aydasist.ro/module/modul-0/" class="back-module">← Înapoi la Modul 0</a>
 </div>
 
 <div class="page">
@@ -588,31 +684,31 @@ body{
 
     <div class="thinker-card" style="border-left-color:var(--blue)">
       <div class="thinker-name">Alan Turing</div>
-      <div class="thinker-idea" style="color:var(--blue)">Inteligența ca comportament → OpenAI</div>
+      <div class="thinker-idea" style="color:var(--blue)">Inteligența ca comportament → <a href="https://openai.com" target="_blank" rel="noopener noreferrer">OpenAI</a></div>
       <div class="thinker-text">A pus prima întrebare serioasă: poate o mașină să gândească? A spart codul Enigma în al Doilea Război Mondial și a salvat, după estimările istoricilor, milioane de vieți. Statul pe care l-a salvat l-a persecutat pentru cine era. A murit la 41 de ani. Reabilitat oficial de statul britanic în 2013 — la 59 de ani după moarte.</div>
     </div>
 
     <div class="thinker-card" style="border-left-color:var(--green)">
       <div class="thinker-name">Charles Darwin</div>
-      <div class="thinker-idea" style="color:var(--green)">Inteligența ca observație acumulată → Google DeepMind</div>
+      <div class="thinker-idea" style="color:var(--green)">Inteligența ca observație acumulată → <a href="https://deepmind.google" target="_blank" rel="noopener noreferrer">Google DeepMind</a></div>
       <div class="thinker-text">A eșuat la medicină și la teologie înainte să găsească ce era cu adevărat al lui. A petrecut 5 ani observând înainte să scrie o teorie. Tatăl lui i-a spus că singurul lui talent pare să fie vânatul. A murit celebru, îngropat la Westminster Abbey lângă Newton.</div>
     </div>
 
     <div class="thinker-card" style="border-left-color:var(--gold)">
       <div class="thinker-name">Albert Einstein</div>
-      <div class="thinker-idea" style="color:var(--gold)">Inteligența ca modele mentale → Anthropic</div>
+      <div class="thinker-idea" style="color:var(--gold)">Inteligența ca modele mentale → <a href="https://www.anthropic.com" target="_blank" rel="noopener noreferrer">Anthropic</a></div>
       <div class="thinker-text">Considerat lent în școală, gândea în imagini înainte să gândească în ecuații. A eșuat examenul de admitere la Politehnica din Zurich la prima încercare. A regretut scrisoarea către Roosevelt despre bomba atomică tot restul vieții. A murit în 1955 refuzând o operație: "Vreau să plec când vreau."</div>
     </div>
 
     <div class="thinker-card" style="border-left-color:var(--purple)">
       <div class="thinker-name">Ada Lovelace</div>
-      <div class="thinker-idea" style="color:var(--purple)">Inteligența ca traducere → DeepMind</div>
+      <div class="thinker-idea" style="color:var(--purple)">Inteligența ca traducere → <a href="https://deepmind.google" target="_blank" rel="noopener noreferrer">DeepMind</a></div>
       <div class="thinker-text">Fiica poetului Lord Byron, crescută deliberat departe de poezie — mama ei a ales matematica pentru a o feri de nebunia familiei Byron. A scris primul algoritm din istorie pentru o mașină care nu exista. A rămas invizibilă aproape un secol. Limbajul de programare Ada a apărut în 1980 — la un secol după moartea ei.</div>
     </div>
 
     <div class="thinker-card" style="border-left-color:var(--orange)">
       <div class="thinker-name">Richard Feynman</div>
-      <div class="thinker-idea" style="color:var(--orange)">Inteligența ca simplitate → Palantir</div>
+      <div class="thinker-idea" style="color:var(--orange)">Inteligența ca simplitate → <a href="https://www.palantir.com" target="_blank" rel="noopener noreferrer">Palantir</a></div>
       <div class="thinker-text">Fizician, profesor și om incomod. Dacă nu poți explica ceva simplu, nu ai înțeles. A investigat dezastrul Challenger luând un inel de cauciuc și punându-l în apă cu gheață. NASA prezentase grafice. El a tăcut și a arătat. A murit în 1988. Ultimele lui cuvinte: "Ar fi plictisitor să mor de două ori."</div>
     </div>
 
@@ -810,6 +906,7 @@ function updateProgress() {
   const pct = Math.round((readSections.size / TOTAL) * 100);
   document.getElementById('pfill').style.width = pct + '%';
   document.getElementById('ppct').textContent = pct + '%';
+  const pinside=document.getElementById('pinside'); if(pinside) pinside.textContent=pct+'%';
 }
 
 // ── JOC ──────────────────────────────────────────────────────────────────────
@@ -927,11 +1024,11 @@ const POOL = [
 ];
 
 const THINKER_INFO = {
-  'Turing':  {full:'Alan Turing',    color:'#3B82F6', idea:'Inteligența ca comportament',           company:'OpenAI'},
-  'Darwin':  {full:'Charles Darwin', color:'#22C55E', idea:'Inteligența ca observație acumulată',   company:'Google DeepMind'},
-  'Lovelace':{full:'Ada Lovelace',   color:'#A855F7', idea:'Inteligența ca traducere între lumi',   company:'DeepMind'},
-  'Feynman': {full:'Richard Feynman',color:'#FF6B2B', idea:'Inteligența ca simplitate',             company:'Palantir'},
-  'Einstein':{full:'Albert Einstein',color:'#FFB347', idea:'Inteligența ca modele mentale',         company:'Anthropic'},
+  'Turing':  {full:'Alan Turing',    color:'#3B82F6', idea:'Inteligența ca comportament',           company:'OpenAI',          url:'https://openai.com'},
+  'Darwin':  {full:'Charles Darwin', color:'#22C55E', idea:'Inteligența ca observație acumulată',   company:'Google DeepMind', url:'https://deepmind.google'},
+  'Lovelace':{full:'Ada Lovelace',   color:'#A855F7', idea:'Inteligența ca traducere între lumi',   company:'DeepMind',        url:'https://deepmind.google'},
+  'Feynman': {full:'Richard Feynman',color:'#FF6B2B', idea:'Inteligența ca simplitate',             company:'Palantir',        url:'https://www.palantir.com'},
+  'Einstein':{full:'Albert Einstein',color:'#FFB347', idea:'Inteligența ca modele mentale',         company:'Anthropic',       url:'https://www.anthropic.com'},
 };
 
 function shuffle(a) {
@@ -1012,12 +1109,21 @@ function nextQ() {
 
 function renderResult() {
   const msgs = ['Continuă să observi. Tiparele vin cu exercițiu.','Continuă.','Jumătate din hartă — o bază solidă.','Aproape complet.','Aproape complet.','Harta completă. Acum știi să citești un sistem după viziunea din spatele lui.'];
-  const recap = Object.values(THINKER_INFO).map(t=>`<div style="display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:10px;margin-bottom:8px"><div style="width:8px;height:8px;border-radius:50%;background:${t.color};flex-shrink:0;margin-top:5px"></div><div><div style="font-size:13px;font-weight:600;color:#fff;margin-bottom:2px">${t.full}</div><div style="font-size:12px;color:var(--muted);font-family:'Cormorant Garamond',serif;font-style:italic">${t.idea} → ${t.company}</div></div></div>`).join('');
+  const recap = Object.values(THINKER_INFO).map(t=>`
+    <div class="recap-card" style="display:flex;align-items:flex-start;gap:12px;padding:13px 15px;background:#FFFFFF;border:1px solid #E5D8C9;border-left:4px solid ${t.color};border-radius:12px;margin-bottom:10px;box-shadow:0 8px 24px rgba(99,34,0,0.035)">
+      <div style="width:9px;height:9px;border-radius:50%;background:${t.color};flex-shrink:0;margin-top:7px"></div>
+      <div>
+        <div class="recap-name" style="font-size:14px;font-weight:800;color:#111827;margin-bottom:3px">${t.full}</div>
+        <div class="recap-desc" style="font-size:12px;color:#4A4038;font-family:'DM Sans',sans-serif;font-style:normal;line-height:1.55">
+          ${t.idea} → <a class="recap-link" href="${t.url}" target="_blank" rel="noopener noreferrer" style="color:${t.color};text-decoration:underline;text-underline-offset:3px;font-weight:700">${t.company}</a>
+        </div>
+      </div>
+    </div>`).join('');
   document.getElementById('game-content').innerHTML = `
     <div style="text-align:center;padding:20px 0">
       <div style="font-size:40px;margin-bottom:12px">${score===5?'🐉':score>=3?'🔥':'👁'}</div>
-      <div style="font-size:16px;font-weight:700;color:#fff;margin-bottom:8px">${score}/${game.length} corecte</div>
-      <div style="font-family:'Cormorant Garamond',serif;font-size:14px;color:#9090AA;line-height:1.7;margin-bottom:16px">${msgs[score]}</div>
+      <div style="font-size:16px;font-weight:800;color:#111827;margin-bottom:8px">${score}/${game.length} corecte</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:15px;color:#6B5E53;line-height:1.7;margin-bottom:16px">${msgs[score]}</div>
     </div>
     ${recap}
     <button class="btn-ghost" style="margin-top:8px" onclick="game=buildGame();current=0;score=0;renderGame()">Joacă din nou — scenarii noi</button>`;

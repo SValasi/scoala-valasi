@@ -694,14 +694,135 @@ nav{
 }
 </style>
 
+<style>
+
+/* VALASI REFINEMENT — progress, contrast, no logo/back */
+body{
+  background:#FAF7F1 !important;
+  background-image:
+    radial-gradient(circle at 16% 0%, rgba(255,107,43,0.08), transparent 32%),
+    radial-gradient(circle at 84% 8%, rgba(255,179,71,0.08), transparent 30%),
+    linear-gradient(180deg, rgba(255,255,255,0.55), transparent 460px) !important;
+}
+.top-nav.valasi-progress-only{
+  position: sticky !important;
+  top:0 !important;
+  z-index:1000 !important;
+  background:rgba(250,247,241,0.94) !important;
+  backdrop-filter:blur(14px) !important;
+  border-bottom:1px solid rgba(99,34,0,0.10) !important;
+  padding:14px 22px 12px !important;
+  display:grid !important;
+  grid-template-columns:auto minmax(160px,1fr) auto !important;
+  gap:14px !important;
+  align-items:center !important;
+}
+.top-nav.valasi-progress-only .nav-label{
+  color:#8A5B39 !important;
+  opacity:.9 !important;
+  font-family:'DM Mono',monospace !important;
+  font-size:9px !important;
+  letter-spacing:2.2px !important;
+}
+.top-nav.valasi-progress-only .progress-bar{
+  position:relative !important;
+  height:7px !important;
+  border-radius:999px !important;
+  background:#E8DED2 !important;
+  overflow:hidden !important;
+  box-shadow: inset 0 0 0 1px rgba(99,34,0,0.04) !important;
+}
+.top-nav.valasi-progress-only .progress-fill{
+  height:100% !important;
+  border-radius:999px !important;
+  background:linear-gradient(90deg,#A43A08,#D28A22) !important;
+}
+.top-nav.valasi-progress-only .progress-inside{
+  position:absolute !important;
+  right:8px !important;
+  top:50% !important;
+  transform:translateY(-50%) !important;
+  font-family:'DM Mono',monospace !important;
+  font-size:8px !important;
+  line-height:1 !important;
+  color:#632200 !important;
+  opacity:.9 !important;
+  pointer-events:none !important;
+}
+.top-nav.valasi-progress-only .progress-pct{
+  color:#632200 !important;
+  font-family:'DM Mono',monospace !important;
+  font-size:10px !important;
+  font-weight:600 !important;
+  min-width:34px !important;
+  text-align:right !important;
+}
+.valasi-logo,.back-module,.nav-logo,.nav-back{
+  display:none !important;
+}
+@media(max-width:560px){
+  .top-nav.valasi-progress-only{
+    grid-template-columns:1fr auto !important;
+    gap:10px !important;
+    padding:12px 14px 10px !important;
+  }
+  .top-nav.valasi-progress-only .nav-label{display:none !important;}
+  .top-nav.valasi-progress-only .progress-bar{height:6px !important;}
+}
+
+/* high-contrast interactive recap / thinker cards */
+.thinker-card{
+  border-left-width:4px !important;
+  border-left-style:solid !important;
+}
+.thinker-name,
+.q-opt-name,
+.recap-name{
+  color:#111827 !important;
+  font-weight:800 !important;
+}
+.thinker-text,
+.recap-desc{
+  color:#374151 !important;
+}
+.thinker-idea a,
+.recap-link{
+  color:inherit !important;
+  text-decoration:underline !important;
+  text-underline-offset:3px !important;
+  font-weight:700 !important;
+}
+
+.dict-progress-only{
+  height:auto !important;
+  padding:14px 22px 12px !important;
+}
+.dict-progress-only .progress-fill{
+  width:0;
+  transition:width .15s;
+}
+.layout{
+  padding-top: 0 !important;
+}
+.sidebar{
+  top:44px !important;
+  height:calc(100vh - 44px) !important;
+}
+@media(max-width:900px){
+  .sidebar{top:44px !important;}
+}
+
+</style>
 </head>
 <body>
 
-<div class="progress-bar" id="prog"></div>
-
-<nav>
-  <a href="https://valasi.aydasist.ro/" class="nav-logo">Școala <span>Valasi</span></a>
-  <a href="https://valasi.aydasist.ro/module/modul-0/" class="nav-back">Înapoi la Modul 0</a>
+<nav class="top-nav valasi-progress-only dict-progress-only">
+  <span class="nav-label">Progres Modul 0</span>
+  <div class="progress-bar">
+    <div class="progress-fill" id="prog"></div>
+    <span class="progress-inside" id="progPct">0%</span>
+  </div>
+  <span class="progress-pct" id="progPctOuter">0%</span>
 </nav>
 
 <div class="layout">
@@ -1052,7 +1173,10 @@ nav{
 // Progress bar
 window.addEventListener('scroll', () => {
   const total = document.documentElement.scrollHeight - window.innerHeight;
-  document.getElementById('prog').style.width = (window.scrollY / total * 100) + '%';
+  const pct = total > 0 ? Math.round(window.scrollY / total * 100) : 100;
+  document.getElementById('prog').style.width = pct + '%';
+  const a=document.getElementById('progPct'); if(a) a.textContent=pct+'%';
+  const b=document.getElementById('progPctOuter'); if(b) b.textContent=pct+'%';
 });
 
 // Sidebar active state
