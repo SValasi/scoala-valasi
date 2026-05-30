@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lecția 3 — Inteligență Structurală · Școala Valasi</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #09090F;
+    --panel: #111320;
+    --border: #1C1F35;
+    --text: #E2E0F0;
+    --muted: #5A5880;
+    --orange: #FF6B2B;
+    --gold: #FFB347;
+    --teal: #4ECDC4;
+    --red: #EF4444;
+    --blue: #3B82F6;
+    --purple: #A855F7;
+    --green: #22C55E;
+    --yellow: #EAB308;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    background-image: radial-gradient(ellipse at 25% 10%, #1A0A2E 0%, var(--bg) 55%);
+  }
+
+  .top-nav { position: sticky; top: 0; z-index: 100; background: rgba(9,9,15,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 12px 20px; display: flex; align-items: center; gap: 12px; }
+  .nav-label { font-size: 9px; letter-spacing: 3px; color: var(--muted); text-transform: uppercase; font-family: monospace; flex-shrink: 0; }
+  .progress-bar { flex: 1; height: 3px; border-radius: 2px; background: var(--border); overflow: hidden; }
+  .progress-fill { height: 100%; border-radius: 2px; background: linear-gradient(90deg, var(--orange), var(--gold)); transition: width 0.5s; width: 0%; }
+  .progress-pct { font-size: 10px; color: var(--muted); font-family: monospace; flex-shrink: 0; }
+
+  .page { max-width: 640px; margin: 0 auto; padding: 0 20px 80px; }
+
+  .hero { padding: 48px 0 32px; }
+  .tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+  .tag { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; font-family: monospace; padding: 3px 10px; border-radius: 20px; border: 1px solid var(--border); color: var(--muted); }
+  .tag.active { border-color: rgba(255,107,43,0.4); color: var(--orange); }
+  .hero-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(22px,5vw,38px); font-weight: 300; line-height: 1.2; letter-spacing: -0.02em; margin-bottom: 16px; background: linear-gradient(135deg, #fff 0%, var(--gold) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .hero-sub { font-family: 'Cormorant Garamond', serif; font-size: 18px; color: #8888BB; line-height: 1.8; }
+
+  .section-tabs { display: flex; gap: 6px; margin-bottom: 32px; flex-wrap: wrap; }
+  .tab-btn { font-size: 10px; padding: 5px 12px; border-radius: 20px; cursor: pointer; font-family: monospace; letter-spacing: 1px; text-transform: uppercase; border: 1px solid var(--border); background: transparent; color: #3A3A5A; transition: all 0.2s; }
+  .tab-btn.active { border-color: var(--orange); background: rgba(255,107,43,0.1); color: var(--orange); }
+  .tab-btn.done { color: var(--muted); }
+
+  .section { display: none; animation: fadeUp 0.4s ease; }
+  .section.visible { display: block; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+  .card { background: linear-gradient(135deg, var(--panel), #0E0E20); border: 1px solid var(--border); border-radius: 18px; padding: 24px; margin-bottom: 16px; }
+  .card p { font-family: 'Cormorant Garamond', serif; font-size: 17px; line-height: 1.9; color: var(--text); margin-bottom: 16px; }
+  .card p:last-child { margin-bottom: 0; }
+  .card p.dim { color: #9090BB; }
+  .card p strong { color:#111827; }
+  .card p em { color: var(--orange); font-style: normal; font-weight: 600; }
+
+  .highlight-card { background: rgba(255,107,43,0.06); border: 1px solid rgba(255,107,43,0.2); border-radius: 14px; padding: 18px; margin-bottom: 16px; }
+  .highlight-card p { font-family: 'Cormorant Garamond', serif; font-size: 15px; color: #475569; line-height: 1.8; margin: 0; }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+  .info-card { background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 16px; text-align: center; }
+  .info-card .val { font-size: 15px; font-weight: 600; color:#111827; margin-bottom: 4px; }
+  .info-card .desc { font-size: 12px; color: var(--muted); }
+
+  .btn-primary { width: 100%; padding: 16px; background: linear-gradient(135deg, var(--orange), var(--gold)); border: none; border-radius: 14px; color: #09090F; font-weight: 700; font-size: 15px; cursor: pointer; font-family: 'DM Sans', sans-serif; box-shadow: 0 6px 24px rgba(255,107,43,0.35); transition: all 0.2s; }
+  .btn-primary:hover { transform: translateY(-1px); }
+  .btn-gold { width: 100%; padding: 16px; background: linear-gradient(135deg, var(--gold), #F97316); border: none; border-radius: 14px; color: #09090F; font-weight: 700; font-size: 15px; cursor: pointer; font-family: 'DM Sans', sans-serif; box-shadow: 0 6px 24px rgba(255,179,71,0.35); transition: all 0.2s; }
+  .btn-ghost { width: 100%; padding: 14px; background:#FFFFFF; border: 1px solid var(--border); border-radius: 14px; color: var(--muted); font-size: 13px; cursor: pointer; font-family: 'DM Sans', sans-serif; }
+  .btn-back { padding: 10px 16px; background:#FFFFFF; border: 1px solid var(--border); border-radius: 10px; color: var(--muted); font-size: 13px; cursor: pointer; font-family: 'DM Sans', sans-serif; }
+  .btn-small { padding: 10px 20px; border: none; border-radius: 10px; color: #09090F; font-weight: 700; font-size: 13px; cursor: pointer; font-family: 'DM Sans', sans-serif; }
+
+  /* ── LEVEL ITEMS ── */
+  .level-item { display: flex; gap: 14px; align-items: flex-start; background: var(--panel); border-radius: 14px; padding: 16px 18px; margin-bottom: 10px; }
+  .level-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; margin-top: 7px; }
+  .level-nr { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; font-family: monospace; margin-bottom: 4px; }
+  .level-label { font-size: 14px; font-weight: 600; color:#111827; margin-bottom: 4px; }
+  .level-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+  /* ── TOOL ACCORDION ── */
+  .tool-accordion { border: 1px solid var(--border); border-radius: 16px; margin-bottom: 12px; overflow: hidden; transition: all 0.3s; }
+  .tool-header { padding: 18px 20px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: background 0.2s; }
+  .tool-header:hover { background: rgba(255,255,255,0.02); }
+  .tool-header.open { border-bottom: 1px solid var(--border); }
+  .tool-meta { display: flex; gap: 8px; align-items: center; margin-bottom: 6px; flex-wrap: wrap; }
+  .tool-type-tag { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; font-family: monospace; padding: 2px 8px; border-radius: 20px; }
+  .tool-time { font-size: 10px; color: var(--muted); font-family: monospace; }
+  .tool-name { font-size: 14px; font-weight: 700; color:#111827; margin-bottom: 4px; }
+  .tool-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+  .tool-arrow { font-size: 16px; flex-shrink: 0; margin-left: 12px; transition: all 0.2s; }
+  .tool-body { padding: 24px; display: none; animation: fadeUp 0.3s ease; }
+  .tool-body.open { display: block; }
+
+  /* ── JOC ── */
+  .q-progress { display: flex; gap: 6px; margin-bottom: 20px; }
+  .q-bar { flex: 1; height: 4px; border-radius: 2px; background: var(--border); transition: all 0.3s; }
+  .q-level-tag { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; font-family: monospace; margin-bottom: 10px; }
+  .q-situation { font-size: 13px; color: #475569; line-height: 1.8; padding: 14px 16px; background:#F8F4EE; border-radius: 12px; border-left: 3px solid; font-style: italic; margin-bottom: 16px; }
+  .q-sequence { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; background:#F8F4EE; border-radius: 12px; padding: 14px 16px; margin-bottom: 16px; }
+  .q-seq-item { font-size: 22px; padding: 4px 6px; border-radius: 8px; }
+  .q-seq-unknown { font-size: 22px; padding: 4px 12px; border-radius: 8px; font-family: monospace; }
+  .q-question { font-size: 15px; font-weight: 600; color:#111827; margin-bottom: 14px; }
+  .q-options { display: flex; flex-direction: column; gap: 8px; }
+  .q-option { padding: 11px 16px; border-radius: 12px; border: 1px solid var(--border); background:#FFFFFF; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--text); }
+  .q-option:hover { border-color: var(--blue); }
+  .q-option-letter { width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 10px; font-family: monospace; flex-shrink: 0; font-weight: 700; }
+  .q-explanation { margin-top: 14px; padding: 12px 14px; border-radius: 10px; animation: fadeUp 0.3s ease; }
+  .q-exp-label { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; font-family: monospace; margin-bottom: 6px; }
+  .q-exp-text { font-size: 12px; color: #475569; line-height: 1.7; }
+
+  /* ── JURNAL ── */
+  .j-progress { display: flex; gap: 6px; margin-bottom: 20px; }
+  .j-bar { flex: 1; height: 4px; border-radius: 2px; transition: all 0.3s; }
+  .j-question { font-size: 15px; font-weight: 700; color:#111827; margin-bottom: 8px; }
+  .j-hint { font-size: 12px; color: var(--muted); font-style: italic; padding: 8px 12px; background: rgba(255,107,43,0.06); border-radius: 8px; border-left: 2px solid rgba(255,107,43,0.3); margin-bottom: 14px; line-height: 1.6; }
+  .j-textarea { width: 100%; min-height: 80px; background:#F5F1EA; border-radius: 10px; color: var(--text); font-size: 13px; padding: 10px 12px; resize: vertical; font-family: Georgia, serif; outline: none; line-height: 1.6; margin-bottom: 12px; border: 1px solid var(--border); }
+  .j-nav { display: flex; gap: 10px; }
+  .pattern-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 16px; }
+  .pattern-card { background:#F8F4EE; border: 1px solid var(--border); border-radius: 12px; padding: 12px; cursor: pointer; transition: all 0.2s; }
+  .pattern-label { font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 3px; }
+  .pattern-desc { font-size: 10px; color: var(--muted); line-height: 1.5; }
+
+  /* ── GHID ── */
+  .g-progress { display: flex; gap: 4px; margin-bottom: 20px; }
+  .g-bar { flex: 1; height: 4px; border-radius: 2px; transition: all 0.3s; }
+  .g-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .g-question { font-size: 15px; font-weight: 700; color:#111827; margin-bottom: 8px; }
+  .g-hint { font-size: 12px; color: var(--muted); font-style: italic; padding: 8px 12px; border-radius: 8px; margin-bottom: 14px; line-height: 1.6; }
+  .g-textarea { width: 100%; min-height: 80px; border-radius: 10px; color: var(--text); font-size: 13px; padding: 10px 12px; resize: vertical; font-family: Georgia, serif; outline: none; line-height: 1.6; margin-bottom: 12px; }
+  .g-nav { display: flex; gap: 10px; }
+
+  /* ── DECODOR ── */
+  .d-textarea { width: 100%; min-height: 80px; background:#F5F1EA; border-radius: 10px; color: var(--text); font-size: 13px; padding: 10px 12px; resize: vertical; font-family: Georgia, serif; outline: none; line-height: 1.6; margin-bottom: 12px; border: 1px solid var(--border); transition: border-color 0.3s; }
+  .d-result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+  .d-result-card { border-radius: 12px; padding: 12px; }
+  .d-result-label { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; font-family: monospace; margin-bottom: 6px; }
+  .d-result-val { font-size: 14px; font-weight: 700; color:#111827; margin-bottom: 8px; }
+  .d-bar { height: 4px; border-radius: 2px; background: var(--border); overflow: hidden; }
+  .d-bar-fill { height: 100%; border-radius: 2px; transition: width 0.5s; }
+  .d-info-row { padding: 10px 14px; border-radius: 10px; margin-bottom: 10px; }
+  .d-info-label { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; font-family: monospace; margin-bottom: 4px; }
+  .d-info-text { font-size: 13px; color: #475569; }
+  .d-question-box { padding: 14px 16px; border-radius: 12px; margin-bottom: 12px; }
+  .d-question-label { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; font-family: monospace; margin-bottom: 6px; }
+  .d-question-text { font-size: 14px; color:#111827; font-style: italic; line-height: 1.6; }
+
+  /* ── CHECKLIST ── */
+  .checklist { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+  .check-item { display: flex; gap: 10px; align-items: flex-start; }
+  .check-icon { color: var(--orange); font-size: 14px; flex-shrink: 0; margin-top: 2px; }
+  .check-text { font-family: 'Cormorant Garamond', serif; font-size: 15px; color: #475569; line-height: 1.6; }
+
+  .quote-card { background: linear-gradient(135deg, var(--panel), #0E0820); border: 1px solid rgba(255,107,43,0.35); border-radius: 20px; padding: 28px; margin-bottom: 20px; text-align: center; }
+  .quote-card p { font-family: 'Cormorant Garamond', serif; font-size: 20px; line-height: 1.8; color:#111827; font-style: italic; margin-bottom: 20px; }
+  .quote-line { width: 40px; height: 2px; margin: 0 auto; background: linear-gradient(90deg, var(--orange), var(--gold)); }
+
+  .modul-complete { background: linear-gradient(135deg, rgba(255,107,43,0.1), rgba(255,179,71,0.05)); border: 1px solid rgba(255,179,71,0.3); border-radius: 18px; padding: 22px; margin-bottom: 16px; }
+  .modul-label { font-size: 10px; letter-spacing: 3px; color: var(--gold); text-transform: uppercase; font-family: monospace; margin-bottom: 10px; }
+  .modul-title { font-size: 15px; font-weight: 600; color:#111827; margin-bottom: 10px; }
+
+  .next-module { background: linear-gradient(135deg, #0F1A2A, #0A1020); border: 1px solid rgba(59,130,246,0.2); border-radius: 18px; padding: 22px; margin-bottom: 20px; }
+  .next-label { font-size: 10px; letter-spacing: 3px; color: var(--blue); text-transform: uppercase; font-family: monospace; margin-bottom: 10px; }
+  .next-title { font-size: 15px; font-weight: 600; color:#111827; margin-bottom: 8px; }
+  .next-desc { font-family: 'Cormorant Garamond', serif; font-size: 15px; color: #475569; line-height: 1.7; }
+
+  .completion { margin-top: 32px; background: linear-gradient(135deg, rgba(255,107,43,0.1), rgba(255,179,71,0.05)); border: 1px solid rgba(255,179,71,0.3); border-radius: 18px; padding: 28px; text-align: center; display: none; }
+  .completion.visible { display: block; animation: fadeUp 0.4s ease; }
+
+  input[type=range] { width: 100%; -webkit-appearance: none; height: 3px; border-radius: 2px; background: var(--border); cursor: pointer; }
+  input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; border-radius: 50%; background: var(--orange); cursor: pointer; }
+
+  @media (max-width: 480px) {
+    .grid-2 { grid-template-columns: 1fr; }
+    .d-result-grid { grid-template-columns: 1fr; }
+    .pattern-grid { grid-template-columns: 1fr; }
+  }:root{
+  --bg:#F7F3EE !important;
+  --panel:#FFFFFF !important;
+  --border:#E5E0D8 !important;
+  --text:#111827 !important;
+  --muted:#5B6472 !important;
+  --orange:#FF6B2B !important;
+  --gold:#FFB347 !important;
+  --teal:#14B8A6 !important;
+  --blue:#2563EB !important;
+  --purple:#7C3AED !important;
+  --green:#16A34A !important;
+  --red:#DC2626 !important;
+}
+
+html, body{
+  background:#F7F3EE !important;
+  color:#111827 !important;
+}
+
+body{
+  background-image:
+    radial-gradient(circle at 18% 0%, rgba(255,107,43,0.10), transparent 34%),
+    radial-gradient(circle at 82% 8%, rgba(255,179,71,0.08), transparent 30%) !important;
+  font-family:'DM Sans',sans-serif !important;
+  font-weight:400 !important;
+}
+
+.top-nav{
+  position:sticky !important;
+  top:0 !important;
+  z-index:1000 !important;
+  display:flex !important;
+  align-items:center !important;
+  gap:10px !important;
+  width:100% !important;
+  padding:10px 18px !important;
+  background:rgba(247,243,238,0.94) !important;
+  border-bottom:1px solid #E5E0D8 !important;
+  backdrop-filter:blur(14px) !important;
+}
+
+.top-nav .nav-label{
+  display:none !important;
+}
+
+.progress-bar{
+  flex:1 !important;
+  height:4px !important;
+  border-radius:999px !important;
+  background:#E5E0D8 !important;
+  overflow:hidden !important;
+  box-shadow:none !important;
+}
+
+.progress-fill{
+  height:100% !important;
+  border-radius:999px !important;
+  background:linear-gradient(90deg,#FF6B2B,#FFB347) !important;
+  transition:width .35s ease !important;
+}
+
+.progress-pct{
+  min-width:38px !important;
+  text-align:right !important;
+  color:#632200 !important;
+  font-family:'DM Sans',sans-serif !important;
+  font-size:12px !important;
+  font-weight:700 !important;
+}
+
+.page{
+  color:#111827 !important;
+}
+
+.hero-title{
+  color:#111827 !important;
+  -webkit-text-fill-color:#111827 !important;
+  background:none !important;
+}
+
+.hero-sub,
+.card p.dim,
+.level-desc,
+.grid-card .desc,
+.half-text,
+.next-desc,
+.highlight-card p{
+  color:#475569 !important;
+}
+
+.card,
+.grid-card,
+.half-card,
+.highlight-card,
+.info-card,
+.level-item,
+.tool-accordion,
+.next-card,
+.completion,
+.reflection-card,
+.scenario-card,
+.system-card,
+.case-card {
+  background:#FFFFFF !important;
+  border-color:#E5E0D8 !important;
+  box-shadow:0 8px 30px rgba(99,34,0,0.045) !important;
+}
+
+.card p,
+.prose,
+.level-label,
+.grid-card .label,
+.info-card .val,
+.next-title,
+.card p strong,
+.highlight-card p strong{
+  color:#111827 !important;
+}
+
+.card p,
+.highlight-card p,
+.level-desc,
+.grid-card .desc,
+.half-text,
+.next-desc{
+  font-family:'DM Sans',sans-serif !important;
+}
+
+.tag,
+.tab-btn{
+  background:#FFFFFF !important;
+  color:#64748B !important;
+  border:1px solid #E5E0D8 !important;
+}
+
+.tag.active,
+.tab-btn.active{
+  background:rgba(255,107,43,0.08) !important;
+  color:#EA580C !important;
+  border-color:#FF6B2B !important;
+}
+
+.tab-btn.done{
+  color:#475569 !important;
+}
+
+.btn-primary,
+.btn-gold,
+.btn-teal,
+.btn-next{
+  color:#111827 !important;
+  border-radius:999px !important;
+  font-weight:700 !important;
+}
+
+.btn-ghost,
+.btn-back{
+  background:#FFFFFF !important;
+  border:1px solid #D6CDC1 !important;
+  color:#334155 !important;
+}
+
+.level-item,
+.grid-card,
+.half-card,
+.info-card{
+  border-left-width:4px !important;
+  border-left-style:solid !important;
+}
+
+.level-item:nth-of-type(4n+1),
+.grid-card:nth-of-type(4n+1),
+.info-card:nth-of-type(4n+1){ border-left-color:#2563EB !important; }
+
+.level-item:nth-of-type(4n+2),
+.grid-card:nth-of-type(4n+2),
+.info-card:nth-of-type(4n+2){ border-left-color:#7C3AED !important; }
+
+.level-item:nth-of-type(4n+3),
+.grid-card:nth-of-type(4n+3),
+.info-card:nth-of-type(4n+3){ border-left-color:#16A34A !important; }
+
+.level-item:nth-of-type(4n+4),
+.grid-card:nth-of-type(4n+4),
+.info-card:nth-of-type(4n+4){ border-left-color:#FF6B2B !important; }
+
+@media (max-width: 560px){
+  .top-nav{ padding:9px 14px !important; }
+  .progress-pct{ font-size:11px !important; min-width:34px !important; }
+  .progress-bar{ height:4px !important; }
+}
+
+</style>
+
+<style id="valasi-lectia3-instrumente-final-fix">
+.tool-accordion,
+.tool-body,
+.tool-header,
+.q-option,
+.pattern-card,
+.d-result-card,
+.d-info-row,
+.d-question-box,
+.q-explanation,
+.modul-complete,
+.next-module,
+.completion,
+.quote-card {
+  background: #FFFFFF !important;
+  border-color: #E5E0D8 !important;
+  color: #111827 !important;
+  box-shadow: 0 8px 30px rgba(99,34,0,0.045) !important;
+}
+
+.tool-header:hover,
+.q-sequence,
+.q-situation,
+.pattern-card,
+.j-hint,
+.g-hint {
+  background: #F8F4EE !important;
+}
+
+.tool-name,
+.q-question,
+.j-question,
+.g-question,
+.pattern-label,
+.d-result-val,
+.d-question-text,
+.modul-title,
+.next-title,
+.completion h3,
+.level-label,
+.info-card .val,
+.grid-card .label {
+  color: #111827 !important;
+}
+
+.tool-desc,
+.tool-time,
+.q-exp-text,
+.q-situation,
+.pattern-desc,
+.d-info-text,
+.next-desc,
+.check-text,
+.completion p,
+.j-hint,
+.g-hint,
+.level-desc,
+.info-card .desc,
+.grid-card .desc {
+  color: #475569 !important;
+}
+
+.j-textarea,
+.g-textarea,
+.d-textarea,
+textarea {
+  background: #F5F1EA !important;
+  color: #111827 !important;
+  border: 1px solid #D8D0C4 !important;
+  border-radius: 12px !important;
+  font-family: 'DM Sans', sans-serif !important;
+}
+
+.j-textarea::placeholder,
+.g-textarea::placeholder,
+.d-textarea::placeholder,
+textarea::placeholder {
+  color: #8A7F72 !important;
+  opacity: 1 !important;
+}
+
+.q-option span,
+.q-seq-item,
+.q-seq-unknown,
+.q-option-letter {
+  color: #111827 !important;
+}
+
+.btn-primary,
+.btn-gold,
+.btn-teal,
+.btn-next {
+  color: #FFFFFF !important;
+}
+
+button[style*="linear-gradient"],
+.btn-small[style*="linear-gradient"] {
+  color: #FFFFFF !important;
+}
+
+.modul-complete,
+.quote-card {
+  background: #FFF7ED !important;
+  border-color: #FED7AA !important;
+}
+
+.next-module {
+  background: #FFFFFF !important;
+}
+
+.d-textarea {
+  background: #F5F1EA !important;
+}
+
+.d-bar,
+.q-bar,
+.j-bar,
+.g-bar {
+  background: #E5E0D8 !important;
+}
+</style>
+
+</head>
+<body>
+
+<div class="top-nav">
+  <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+  <span class="progress-pct" id="progress-pct">0%</span>
+</div>
+
+<div class="page">
+
+  <div class="hero">
+    <div class="tags">
+      <span class="tag active">Modul 1</span>
+      <span class="tag">Inteligență Structurală</span>
+      <span class="tag">Lecția 3 din 3</span>
+    </div>
+    <h1 class="hero-title">Pattern Recognition — cum antrenezi ochiul să vadă ce urmează</h1>
+    <p class="hero-sub">Același ochi care vede tipare în forme vede tipare în oameni și în societate. Nu e un talent — e un mușchi. Și îl poți antrena.</p>
+  </div>
+
+  <div class="section-tabs">
+    <button class="tab-btn active" onclick="goTo(0)">Introducere</button>
+    <button class="tab-btn" onclick="goTo(1)">Conceptul</button>
+    <button class="tab-btn" onclick="goTo(2)">Exemplul</button>
+    <button class="tab-btn" onclick="goTo(3)">Instrumente</button>
+    <button class="tab-btn" onclick="goTo(4)">Concluzia</button>
+  </div>
+
+  <!-- INTRO -->
+  <div class="section visible" id="sec-0">
+    <div class="card">
+      <p>Ai făcut vreodată un test de IQ? Ai văzut pătratele, cercurile, secvențele?</p>
+      <p class="dim">Credeai că testezi inteligența. De fapt antrenai ceva mult mai util — <strong>ochiul care vede ce urmează înainte să se întâmple.</strong></p>
+    </div>
+    <div class="grid-2">
+      <div class="info-card"><div class="val">4 instrumente</div><div class="desc">alegi ordinea în care le explorezi</div></div>
+      <div class="info-card"><div class="val">3 niveluri</div><div class="desc">vizual, comportamental, social</div></div>
+    </div>
+    <button class="btn-primary" onclick="markRead(0)">Începe lecția →</button>
+  </div>
+
+  <!-- CONCEPT -->
+  <div class="section" id="sec-1">
+    <div style="font-size:11px;letter-spacing:3px;color:var(--orange);text-transform:uppercase;font-family:monospace;margin-bottom:16px">Conceptul</div>
+    <div class="card">
+      <p>Pattern recognition nu e despre a fi rapid. E despre a te opri suficient de mult ca să întrebi <em>"am mai văzut asta?"</em></p>
+      <p class="dim">Creierul tău face asta automat toată ziua — recunoaște fețe, anticipează comportamente, completează fraze neterminate. Problema e că procesul e <strong>inconștient și neantrenat.</strong></p>
+    </div>
+    <div class="level-item" style="border:1px solid rgba(59,130,246,0.2)">
+      <div class="level-dot" style="background:var(--blue)"></div>
+      <div><div class="level-nr" style="color:var(--blue)">Nivelul 1 — Tipare vizuale</div><div class="level-desc">Forme, culori, secvențe. Creierul le vede instant — fără să calculeze.</div></div>
+    </div>
+    <div class="level-item" style="border:1px solid rgba(255,107,43,0.2)">
+      <div class="level-dot" style="background:var(--orange)"></div>
+      <div><div class="level-nr" style="color:var(--orange)">Nivelul 2 — Tipare comportamentale</div><div class="level-desc">Cum reacționează oamenii în situații repetitive. La fel de previzibil ca o secvență matematică.</div></div>
+    </div>
+    <div class="level-item" style="border:1px solid rgba(168,85,247,0.2)">
+      <div class="level-dot" style="background:var(--purple)"></div>
+      <div><div class="level-nr" style="color:var(--purple)">Nivelul 3 — Tipare sociale</div><div class="level-desc">Cum se comportă grupurile, cum se răspândesc ideile, cum funcționează influența.</div></div>
+    </div>
+    <button class="btn-primary" onclick="markRead(1)" style="margin-top:8px">Am înțeles — arată-mi exemplul →</button>
+  </div>
+
+  <!-- EXEMPLU -->
+  <div class="section" id="sec-2">
+    <div style="font-size:11px;letter-spacing:3px;color:var(--orange);text-transform:uppercase;font-family:monospace;margin-bottom:16px">Exemplul real</div>
+    <div class="card">
+      <p class="dim" style="font-style:italic">Un om care nu vede tipare. Un om care le vede. Aceeași situație.</p>
+      <div style="background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.2);border-radius:12px;padding:16px;margin-bottom:12px">
+        <div style="font-size:10px;letter-spacing:2px;color:var(--red);text-transform:uppercase;font-family:monospace;margin-bottom:8px">Fără pattern recognition</div>
+        <p style="margin:0;color:#475569;font-family:'Cormorant Garamond',serif;font-size:15px;line-height:1.7">De trei ori a început un proiect cu entuziasm și l-a abandonat la jumătate. Tratează fiecare caz ca pe ceva nou. Se surprinde de fiecare dată.</p>
+      </div>
+      <div style="background:rgba(78,205,196,0.06);border:1px solid rgba(78,205,196,0.2);border-radius:12px;padding:16px">
+        <div style="font-size:10px;letter-spacing:2px;color:var(--teal);text-transform:uppercase;font-family:monospace;margin-bottom:8px">Cu pattern recognition</div>
+        <p style="margin:0;color:#475569;font-family:'Cormorant Garamond',serif;font-size:15px;line-height:1.7">Vede că de fiecare dată abandonează când apare primul obstacol real. Nu e un proiect slab — e un tipar de comportament. Intervine acolo.</p>
+      </div>
+    </div>
+    <div class="highlight-card">
+      <p>Oamenii care reușesc consistent nu sunt mai norocoși. Văd tipare pe care alții le ignoră — și intervin înainte ca tiparele să îi controleze pe ei.</p>
+    </div>
+    <button class="btn-primary" onclick="markRead(2)">Înțeleg — vreau să exersez →</button>
+  </div>
+
+  <!-- INSTRUMENTE -->
+  <div class="section" id="sec-3">
+    <div style="font-size:11px;letter-spacing:3px;color:var(--orange);text-transform:uppercase;font-family:monospace;margin-bottom:8px">Instrumente</div>
+    <p style="font-family:'Cormorant Garamond',serif;font-size:15px;color:var(--muted);line-height:1.7;margin-bottom:20px">Patru instrumente, patru unghiuri diferite. Alege ordinea care ți se potrivește.</p>
+
+    <!-- JOC -->
+    <div class="tool-accordion" id="acc-joc" style="border-color:rgba(59,130,246,0.3)">
+      <div class="tool-header" onclick="toggleTool('joc')">
+        <div style="flex:1">
+          <div class="tool-meta">
+            <span class="tool-type-tag" style="background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.3);color:var(--blue)">Joc</span>
+            <span class="tool-time">15 min</span>
+          </div>
+          <div class="tool-name">Jocul de Pattern Recognition</div>
+          <div class="tool-desc">Antrenează ochiul — de la forme la comportamente și dinamici sociale. Același ochi, materiale diferite.</div>
+        </div>
+        <div class="tool-arrow" id="arr-joc">→</div>
+      </div>
+      <div class="tool-body" id="body-joc"></div>
+    </div>
+
+    <!-- JURNAL -->
+    <div class="tool-accordion" id="acc-jurnal" style="border-color:rgba(255,107,43,0.3)">
+      <div class="tool-header" onclick="toggleTool('jurnal')">
+        <div style="flex:1">
+          <div class="tool-meta">
+            <span class="tool-type-tag" style="background:rgba(255,107,43,0.1);border:1px solid rgba(255,107,43,0.3);color:var(--orange)">Jurnal</span>
+            <span class="tool-time">5-10 min</span>
+          </div>
+          <div class="tool-name">Jurnalul de Tipare</div>
+          <div class="tool-desc">Înregistrezi situații din viața ta și în timp descoperi ce se repetă. Privat, local, fără date colectate.</div>
+        </div>
+        <div class="tool-arrow" id="arr-jurnal">→</div>
+      </div>
+      <div class="tool-body" id="body-jurnal"></div>
+    </div>
+
+    <!-- GHID -->
+    <div class="tool-accordion" id="acc-ghid" style="border-color:rgba(168,85,247,0.3)">
+      <div class="tool-header" onclick="toggleTool('ghid')">
+        <div style="flex:1">
+          <div class="tool-meta">
+            <span class="tool-type-tag" style="background:rgba(168,85,247,0.1);border:1px solid rgba(168,85,247,0.3);color:var(--purple)">Ghid</span>
+            <span class="tool-time">10 min</span>
+          </div>
+          <div class="tool-name">Ghidul de Observație</div>
+          <div class="tool-desc">Separi ce ai văzut de ce ai interpretat. Consecvent vs. contextual.</div>
+        </div>
+        <div class="tool-arrow" id="arr-ghid">→</div>
+      </div>
+      <div class="tool-body" id="body-ghid"></div>
+    </div>
+
+    <!-- DECODOR -->
+    <div class="tool-accordion" id="acc-decodor" style="border-color:rgba(78,205,196,0.3)">
+      <div class="tool-header" onclick="toggleTool('decodor')">
+        <div style="flex:1">
+          <div class="tool-meta">
+            <span class="tool-type-tag" style="background:rgba(78,205,196,0.1);border:1px solid rgba(78,205,196,0.3);color:var(--teal)">Analiză AI</span>
+            <span class="tool-time">5 min</span>
+          </div>
+          <div class="tool-name">Decodorul de Mesaje</div>
+          <div class="tool-desc">Introduci orice mesaj și afli ce emoție țintește, ce mecanism folosește și ce vrea de la tine.</div>
+        </div>
+        <div class="tool-arrow" id="arr-decodor">→</div>
+      </div>
+      <div class="tool-body" id="body-decodor"></div>
+    </div>
+
+    <div style="margin-top:16px">
+      <button class="btn-ghost" onclick="markRead(3)">Mergi la concluzie →</button>
+    </div>
+  </div>
+
+  <!-- CONCLUZIE -->
+  <div class="section" id="sec-4">
+    <div style="font-size:11px;letter-spacing:3px;color:var(--orange);text-transform:uppercase;font-family:monospace;margin-bottom:16px">Concluzia</div>
+    <div class="quote-card">
+      <p>"Pattern recognition nu e un talent înnăscut. E un mușchi. Și tocmai l-ai antrenat."</p>
+      <div class="quote-line"></div>
+    </div>
+    <div class="card" style="padding:20px">
+      <div style="font-size:11px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;font-family:monospace;margin-bottom:14px">Ce ai învățat</div>
+      <div class="checklist">
+        <div class="check-item"><span class="check-icon">✓</span><span class="check-text">Că același mecanism care vede tipare în forme îl poți antrena să vadă tipare în comportamente și dinamici sociale</span></div>
+        <div class="check-item"><span class="check-icon">✓</span><span class="check-text">Cum să recunoști tipare în propria ta viață prin jurnal și observație structurată</span></div>
+        <div class="check-item"><span class="check-icon">✓</span><span class="check-text">Cum să separi ce ai văzut de ce ai interpretat când analizezi comportamentul altcuiva</span></div>
+        <div class="check-item"><span class="check-icon">✓</span><span class="check-text">Cum să decodezi mecanismele psihologice din orice mesaj pe care îl consumi</span></div>
+      </div>
+    </div>
+    <div class="modul-complete">
+      <div class="modul-label">Modul 1 complet</div>
+      <div class="modul-title">Inteligența Structurală — tot ce ai învățat</div>
+      <div class="checklist">
+        <div class="check-item"><span class="check-icon" style="color:var(--gold)">✓</span><span class="check-text" style="color:#475569">Lecția 1 — Cum să vezi mecanismele din spatele evenimentelor</span></div>
+        <div class="check-item"><span class="check-icon" style="color:var(--gold)">✓</span><span class="check-text" style="color:#475569">Lecția 2 — Cum să diseci orice sistem și să îi găsești compromisul</span></div>
+        <div class="check-item"><span class="check-icon" style="color:var(--gold)">✓</span><span class="check-text" style="color:#475569">Lecția 3 — Cum să recunoști tipare în forme, oameni și societate</span></div>
+      </div>
+    </div>
+    <div class="next-module">
+      <div class="next-label">Modul 2 — în curând</div>
+      <div class="next-title">Inteligență Strategică</div>
+      <div class="next-desc">Cum anticipezi ce urmează. Cum calculezi scenarii înainte să acționezi. Cum iei decizii bune în condiții de incertitudine.</div>
+    </div>
+    <button class="btn-gold" onclick="markRead(4)">Modul 1 completat</button>
+  </div>
+
+  <div class="completion" id="completion">
+    <div style="font-size:48px;margin-bottom:12px">🐉</div>
+    <h3 style="font-size:20px;font-weight:700;color:#111827;margin-bottom:10px">Modulul 1 completat</h3>
+    <p style="font-family:'Cormorant Garamond',serif;font-size:15px;color:#475569;line-height:1.7">Dragonul tău vede acum mecanismele, sistemele și tiparele. Nimeni și nimic nu îl mai poate surprinde fără veste.</p>
+  </div>
+
+</div>
+
+<script>
+// ── NAV ──────────────────────────────────────────────────────────────────────
+const TOTAL = 5;
+const readSections = new Set([0]);
+
+function goTo(i) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('visible'));
+  document.getElementById('sec-' + i).classList.add('visible');
+  document.querySelectorAll('.tab-btn').forEach((b, idx) => {
+    b.classList.remove('active','done');
+    if (idx === i) b.classList.add('active');
+    else if (readSections.has(idx)) b.classList.add('done');
+  });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function markRead(i) {
+  readSections.add(i);
+  updateProgress();
+  if (i < TOTAL - 1) goTo(i + 1);
+  if (readSections.size === TOTAL) document.getElementById('completion').classList.add('visible');
+}
+
+function updateProgress() {
+  const pct = Math.round((readSections.size / TOTAL) * 100);
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-pct').textContent = pct + '%';
+}
+
+// ── TOOL ACCORDION ────────────────────────────────────────────────────────────
+const openTools = new Set();
+
+function toggleTool(id) {
+  const body = document.getElementById('body-' + id);
+  const arr = document.getElementById('arr-' + id);
+  const header = body.previousElementSibling;
+
+  if (openTools.has(id)) {
+    openTools.delete(id);
+    body.classList.remove('open');
+    header.classList.remove('open');
+    arr.textContent = '→';
+  } else {
+    openTools.add(id);
+    body.classList.add('open');
+    header.classList.add('open');
+    arr.textContent = '↑';
+    if (!body.dataset.rendered) {
+      renderTool(id);
+      body.dataset.rendered = '1';
+    }
+    setTimeout(() => body.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+  }
+}
+
+function renderTool(id) {
+  if (id === 'joc') renderJoc();
+  if (id === 'jurnal') renderJurnal();
+  if (id === 'ghid') renderGhid();
+  if (id === 'decodor') renderDecodor();
+}
+
+// ── JOC ──────────────────────────────────────────────────────────────────────
+const QUESTIONS = [
+
+  // ── VIZUAL 1 — Două variabile simultan ──
+  { type:'visual', color:'#3B82F6', label:'Vizual · Nivel 1',
+    sequence:['🔺🔵','🔻🔴','🔺🔵','🔻🔴','🔺🔵'],
+    question:'Tiparele de formă și culoare se schimbă simultan. Ce urmează?',
+    options:['🔻🔴','🔺🔵','🔻🔵','🔺🔴'],
+    answer:0,
+    explanation:'Două tipare suprapuse: forma alternează sus-jos, culoarea alternează albastru-roșu. Ambele se resetează în același timp. Mintea trebuie să urmărească două variabile deodată — asta e pattern recognition real.' },
+
+  // ── VIZUAL 2 — Tipar cu excepție ascunsă ──
+  { type:'visual', color:'#3B82F6', label:'Vizual · Nivel 2',
+    sequence:['2','4','8','16','32'],
+    question:'Secvența se dublează. Dar dacă regula se schimbă la al 6-lea element și adunăm diferența față de precedentul — ce urmează?',
+    options:['64','48','40','56'],
+    answer:1,
+    explanation:'Pânâ la 32, regula e ×2. Diferențele sunt: 2, 4, 8, 16. Dacă diferența urmează acum +16 (nu ×2), al 6-lea termen e 32+16=48. Un tipar poate părea simplu și ascunde o regulă secundară. Ochiul neantrenat nu vede schimbarea.' },
+
+  // ── VIZUAL 3 — Matrice cu tipar dublu ──
+  { type:'visual', color:'#3B82F6', label:'Vizual · Nivel 3',
+    matrix: [
+      ['🔵','🔵','🔴'],
+      ['🔵','🔴','🔴'],
+      ['🔴','🔴','?'],
+    ],
+    question:'Matricea are un tipar pe orizontală și pe verticală simultan. Ce e în colțul din dreapta jos?',
+    options:['🔵','🔴','🟡','🟢'],
+    answer:1,
+    explanation:'Pe fiecare rând, numărul de roșii crește cu 1. Pe fiecare coloană, același lucru. Colțul din dreapta jos trebuie să fie roșu pentru ca ambele tipare să fie corecte simultan. Tiparele în două dimensiuni sunt vizibile doar dacă privești și pe orizontală și pe verticală.' },
+
+  // ── VIZUAL 4 — Două reguli alternante ──
+  { type:'visual', color:'#3B82F6', label:'Vizual · Nivel 4',
+    sequence:['1','3','2','6','3','9','4'],
+    question:'Secvența urmează două reguli care alternează. Ce urmează după 4?',
+    options:['5','12','8','10'],
+    answer:1,
+    explanation:'Două reguli alternante: pozițiile impare (1,2,3,4...) cresc cu +1. Pozițiile pare (3,6,9...) sunt ×3 din precedentul impar. Deci după 4 urmează 4×3=12. Când un tipar pare haotic, caută reguli separate pentru pozițiile pare și impare.' },
+
+  // ── VIZUAL 5 — Tipar de absență ──
+  { type:'visual', color:'#3B82F6', label:'Vizual · Nivel 5',
+    sequence:['🔴🔵🟡','🔵🟡🟢','🟡🟢🔴','🟢🔴🔵'],
+    question:'Fiecare grup de 3 rotește culorile cu o poziție la stânga. Ce grup urmează?',
+    options:['🔴🔵🟡','🔵🟡🟢','🔴🟢🔵','🟢🔴🔵'],
+    answer:0,
+    explanation:'Tipar circular: primul element dispare, celelalte se mută la stânga, un element nou apare la final urmând ordinea inițială. Ultimul grup e 🟢🔴🔵 — deci următorul e 🔴🔵🟡, revenind la start. Tiparele circulare se identifică urmărind ce dispare, nu ce apare.' },
+
+  // ── COMPORTAMENTAL ──
+  { type:'behavioral', color:'#FF6B2B', label:'Comportamental',
+    situation:'Andrei întârzie luni, miercuri și vineri. Marți și joi vine la timp. Săptămâna trecută același lucru. Acum două săptămâni — identic.',
+    question:'Mâine e luni. Ce aștepți — și de ce contează că ai 3 săptămâni de date, nu una?',
+    options:['Va veni la timp — poate s-a schimbat','Va întârzia — tipar consecvent pe 3 săptămâni','Nu se poate ști cu certitudine','Depinde de ce are în acea zi'],
+    answer:1,
+    explanation:'Un tipar observat o dată poate fi coincidență. De trei ori pe aceeași structură — e tipar real. Cu cât ai mai multe observații care confirmă același model, cu atât predicția devine mai solidă. Asta e diferența dintre a reacționa la un eveniment și a înțelege un mecanism.' },
+
+  // ── SOCIAL ──
+  { type:'social', color:'#A855F7', label:'Social',
+    situation:'Într-o echipă de 8 persoane, oricând apare un conflict, aceleași 2 persoane tac complet, 3 iau partea celui mai vocal, 2 încearcă să medieze și 1 iese din cameră. Asta se întâmplă indiferent de subiectul conflictului.',
+    question:'Apare un nou conflict pe un subiect complet diferit. Ce vei observa?',
+    options:['Reacții diferite — subiectul contează','Același tipar de roluri — subiectul nu schimbă mecanismul','Depinde de cine inițiază conflictul','Imposibil de prevăzut'],
+    answer:1,
+    explanation:'Rolurile în grup sunt structurale, nu contextuale. Tăcuții tac, mediatorii mediază, cel care iese — iese. Subiectul conflictului e evenimentul. Mecanismul de răspuns al grupului e tiparul. Odată ce vezi tiparul, poți anticipa comportamentul înainte să se întâmple — și poți interveni strategic.' },
+];
+
+let jocQ = 0, jocScore = 0, jocDone = false;
+
+function renderJoc() {
+  const el = document.getElementById('body-joc');
+  if (jocDone) {
+    const total = QUESTIONS.length;
+    el.innerHTML = `<div style="text-align:center;padding:20px 0">
+      <div style="font-size:40px;margin-bottom:12px">🐉</div>
+      <div style="font-size:16px;font-weight:700;color:#111827;margin-bottom:8px">${jocScore}/${total} corecte</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:14px;color:#475569;line-height:1.7;margin-bottom:16px;max-width:380px;margin-left:auto;margin-right:auto">Ai traversat 5 niveluri vizuale, un tipar comportamental și unul social. Același ochi — materiale diferite. Asta e pattern recognition.</div>
+      <button class="btn-small" style="background:linear-gradient(135deg,#3B82F6,#60A5FA)" onclick="jocQ=0;jocScore=0;jocDone=false;renderJoc()">Joacă din nou</button></div>`;
+    return;
+  }
+  const q = QUESTIONS[jocQ];
+  const matrixHTML = q.matrix ? `
+    <div style="margin-bottom:16px">
+      <div style="font-size:10px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;font-family:monospace;margin-bottom:10px">Matricea</div>
+      <div style="display:inline-block;background:#F8F4EE;border-radius:12px;padding:14px;border:1px solid ${q.color}22">
+        ${q.matrix.map(row => `<div style="display:flex;gap:10px;margin-bottom:8px;justify-content:center">${row.map(cell => `<span style="font-size:22px;width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:${cell==='?'?q.color+'20':'rgba(59,130,246,0.1)'};border:${cell==='?'?'2px dashed '+q.color+'66':'1px solid rgba(59,130,246,0.2)'};border-radius:8px;color:${cell==='?'?q.color:'inherit'}">${cell}</span>`).join('')}</div>`).join('')}
+      </div>
+    </div>` : '';
+  el.innerHTML = `
+    <div class="q-progress">${QUESTIONS.map((_,i) => `<div class="q-bar" style="background:${i<=jocQ?QUESTIONS[i].color:'var(--border)'};opacity:${i<jocQ?0.5:1}"></div>`).join('')}</div>
+    <div class="q-level-tag" style="color:${q.color}">${q.label}</div>
+    ${q.sequence ? `<div class="q-sequence">${q.sequence.map(s=>`<span class="q-seq-item" style="background:${q.color}15;border:1px solid ${q.color}22;font-size:${s.length>2?'14px':'22px'};padding:${s.length>2?'6px 10px':'4px 6px'}">${s}</span>`).join('')}<span class="q-seq-unknown" style="background:${q.color}20;border:2px dashed ${q.color}66;color:${q.color}">?</span></div>` : ''}
+    ${matrixHTML}
+    ${q.situation ? `<div class="q-situation" style="border-left-color:${q.color}">${q.situation}</div>` : ''}
+    <div class="q-question">${q.question}</div>
+    <div class="q-options">${q.options.map((o,i)=>`<div class="q-option" id="opt-${i}" onclick="selectJoc(${i})"><div class="q-option-letter" id="let-${i}">${String.fromCharCode(65+i)}</div><span>${o}</span></div>`).join('')}</div>
+    <div id="q-exp" style="display:none"></div>
+    <div id="q-next" style="display:none;margin-top:14px"><button class="btn-small" style="width:100%;background:linear-gradient(135deg,${q.color},${q.color}AA)" onclick="nextJoc()">${jocQ<QUESTIONS.length-1?'Următoarea →':'Vezi rezultatul →'}</button></div>`;
+}
+
+function selectJoc(i) {
+  const q = QUESTIONS[jocQ];
+  document.querySelectorAll('.q-option').forEach(o => o.style.cursor = 'default');
+  const isCorrect = i === q.answer;
+  if (isCorrect) jocScore++;
+
+  document.querySelectorAll('.q-option').forEach((o, idx) => {
+    const isC = idx === q.answer, isW = idx === i && !isC;
+    if (isC) { o.style.background=`rgba(34,197,94,0.12)`; o.style.borderColor='#22C55E'; document.getElementById('let-'+idx).style.background='#22C55E'; document.getElementById('let-'+idx).textContent='✓'; document.getElementById('let-'+idx).style.color='#09090F'; }
+    if (isW) { o.style.background=`rgba(239,68,68,0.1)`; o.style.borderColor='#EF4444'; document.getElementById('let-'+idx).style.background='#EF4444'; document.getElementById('let-'+idx).textContent='×'; document.getElementById('let-'+idx).style.color='#09090F'; }
+  });
+
+  const expEl = document.getElementById('q-exp');
+  expEl.style.display = 'block';
+  expEl.className = 'q-explanation';
+  expEl.style.background = isCorrect ? 'rgba(34,197,94,0.06)' : 'rgba(239,68,68,0.06)';
+  expEl.style.border = `1px solid ${isCorrect ? 'rgba(34,197,94,0.2)' : 'rgba(239,68,68,0.2)'}`;
+  expEl.style.borderRadius = '10px';
+  expEl.style.padding = '12px 14px';
+  expEl.innerHTML = `<div class="q-exp-label" style="color:${isCorrect?'#22C55E':'#EF4444'}">${isCorrect?'Corect':'Răspuns incorect'}</div><div class="q-exp-text">${q.explanation}</div>`;
+  document.getElementById('q-next').style.display = 'block';
+}
+
+function nextJoc() {
+  if (jocQ < QUESTIONS.length - 1) { jocQ++; renderJoc(); }
+  else { jocDone = true; renderJoc(); }
+}
+
+// ── JURNAL ────────────────────────────────────────────────────────────────────
+const PATTERNS = [
+  { id:'evitare', label:'Evitare', color:'#A855F7', desc:'Evit situații sau conversații dificile' },
+  { id:'reactie', label:'Reacție impulsivă', color:'#EF4444', desc:'Reacționez înainte să gândesc' },
+  { id:'amanare', label:'Amânare', color:'#EAB308', desc:'Amân lucruri importante' },
+  { id:'autocritic', label:'Autocritică', color:'#FF6B2B', desc:'Mă judec aspru pe mine' },
+  { id:'pleasing', label:'People pleasing', color:'#4ECDC4', desc:'Îmi e greu să spun nu' },
+  { id:'altul', label:'Alt tipar', color:'#5A5880', desc:'Am observat altceva' },
+];
+
+let jStep = 0;
+const jVals = { eveniment: '', comportament: '', tipar: null };
+const jSteps = [
+  { field:'eveniment', question:'Ce s-a întâmplat?', hint:'Fapte pure, fără interpretare. Ce ai văzut, ce ai auzit.', placeholder:'Ex: Am evitat o conversație importantă timp de 3 zile...' },
+  { field:'comportament', question:'Ce ai făcut tu?', hint:'Nu de ce — ci ce. Comportamentul concret, nu intenția.', placeholder:'Ex: Am tot găsit scuze, am amânat mesajul...' },
+];
+
+function renderJurnal() {
+  const el = document.getElementById('body-jurnal');
+  if (jVals.tipar && jStep === 2) {
+    const p = PATTERNS.find(pt => pt.id === jVals.tipar);
+    el.innerHTML = `<div style="text-align:center;padding:20px 0">
+      <div style="font-size:36px;margin-bottom:12px">📖</div>
+      <div style="font-size:15px;font-weight:700;color:#111827;margin-bottom:8px">Intrare salvată</div>
+      <div style="display:inline-block;padding:6px 16px;background:${p.color}15;border:1px solid ${p.color}33;border-radius:20px;font-size:12px;color:${p.color};margin-bottom:12px">${p.label}</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:13px;color:#475569;line-height:1.7;margin-bottom:16px">Tiparele nu se văd dintr-o singură intrare. Se văd când adaugi mai multe și observi ce se repetă.</div>
+      <button class="btn-small" style="background:#F8F4EE;color:var(--muted);border:1px solid var(--border)" onclick="jStep=0;jVals.eveniment='';jVals.comportament='';jVals.tipar=null;renderJurnal()">Adaugă altă intrare</button></div>`;
+    return;
+  }
+  if (jStep <= 1) {
+    const s = jSteps[jStep];
+    const canNext = jVals[s.field].trim() !== '';
+    el.innerHTML = `
+      <div class="j-progress">${[0,1,2].map(i=>`<div class="j-bar" style="background:${i<=jStep?'var(--orange)':'var(--border)'}"></div>`).join('')}</div>
+      <div class="j-question">${s.question}</div>
+      <div class="j-hint">${s.hint}</div>
+      <textarea class="j-textarea" id="j-ta" placeholder="${s.placeholder}" oninput="jVals['${s.field}']=this.value;document.getElementById('j-btn').style.opacity=this.value.trim()?'1':'0.4'">${jVals[s.field]}</textarea>
+      <div class="j-nav">
+        ${jStep>0?`<button class="btn-back" onclick="jStep--;renderJurnal()">←</button>`:''}
+        <button class="btn-small" id="j-btn" style="flex:1;background:linear-gradient(135deg,var(--orange),var(--gold));opacity:${canNext?1:0.4}" onclick="if(jVals['${s.field}'].trim()){jStep++;renderJurnal()}">Continuă →</button>
+      </div>`;
+    setTimeout(() => { const ta = document.getElementById('j-ta'); if(ta) ta.focus(); }, 50);
+  } else {
+    el.innerHTML = `
+      <div class="j-progress">${[0,1,2].map(i=>`<div class="j-bar" style="background:${i<=2?'var(--orange)':'var(--border)'}"></div>`).join('')}</div>
+      <div class="j-question">Recunoști un tipar?</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:14px;line-height:1.6">Nu trebuie să fie perfect. Alege ce rezonează.</div>
+      <div class="pattern-grid">${PATTERNS.map(p=>`<div class="pattern-card" id="pc-${p.id}" style="border-color:${jVals.tipar===p.id?p.color:'var(--border)'};background:${jVals.tipar===p.id?p.color+'18':'rgba(0,0,0,0.2)'}" onclick="selectPattern('${p.id}','${p.color}')"><div class="pattern-label" style="color:${jVals.tipar===p.id?p.color:'var(--text)'}">${p.label}</div><div class="pattern-desc">${p.desc}</div></div>`).join('')}</div>
+      <div class="j-nav">
+        <button class="btn-back" onclick="jStep--;renderJurnal()">←</button>
+        <button class="btn-small" id="j-save" style="flex:1;background:${jVals.tipar?'linear-gradient(135deg,#22C55E,#2ECC71)':'var(--border)'};color:${jVals.tipar?'#09090F':'var(--muted)'};opacity:${jVals.tipar?1:0.4}" onclick="if(jVals.tipar)renderJurnal()">Salvează ✓</button>
+      </div>`;
+  }
+}
+
+function selectPattern(id, color) {
+  jVals.tipar = id;
+  document.querySelectorAll('.pattern-card').forEach(c => {
+    const cid = c.id.replace('pc-','');
+    const p = PATTERNS.find(pt => pt.id === cid);
+    c.style.borderColor = cid === id ? p.color : 'var(--border)';
+    c.style.background = cid === id ? p.color + '18' : 'rgba(0,0,0,0.2)';
+    c.querySelector('.pattern-label').style.color = cid === id ? p.color : 'var(--text)';
+  });
+  const btn = document.getElementById('j-save');
+  if (btn) { btn.style.background = 'linear-gradient(135deg,#22C55E,#2ECC71)'; btn.style.color = '#09090F'; btn.style.opacity = '1'; }
+}
+
+// ── GHID ─────────────────────────────────────────────────────────────────────
+const GFIELDS = [
+  { field:'situatie', question:'Ce s-a întâmplat?', color:'#5A5880', hint:'Descrie situația concretă.', placeholder:'Ex: Colegul nu a răspuns la mesaj o zi întreagă...' },
+  { field:'observatie', question:'Ce ai văzut — fapte pure', color:'#3B82F6', hint:'Doar ce ai perceput cu simțurile. Fără interpretare.', placeholder:'Ex: Nu a răspuns la 2 mesaje în 24 de ore.' },
+  { field:'interpretare', question:'Ce a adăugat mintea automat', color:'#EF4444', hint:'Prima interpretare — cea care a apărut instant.', placeholder:'Ex: Mă evită. S-a supărat pe mine.' },
+  { field:'alternativa', question:'O altă explicație posibilă', color:'#22C55E', hint:'Nu trebuie să o crezi — doar să o poți gândi.', placeholder:'Ex: Poate a avut o zi dificilă și a uitat...' },
+];
+let gStep = 0;
+const gVals = { situatie:'', observatie:'', interpretare:'', alternativa:'' };
+let gDone = false;
+
+function renderGhid() {
+  const el = document.getElementById('body-ghid');
+  if (gDone) {
+    el.innerHTML = `
+      <div style="margin-bottom:14px">${['observatie','interpretare','alternativa'].map(f=>{
+        const fd = GFIELDS.find(gf=>gf.field===f);
+        return `<div style="margin-bottom:10px"><div style="font-size:9px;letter-spacing:2px;color:${fd.color};text-transform:uppercase;font-family:monospace;margin-bottom:3px">${fd.question}</div><div style="font-family:'Cormorant Garamond',serif;font-size:13px;color:#475569;padding:8px 12px;background:${fd.color}08;border-radius:8px;border-left:2px solid ${fd.color}33;line-height:1.6">${gVals[f]}</div></div>`;
+      }).join('')}</div>
+      <div style="padding:12px 14px;background:rgba(59,130,246,0.06);border:1px solid rgba(59,130,246,0.2);border-radius:10px;font-family:'Cormorant Garamond',serif;font-size:13px;color:#475569;font-style:italic;line-height:1.7;margin-bottom:14px">Gândirea interpersonală matură nu înseamnă să scuzi pe toată lumea. Înseamnă să nu confunzi o observație cu un adevăr absolut.</div>
+      <button class="btn-ghost" onclick="gStep=0;Object.keys(gVals).forEach(k=>gVals[k]='');gDone=false;renderGhid()">← Analizează altă situație</button>`;
+    return;
+  }
+  const f = GFIELDS[gStep];
+  const canNext = gVals[f.field].trim() !== '';
+  el.innerHTML = `
+    <div class="g-progress">${GFIELDS.map((_,i)=>`<div class="g-bar" style="background:${i<=gStep?GFIELDS[i].color:'var(--border)'};opacity:${i<gStep?0.5:1}"></div>`).join('')}</div>
+    <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px"><div class="g-dot" style="background:${f.color}"></div><div class="g-question">${f.question}</div></div>
+    <div class="g-hint" style="background:${f.color}08;border-left:2px solid ${f.color}33">${f.hint}</div>
+    <textarea class="g-textarea" id="g-ta" placeholder="${f.placeholder}" style="background:${f.color}06;border:1px solid ${f.color}33" oninput="gVals['${f.field}']=this.value;document.getElementById('g-btn').style.opacity=this.value.trim()?'1':'0.4'">${gVals[f.field]}</textarea>
+    <div class="g-nav">
+      ${gStep>0?`<button class="btn-back" onclick="gStep--;renderGhid()">←</button>`:''}
+      <button class="btn-small" id="g-btn" style="flex:1;background:linear-gradient(135deg,${f.color},${f.color}AA);opacity:${canNext?1:0.4}" onclick="if(gVals['${f.field}'].trim()){${gStep<GFIELDS.length-1?'gStep++;renderGhid()':'gDone=true;renderGhid()'}}">
+        ${gStep<GFIELDS.length-1?'Continuă →':'Vezi analiza →'}
+      </button>
+    </div>`;
+  setTimeout(() => { const ta = document.getElementById('g-ta'); if(ta) ta.focus(); }, 50);
+}
+
+// ── DECODOR ───────────────────────────────────────────────────────────────────
+let dInput = '', dPhase = 'idle', dResult = null;
+
+function renderDecodor() {
+  const el = document.getElementById('body-decodor');
+  if (dPhase === 'idle') {
+    el.innerHTML = `
+      <textarea class="d-textarea" id="d-ta" placeholder="Lipește orice mesaj — titlu de știre, post, reclamă, frază politică..." oninput="dInput=this.value">${dInput}</textarea>
+      <button class="btn-small" id="d-btn" style="width:100%;background:linear-gradient(135deg,var(--teal),#2DD4BF)" onclick="startDecode()">Decodează →</button>
+      <div style="margin-top:10px;font-size:11px;color:var(--muted);text-align:center">sau încearcă un exemplu:</div>
+      <div style="display:flex;flex-direction:column;gap:6px;margin-top:8px">
+        ${[
+          'ALERTĂ: Medicii nu vor să știi asta! Ingredientul secret care distruge sănătatea ta',
+          'Generația noastră e prima care va trăi mai prost decât părinții. Și nimănui nu îi pasă.',
+          'Doar 3 locuri rămase! Cursul care a schimbat viața a 10.000 de oameni.'
+        ].map(ex=>`<div onclick="dInput=\`${ex}\`;document.getElementById('d-ta').value=\`${ex}\`" style="font-size:11px;color:var(--muted);background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:8px;padding:8px 12px;cursor:pointer;transition:all 0.2s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--border)'">${ex.slice(0,80)}...</div>`).join('')}
+      </div>`;
+  } else if (dPhase === 'loading') {
+    el.innerHTML = `<div style="text-align:center;padding:30px 0"><div style="display:inline-flex;gap:6px;margin-bottom:12px">${['#EF4444','#FF6B2B','#EAB308'].map(c=>`<div style="width:8px;height:8px;border-radius:50%;background:${c};animation:pulse 1s ease-in-out infinite"></div>`).join('')}</div><div style="font-size:13px;color:var(--muted);font-family:monospace">Analizez mecanismele...</div></div><style>@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(0.8)}}</style>`;
+  } else if (dPhase === 'result' && dResult) {
+    const r = dResult;
+    const hColor = r.scor_onestitate > 65 ? '#22C55E' : r.scor_onestitate > 35 ? '#EAB308' : '#EF4444';
+    el.innerHTML = `
+      <div class="d-result-grid">
+        <div class="d-result-card" style="background:rgba(168,85,247,0.08);border:1px solid rgba(168,85,247,0.2)">
+          <div class="d-result-label" style="color:var(--purple)">Emoția activată</div>
+          <div class="d-result-val">${r.emotie}</div>
+          <div class="d-bar"><div class="d-bar-fill" style="width:${r.intensitate}%;background:var(--purple)"></div></div>
+        </div>
+        <div class="d-result-card" style="background:${hColor}0A;border:1px solid ${hColor}22">
+          <div class="d-result-label" style="color:${hColor}">Scor onestitate</div>
+          <div style="font-size:32px;font-weight:900;color:${hColor};font-family:monospace;line-height:1">${r.scor_onestitate}</div>
+        </div>
+      </div>
+      <div class="d-info-row" style="background:rgba(255,107,43,0.06);border:1px solid rgba(255,107,43,0.2)">
+        <div class="d-info-label" style="color:var(--orange)">Mecanismul folosit</div>
+        <div class="d-info-text">${r.mecanism}</div>
+      </div>
+      <div class="d-info-row" style="background:rgba(59,130,246,0.06);border:1px solid rgba(59,130,246,0.2)">
+        <div class="d-info-label" style="color:var(--blue)">Ce vrea să producă în tine</div>
+        <div class="d-info-text">${r.ce_vrea}</div>
+      </div>
+      <div class="d-question-box" style="background:rgba(78,205,196,0.08);border:1px solid rgba(78,205,196,0.3)">
+        <div class="d-question-label" style="color:var(--teal)">Întrebarea de verificat</div>
+        <div class="d-question-text">"${r.intrebare}"</div>
+      </div>
+      <button class="btn-ghost" onclick="dPhase='idle';dResult=null;renderDecodor()">← Analizează alt mesaj</button>`;
+  }
+}
+
+async function startDecode() {
+  if (!dInput.trim()) return;
+  dPhase = 'loading';
+  renderDecodor();
+  try {
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 500,
+        system: `Analizezi mesaje media pentru tineri din România. Răspunde DOAR cu JSON valid, fără text înainte sau după, fără markdown:
+{"emotie":"una din: frică, furie, speranță, invidie, mândrie, curiozitate","intensitate":număr 0-100,"mecanism":"tipar retoric în 3-4 cuvinte","ce_vrea":"o propoziție scurtă","intrebare":"o întrebare de verificat","scor_onestitate":număr 0-100}`,
+        messages: [{ role: 'user', content: `Analizează: "${dInput}"` }],
+      }),
+    });
+    const data = await resp.json();
+    const raw = data.content?.find(b => b.type === 'text')?.text || '';
+    dResult = JSON.parse(raw.replace(/```json|```/g,'').trim());
+    dPhase = 'result';
+  } catch(e) {
+    dPhase = 'idle';
+    alert('Nu am putut analiza mesajul. Încearcă din nou.');
+  }
+  renderDecodor();
+}
+
+// ── INIT ─────────────────────────────────────────────────────────────────────
+updateProgress();
+</script>
+</body>
+</html>

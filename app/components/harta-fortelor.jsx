@@ -140,7 +140,7 @@ export default function HartaFortelor() {
           textTransform: "uppercase",
           marginBottom: 6,
           fontFamily: "monospace",
-        }}>Young Dragons Academy</div>
+        }}>Școala Valasi</div>
         <h1 style={{
           fontSize: "clamp(22px, 5vw, 34px)",
           fontWeight: 700,

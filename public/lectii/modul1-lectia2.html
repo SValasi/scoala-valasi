@@ -219,79 +219,7 @@ body {
   background:rgba(255,255,255,0.94) !important;
   border-bottom:1px solid #E5E7EB !important;
   backdrop-filter:blur(14px) !important;
-}
-
-.valasi-logo {
-  display:inline-flex !important;
-  align-items:center !important;
-  gap:10px !important;
-  color:#111827 !important;
-  text-decoration:none !important;
-  white-space:nowrap !important;
-}
-
-.valasi-mark {
-  width:34px !important;
-  height:34px !important;
-  border-radius:50% !important;
-  display:inline-flex !important;
-  align-items:center !important;
-  justify-content:center !important;
-  background:linear-gradient(135deg,#FF6B2B,#FFB347) !important;
-  color:#FFFFFF !important;
-  font-family:'Cormorant Garamond',serif !important;
-  font-size:20px !important;
-  font-weight:600 !important;
-  line-height:1 !important;
-  box-shadow:0 8px 18px rgba(255,107,43,0.18) !important;
-}
-
-.valasi-logo-text {
-  display:flex !important;
-  flex-direction:column !important;
-  gap:1px !important;
-  line-height:1.05 !important;
-}
-
-.valasi-logo-small {
-  font-family:'DM Mono',monospace !important;
-  font-size:9px !important;
-  letter-spacing:0.16em !important;
-  text-transform:uppercase !important;
-  color:#64748B !important;
-}
-
-.valasi-logo-main {
-  font-family:'Cormorant Garamond',serif !important;
-  font-size:19px !important;
-  font-weight:600 !important;
-  color:#111827 !important;
-}
-
-.back-module {
-  display:inline-flex !important;
-  align-items:center !important;
-  justify-content:center !important;
-  padding:9px 13px !important;
-  border:1px solid #E5E7EB !important;
-  border-radius:999px !important;
-  background:#FFFFFF !important;
-  color:#334155 !important;
-  text-decoration:none !important;
-  font-family:'DM Sans',sans-serif !important;
-  font-size:13px !important;
-  font-weight:700 !important;
-  white-space:nowrap !important;
-  box-shadow:0 4px 14px rgba(15,23,42,0.04) !important;
-}
-
-.back-module:hover {
-  border-color:#FF6B2B !important;
-  background:#FFF7ED !important;
-  color:#EA580C !important;
-}
-
-.nav-label {
+}.nav-label {
   color:#64748B !important;
 }
 
@@ -511,28 +439,207 @@ input[type=range] {
   .top-nav .progress-bar,
   .progress-pct {
     display:none !important;
-  }
-  .valasi-logo-small {
-    display:none !important;
-  }
+  }}:root{
+  --bg:#F7F3EE !important;
+  --panel:#FFFFFF !important;
+  --border:#E5E0D8 !important;
+  --text:#111827 !important;
+  --muted:#5B6472 !important;
+  --orange:#FF6B2B !important;
+  --gold:#FFB347 !important;
+  --teal:#14B8A6 !important;
+  --blue:#2563EB !important;
+  --purple:#7C3AED !important;
+  --green:#16A34A !important;
+  --red:#DC2626 !important;
 }
-</style>
 
+html, body{
+  background:#F7F3EE !important;
+  color:#111827 !important;
+}
+
+body{
+  background-image:
+    radial-gradient(circle at 18% 0%, rgba(255,107,43,0.10), transparent 34%),
+    radial-gradient(circle at 82% 8%, rgba(255,179,71,0.08), transparent 30%) !important;
+  font-family:'DM Sans',sans-serif !important;
+  font-weight:400 !important;
+}
+
+.top-nav{
+  position:sticky !important;
+  top:0 !important;
+  z-index:1000 !important;
+  display:flex !important;
+  align-items:center !important;
+  gap:10px !important;
+  width:100% !important;
+  padding:10px 18px !important;
+  background:rgba(247,243,238,0.94) !important;
+  border-bottom:1px solid #E5E0D8 !important;
+  backdrop-filter:blur(14px) !important;
+}
+
+.top-nav .nav-label{
+  display:none !important;
+}
+
+.progress-bar{
+  flex:1 !important;
+  height:4px !important;
+  border-radius:999px !important;
+  background:#E5E0D8 !important;
+  overflow:hidden !important;
+  box-shadow:none !important;
+}
+
+.progress-fill{
+  height:100% !important;
+  border-radius:999px !important;
+  background:linear-gradient(90deg,#FF6B2B,#FFB347) !important;
+  transition:width .35s ease !important;
+}
+
+.progress-pct{
+  min-width:38px !important;
+  text-align:right !important;
+  color:#632200 !important;
+  font-family:'DM Sans',sans-serif !important;
+  font-size:12px !important;
+  font-weight:700 !important;
+}
+
+.page{
+  color:#111827 !important;
+}
+
+.hero-title{
+  color:#111827 !important;
+  -webkit-text-fill-color:#111827 !important;
+  background:none !important;
+}
+
+.hero-sub,
+.card p.dim,
+.level-desc,
+.grid-card .desc,
+.half-text,
+.next-desc,
+.highlight-card p{
+  color:#475569 !important;
+}
+
+.card,
+.grid-card,
+.half-card,
+.highlight-card,
+.info-card,
+.level-item,
+.tool-accordion,
+.next-card,
+.completion,
+.reflection-card,
+.scenario-card,
+.system-card,
+.case-card {
+  background:#FFFFFF !important;
+  border-color:#E5E0D8 !important;
+  box-shadow:0 8px 30px rgba(99,34,0,0.045) !important;
+}
+
+.card p,
+.prose,
+.level-label,
+.grid-card .label,
+.info-card .val,
+.next-title,
+.card p strong,
+.highlight-card p strong{
+  color:#111827 !important;
+}
+
+.card p,
+.highlight-card p,
+.level-desc,
+.grid-card .desc,
+.half-text,
+.next-desc{
+  font-family:'DM Sans',sans-serif !important;
+}
+
+.tag,
+.tab-btn{
+  background:#FFFFFF !important;
+  color:#64748B !important;
+  border:1px solid #E5E0D8 !important;
+}
+
+.tag.active,
+.tab-btn.active{
+  background:rgba(255,107,43,0.08) !important;
+  color:#EA580C !important;
+  border-color:#FF6B2B !important;
+}
+
+.tab-btn.done{
+  color:#475569 !important;
+}
+
+.btn-primary,
+.btn-gold,
+.btn-teal,
+.btn-next{
+  color:#FFFFFF !important;
+  border-radius:999px !important;
+  font-weight:700 !important;
+}
+
+.btn-ghost,
+.btn-back{
+  background:#FFFFFF !important;
+  border:1px solid #D6CDC1 !important;
+  color:#334155 !important;
+}
+
+.level-item,
+.grid-card,
+.half-card,
+.info-card{
+  border-left-width:4px !important;
+  border-left-style:solid !important;
+}
+
+.level-item:nth-of-type(4n+1),
+.grid-card:nth-of-type(4n+1),
+.info-card:nth-of-type(4n+1){ border-left-color:#2563EB !important; }
+
+.level-item:nth-of-type(4n+2),
+.grid-card:nth-of-type(4n+2),
+.info-card:nth-of-type(4n+2){ border-left-color:#7C3AED !important; }
+
+.level-item:nth-of-type(4n+3),
+.grid-card:nth-of-type(4n+3),
+.info-card:nth-of-type(4n+3){ border-left-color:#16A34A !important; }
+
+.level-item:nth-of-type(4n+4),
+.grid-card:nth-of-type(4n+4),
+.info-card:nth-of-type(4n+4){ border-left-color:#FF6B2B !important; }
+
+@media (max-width: 560px){
+  .top-nav{ padding:9px 14px !important; }
+  .progress-pct{ font-size:11px !important; min-width:34px !important; }
+  .progress-bar{ height:4px !important; }
+}
+
+</style>
 </head>
 <body>
 
 <!-- NAV -->
 <div class="top-nav">
-  <a href="https://valasi.aydasist.ro/" class="valasi-logo" aria-label="Școala Valasi">
-    <span class="valasi-mark">V</span>
-    <span class="valasi-logo-text">
-      <span class="valasi-logo-small">Școala</span>
-      <span class="valasi-logo-main">Valasi</span>
-    </span>
-  </a>
   <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
   <span class="progress-pct" id="progress-pct">0%</span>
-  <a href="https://valasi.aydasist.ro/module/modul-1/" class="back-module">← Înapoi la Modul 1</a>
 </div>
 
 <div class="page">

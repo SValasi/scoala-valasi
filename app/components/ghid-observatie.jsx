@@ -133,7 +133,7 @@ function ExampleCard({ ex, index }) {
               ))}
             </div>
             <div style={{
-              fontSize: 12, color: C.muted, fontStyle: "italic",
+              fontSize: 11, color: C.muted, fontStyle: "italic",
               marginTop: 8, lineHeight: 1.6,
             }}>
               Niciuna din interpretările de mai sus nu se găsește în observație. Toate sunt adăugate de minte în fracțiuni de secundă.
@@ -213,7 +213,7 @@ function MyObservation() {
       boxShadow: `0 0 30px ${result.tip === "consecvent" ? C.consecvent : result.tip === "contextual" ? C.contextual : C.gold}11`,
       animation: "fadeUp 0.4s ease",
     }}>
-      <div style={{ fontSize: 12, letterSpacing: 2, color: C.muted, textTransform: "uppercase", fontFamily: "monospace", marginBottom: 16 }}>
+      <div style={{ fontSize: 10, letterSpacing: 3, color: C.muted, textTransform: "uppercase", fontFamily: "monospace", marginBottom: 16 }}>
         Analiza ta
       </div>
 
@@ -224,7 +224,7 @@ function MyObservation() {
       </div>
 
       <div style={{
-        fontSize: 16, fontWeight: "700", color: C.text,
+        fontSize: 16, fontWeight: "700", color: "#fff",
         textAlign: "center", marginBottom: 12,
       }}>
         {result.tip === "consecvent"
@@ -290,7 +290,7 @@ function MyObservation() {
         display: "flex", justifyContent: "space-between",
         alignItems: "center", marginBottom: 20,
       }}>
-        <div style={{ fontSize: 12, letterSpacing: 2, color: C.accent, textTransform: "uppercase", fontFamily: "monospace" }}>
+        <div style={{ fontSize: 10, letterSpacing: 3, color: C.accent, textTransform: "uppercase", fontFamily: "monospace" }}>
           Situația ta
         </div>
         <div style={{ display: "flex", gap: 5 }}>
@@ -307,7 +307,7 @@ function MyObservation() {
       {/* Step 0 — Person & situation */}
       {step === 0 && (
         <div style={{ animation: "fadeUp 0.3s ease" }}>
-          <div style={{ fontSize: 16, fontWeight: "700", color: C.text, marginBottom: 8 }}>
+          <div style={{ fontSize: 16, fontWeight: "700", color: "#fff", marginBottom: 8 }}>
             Despre cine și ce situație?
           </div>
           <div style={{ fontSize: 13, color: "#475569", lineHeight: 1.7, marginBottom: 16 }}>
@@ -315,7 +315,7 @@ function MyObservation() {
           </div>
 
           <div style={{ marginBottom: 12 }}>
-            <div style={{ fontSize: 12, letterSpacing: 2, color: C.muted, textTransform: "uppercase", fontFamily: "monospace", marginBottom: 6 }}>Persoana</div>
+            <div style={{ fontSize: 10, letterSpacing: 2, color: C.muted, textTransform: "uppercase", fontFamily: "monospace", marginBottom: 6 }}>Persoana</div>
             <input
               autoFocus
               value={form.persoana}
@@ -331,7 +331,7 @@ function MyObservation() {
           </div>
 
           <div style={{ marginBottom: 16 }}>
-            <div style={{ fontSize: 12, letterSpacing: 2, color: C.muted, textTransform: "uppercase", fontFamily: "monospace", marginBottom: 6 }}>Ce s-a întâmplat?</div>
+            <div style={{ fontSize: 10, letterSpacing: 2, color: C.muted, textTransform: "uppercase", fontFamily: "monospace", marginBottom: 6 }}>Ce s-a întâmplat?</div>
             <textarea
               value={form.situatie}
               onChange={e => setForm(f => ({ ...f, situatie: e.target.value }))}
@@ -348,7 +348,7 @@ function MyObservation() {
 
           <button onClick={() => setStep(1)} disabled={!canNext0} style={{
             width: "100%",
-            background: canNext0 ? C.obs : C.border,
+            background: canNext0 ? `linear-gradient(135deg, ${C.obs}, #60A5FA)` : C.border,
             border: "none", borderRadius: 10,
             color: canNext0 ? "#F3F4F6" : C.muted,
             fontWeight: "bold", fontSize: 14, padding: "12px",
@@ -360,7 +360,7 @@ function MyObservation() {
       {/* Step 1 — Observation vs interpretation */}
       {step === 1 && (
         <div style={{ animation: "fadeUp 0.3s ease" }}>
-          <div style={{ fontSize: 16, fontWeight: "700", color: C.text, marginBottom: 8 }}>
+          <div style={{ fontSize: 16, fontWeight: "700", color: "#fff", marginBottom: 8 }}>
             Separă ce ai văzut de ce ai interpretat
           </div>
           <div style={{ fontSize: 13, color: "#475569", lineHeight: 1.7, marginBottom: 16 }}>
@@ -369,7 +369,7 @@ function MyObservation() {
 
           <div style={{ marginBottom: 12 }}>
             <div style={{
-              fontSize: 12, letterSpacing: 2, color: C.obs,
+              fontSize: 10, letterSpacing: 2, color: C.obs,
               textTransform: "uppercase", fontFamily: "monospace", marginBottom: 6,
               display: "flex", alignItems: "center", gap: 6,
             }}>
@@ -393,7 +393,7 @@ function MyObservation() {
 
           <div style={{ marginBottom: 16 }}>
             <div style={{
-              fontSize: 12, letterSpacing: 2, color: C.judecata,
+              fontSize: 10, letterSpacing: 2, color: C.judecata,
               textTransform: "uppercase", fontFamily: "monospace", marginBottom: 6,
               display: "flex", alignItems: "center", gap: 6,
             }}>
@@ -421,7 +421,7 @@ function MyObservation() {
             }}>←</button>
             <button onClick={() => setStep(2)} disabled={!canNext1} style={{
               flex: 1,
-              background: canNext1 ? C.obs : C.border,
+              background: canNext1 ? `linear-gradient(135deg, ${C.obs}, #60A5FA)` : C.border,
               border: "none", borderRadius: 10,
               color: canNext1 ? "#F3F4F6" : C.muted,
               fontWeight: "bold", fontSize: 14, padding: "12px",
@@ -434,7 +434,7 @@ function MyObservation() {
       {/* Step 2 — Alternative interpretation */}
       {step === 2 && (
         <div style={{ animation: "fadeUp 0.3s ease" }}>
-          <div style={{ fontSize: 16, fontWeight: "700", color: C.text, marginBottom: 8 }}>
+          <div style={{ fontSize: 16, fontWeight: "700", color: "#fff", marginBottom: 8 }}>
             Ce altă explicație ar putea exista?
           </div>
           <div style={{
@@ -456,7 +456,7 @@ function MyObservation() {
 
           <div style={{ marginBottom: 16 }}>
             <div style={{
-              fontSize: 12, letterSpacing: 2, color: C.contextual,
+              fontSize: 10, letterSpacing: 2, color: C.contextual,
               textTransform: "uppercase", fontFamily: "monospace", marginBottom: 6,
             }}>O altă explicație posibilă</div>
             <textarea
@@ -481,7 +481,7 @@ function MyObservation() {
             }}>←</button>
             <button onClick={() => setStep(3)} disabled={!canNext2} style={{
               flex: 1,
-              background: canNext2 ? C.contextual : C.border,
+              background: canNext2 ? `linear-gradient(135deg, ${C.contextual}, #34D399)` : C.border,
               border: "none", borderRadius: 10,
               color: canNext2 ? "#F3F4F6" : C.muted,
               fontWeight: "bold", fontSize: 14, padding: "12px",
@@ -494,7 +494,7 @@ function MyObservation() {
       {/* Step 3 — Consistent vs contextual */}
       {step === 3 && (
         <div style={{ animation: "fadeUp 0.3s ease" }}>
-          <div style={{ fontSize: 16, fontWeight: "700", color: C.text, marginBottom: 8 }}>
+          <div style={{ fontSize: 16, fontWeight: "700", color: "#fff", marginBottom: 8 }}>
             Consecvent sau contextual?
           </div>
           <div style={{ fontSize: 13, color: "#475569", lineHeight: 1.7, marginBottom: 16 }}>
@@ -519,8 +519,8 @@ function MyObservation() {
                 >
                   <div style={{ fontSize: 20, flexShrink: 0 }}>{ctx.emoji}</div>
                   <div style={{ flex: 1 }}>
-                    <div style={{ fontSize: 13, fontWeight: "600", color: C.text, marginBottom: 2 }}>{ctx.label}</div>
-                    <div style={{ fontSize: 12, color: C.muted, lineHeight: 1.5 }}>{ctx.desc}</div>
+                    <div style={{ fontSize: 13, fontWeight: "600", color: selected ? "#fff" : C.text, marginBottom: 2 }}>{ctx.label}</div>
+                    <div style={{ fontSize: 11, color: C.muted, lineHeight: 1.5 }}>{ctx.desc}</div>
                   </div>
                   <div style={{
                     width: 18, height: 18, borderRadius: "50%", flexShrink: 0,
@@ -529,7 +529,7 @@ function MyObservation() {
                     display: "flex", alignItems: "center", justifyContent: "center",
                     transition: "all 0.2s",
                   }}>
-                    {selected && <div style={{ fontSize: 10, color: C.text }}>✓</div>}
+                    {selected && <div style={{ fontSize: 10, color: "#fff" }}>✓</div>}
                   </div>
                 </div>
               );
@@ -537,7 +537,7 @@ function MyObservation() {
           </div>
 
           <div style={{ marginBottom: 16 }}>
-            <div style={{ fontSize: 12, letterSpacing: 2, color: C.gold, textTransform: "uppercase", fontFamily: "monospace", marginBottom: 6 }}>
+            <div style={{ fontSize: 10, letterSpacing: 2, color: C.gold, textTransform: "uppercase", fontFamily: "monospace", marginBottom: 6 }}>
               Concluzia ta provizorie
             </div>
             <textarea
@@ -561,7 +561,7 @@ function MyObservation() {
             }}>←</button>
             <button onClick={finish} disabled={!canFinish} style={{
               flex: 1,
-              background: canFinish ? C.accent : C.border,
+              background: canFinish ? `linear-gradient(135deg, ${C.gold}, #F97316)` : C.border,
               border: "none", borderRadius: 10,
               color: canFinish ? "#F3F4F6" : C.muted,
               fontWeight: "bold", fontSize: 14, padding: "12px",
@@ -580,7 +580,7 @@ export default function GhidObservatie() {
   return (
     <div style={{
       minHeight: "100vh",
-      background: C.bg,
+      background: `radial-gradient(ellipse at 20% 10%, #080820 0%, ${C.bgDeep} 60%)`,
       fontFamily: "'Georgia', serif", color: C.text,
       padding: "28px 16px 80px",
     }}>
@@ -598,7 +598,7 @@ export default function GhidObservatie() {
           </div>
           <h1 style={{
             fontSize: "clamp(20px, 5vw, 30px)", fontWeight: 700, margin: "0 0 8px",
-            background: C.obs,
+            background: `linear-gradient(135deg, #fff 0%, #93C5FD 100%)`,
             WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
           }}>Ghidul de Observație</h1>
           <p style={{ fontSize: 12, color: C.muted, margin: 0, fontStyle: "italic" }}>
@@ -623,7 +623,7 @@ export default function GhidObservatie() {
               style={{
                 flex: 1, padding: "10px 8px", borderRadius: 10,
                 border: "none", cursor: "pointer",
-                background: tab === t.id ? C.obs : "transparent",
+                background: tab === t.id ? `linear-gradient(135deg, ${C.obs}, #60A5FA)` : "transparent",
                 color: tab === t.id ? "#F3F4F6" : C.muted,
                 fontWeight: tab === t.id ? "bold" : "normal",
                 fontSize: 12, fontFamily: "'DM Sans', system-ui, sans-serif",
@@ -646,17 +646,17 @@ export default function GhidObservatie() {
 
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 14 }}>
               <div style={{ background: `${C.obs}0A`, border: `1px solid ${C.obs}33`, borderRadius: 14, padding: "16px" }}>
-                <div style={{ fontSize: 12, letterSpacing: 2, color: C.obs, textTransform: "uppercase", fontFamily: "monospace", marginBottom: 8 }}>Observație</div>
+                <div style={{ fontSize: 10, letterSpacing: 2, color: C.obs, textTransform: "uppercase", fontFamily: "monospace", marginBottom: 8 }}>Observație</div>
                 <div style={{ fontSize: 13, color: "#90A0CC", lineHeight: 1.7 }}>Ce ai perceput cu simțurile. Verificabil. Nu se poate contesta.</div>
               </div>
               <div style={{ background: `${C.judecata}0A`, border: `1px solid ${C.judecata}33`, borderRadius: 14, padding: "16px" }}>
-                <div style={{ fontSize: 12, letterSpacing: 2, color: C.judecata, textTransform: "uppercase", fontFamily: "monospace", marginBottom: 8 }}>Judecată</div>
+                <div style={{ fontSize: 10, letterSpacing: 2, color: C.judecata, textTransform: "uppercase", fontFamily: "monospace", marginBottom: 8 }}>Judecată</div>
                 <div style={{ fontSize: 13, color: "#C09090", lineHeight: 1.7 }}>Ce a adăugat mintea. Poate fi adevărat — sau poate nu. Merită verificat.</div>
               </div>
             </div>
 
             <div style={{ background: C.panel, border: `1px solid ${C.border}`, borderRadius: 18, padding: "22px", marginBottom: 14 }}>
-              <div style={{ fontSize: 12, letterSpacing: 2, color: C.muted, textTransform: "uppercase", fontFamily: "monospace", marginBottom: 16 }}>
+              <div style={{ fontSize: 11, letterSpacing: 2, color: C.muted, textTransform: "uppercase", fontFamily: "monospace", marginBottom: 16 }}>
                 Consecvent vs. contextual
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
@@ -681,7 +681,7 @@ export default function GhidObservatie() {
 
             <button onClick={() => setTab("exemple")} style={{
               width: "100%", marginTop: 16,
-              background: C.obs,
+              background: `linear-gradient(135deg, ${C.obs}, #60A5FA)`,
               border: "none", borderRadius: 14, color: "#F3F4F6",
               fontWeight: "bold", fontSize: 15, padding: "16px",
               cursor: "pointer", boxShadow: `0 6px 24px ${C.obs}33`,
@@ -698,7 +698,7 @@ export default function GhidObservatie() {
             {EXAMPLES.map((ex, i) => <ExampleCard key={i} ex={ex} index={i} />)}
             <button onClick={() => setTab("practica")} style={{
               width: "100%", marginTop: 8,
-              background: C.obs,
+              background: `linear-gradient(135deg, ${C.obs}, #60A5FA)`,
               border: "none", borderRadius: 14, color: "#F3F4F6",
               fontWeight: "bold", fontSize: 15, padding: "16px",
               cursor: "pointer", boxShadow: `0 6px 24px ${C.obs}33`,

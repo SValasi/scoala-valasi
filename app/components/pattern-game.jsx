@@ -339,7 +339,7 @@ function ProgressBar({ current, total, color }) {
       <div style={{
         height: "100%", borderRadius: 2,
         width: `${(current / total) * 100}%`,
-        background: color,
+        background: `linear-gradient(90deg, ${color}, ${color}AA)`,
         transition: "width 0.5s cubic-bezier(0.4,0,0.2,1)",
         boxShadow: `0 0 8px ${color}55`,
       }} />
@@ -424,7 +424,7 @@ export default function PatternGame() {
   if (phase === "intro") return (
     <div style={{
       minHeight: "100vh",
-      background: C.bg,
+      background: `radial-gradient(ellipse at 20% 15%, #0A0A20 0%, ${C.bg} 60%)`,
       fontFamily: "'Georgia', serif", color: C.text,
       display: "flex", flexDirection: "column", alignItems: "center",
       padding: "32px 16px 60px",
@@ -437,7 +437,7 @@ export default function PatternGame() {
           </div>
           <h1 style={{
             fontSize: "clamp(24px, 6vw, 40px)", fontWeight: 700, margin: "0 0 12px",
-            background: C.accent || C.orange,
+            background: `linear-gradient(135deg, #fff 0%, ${C.gold} 100%)`,
             WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
             lineHeight: 1.2,
           }}>Antrenamentul de Tipare</h1>
@@ -477,7 +477,7 @@ export default function PatternGame() {
 
         <button onClick={() => setPhase("playing")} style={{
           width: "100%",
-          background: C.blue,
+          background: `linear-gradient(135deg, ${C.blue}, #60A5FA)`,
           border: "none", borderRadius: 16,
           color: "#F3F4F6", fontWeight: "bold", fontSize: 16,
           padding: "18px", cursor: "pointer",
@@ -495,7 +495,7 @@ export default function PatternGame() {
     return (
       <div style={{
         minHeight: "100vh",
-        background: C.bg,
+        background: `radial-gradient(ellipse at 50% 30%, #0A0A20 0%, ${C.bg} 60%)`,
         fontFamily: "'Georgia', serif", color: C.text,
         display: "flex", flexDirection: "column", alignItems: "center",
         justifyContent: "center", padding: "32px 20px",
@@ -506,10 +506,10 @@ export default function PatternGame() {
             {levelScores[level.id] === level.questions.length ? "🔥" : levelScores[level.id] >= 2 ? "✨" : "💪"}
           </div>
           <div style={{
-            fontSize: 12, letterSpacing: 3, color: typeColor,
+            fontSize: 11, letterSpacing: 3, color: typeColor,
             textTransform: "uppercase", fontFamily: "monospace", marginBottom: 10,
           }}>Nivel {level.id} completat</div>
-          <div style={{ fontSize: 18, fontWeight: "700", color: C.text, marginBottom: 8 }}>
+          <div style={{ fontSize: 18, fontWeight: "700", color: "#fff", marginBottom: 8 }}>
             {levelScores[level.id]}/{level.questions.length} corecte
           </div>
 
@@ -520,7 +520,7 @@ export default function PatternGame() {
               textAlign: "left",
             }}>
               <div style={{
-                fontSize: 12, letterSpacing: 2, color: TYPE_COLORS[nextLevel.type],
+                fontSize: 10, letterSpacing: 3, color: TYPE_COLORS[nextLevel.type],
                 textTransform: "uppercase", fontFamily: "monospace", marginBottom: 10,
               }}>Tranziție</div>
               <div style={{ fontSize: 14, color: "#475569", lineHeight: 1.8 }}>
@@ -544,7 +544,7 @@ export default function PatternGame() {
 
           <button onClick={startNextLevel} style={{
             marginTop: 20, width: "100%",
-            background: TYPE_COLORS[nextLevel?.type] || C.gold,
+            background: `linear-gradient(135deg, ${TYPE_COLORS[nextLevel?.type] || C.gold}, ${TYPE_COLORS[nextLevel?.type] || C.gold}AA)`,
             border: "none", borderRadius: 14,
             color: "#F3F4F6", fontWeight: "bold", fontSize: 15,
             padding: "16px", cursor: "pointer",
@@ -561,7 +561,7 @@ export default function PatternGame() {
     return (
       <div style={{
         minHeight: "100vh",
-        background: C.bg,
+        background: `radial-gradient(ellipse at 30% 20%, #1A0A2E 0%, ${C.bg} 55%)`,
         fontFamily: "'Georgia', serif", color: C.text,
         display: "flex", flexDirection: "column", alignItems: "center",
         padding: "32px 16px 60px",
@@ -572,7 +572,7 @@ export default function PatternGame() {
             <div style={{ fontSize: 56, marginBottom: 12 }}>🐉</div>
             <h1 style={{
               fontSize: "clamp(22px, 5vw, 32px)", fontWeight: 700, margin: "0 0 10px",
-              background: C.accent || C.orange,
+              background: `linear-gradient(135deg, #fff 0%, ${C.gold} 100%)`,
               WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
             }}>Antrenament complet</h1>
             <div style={{
@@ -584,7 +584,7 @@ export default function PatternGame() {
 
           {/* Per-level breakdown */}
           <div style={{ background: C.panel, border: `1px solid ${C.border}`, borderRadius: 18, padding: "22px", marginBottom: 16 }}>
-            <div style={{ fontSize: 12, letterSpacing: 2, color: C.muted, textTransform: "uppercase", fontFamily: "monospace", marginBottom: 16 }}>
+            <div style={{ fontSize: 10, letterSpacing: 3, color: C.muted, textTransform: "uppercase", fontFamily: "monospace", marginBottom: 16 }}>
               Pe categorii
             </div>
             {["visual", "behavioral", "social", "mixed"].map(type => {
@@ -600,7 +600,7 @@ export default function PatternGame() {
                     <span style={{ fontSize: 12, fontFamily: "monospace", color: typePct > 70 ? C.green : typePct > 40 ? C.gold : C.red }}>{typeScore}/{typeTotal}</span>
                   </div>
                   <div style={{ height: 5, borderRadius: 3, background: C.border, overflow: "hidden" }}>
-                    <div style={{ height: "100%", borderRadius: 3, width: `${typePct}%`, background: color, transition: "width 0.6s" }} />
+                    <div style={{ height: "100%", borderRadius: 3, width: `${typePct}%`, background: `linear-gradient(90deg, ${col}88, ${col})`, transition: "width 0.6s" }} />
                   </div>
                 </div>
               );
@@ -609,11 +609,11 @@ export default function PatternGame() {
 
           {/* The lesson */}
           <div style={{
-            background: C.panel,
+            background: `linear-gradient(135deg, ${C.gold}10, ${C.orange}08)`,
             border: `1px solid ${C.gold}33`,
             borderRadius: 18, padding: "24px 22px", marginBottom: 20,
           }}>
-            <div style={{ fontSize: 12, letterSpacing: 2, color: C.gold, textTransform: "uppercase", fontFamily: "monospace", marginBottom: 12 }}>
+            <div style={{ fontSize: 10, letterSpacing: 3, color: C.gold, textTransform: "uppercase", fontFamily: "monospace", marginBottom: 12 }}>
               Lecția din spatele jocului
             </div>
             <p style={{ fontSize: 14, color: "#B0A890", lineHeight: 1.8, margin: "0 0 14px" }}>
@@ -622,7 +622,7 @@ export default function PatternGame() {
             <p style={{ fontSize: 14, color: "#B0A890", lineHeight: 1.8, margin: "0 0 14px" }}>
               Creierul tău nu a schimbat nimic între nivel 1 și nivel 10. A văzut tipare — indiferent de material.
             </p>
-            <p style={{ fontSize: 14, color: C.text, lineHeight: 1.8, margin: 0, fontWeight: "600" }}>
+            <p style={{ fontSize: 14, color: "#fff", lineHeight: 1.8, margin: 0, fontWeight: "600" }}>
               Asta e pattern recognition. Nu e un talent înnăscut. E un mușchi. Și tocmai l-ai antrenat.
             </p>
           </div>
@@ -645,7 +645,7 @@ export default function PatternGame() {
   return (
     <div style={{
       minHeight: "100vh",
-      background: C.bg,
+      background: `radial-gradient(ellipse at 20% 10%, #080820 0%, ${C.bg} 60%)`,
       fontFamily: "'Georgia', serif", color: C.text,
       padding: "20px 16px 60px",
     }}>
@@ -698,10 +698,10 @@ export default function PatternGame() {
 
         {/* Level header */}
         <div style={{ marginBottom: 20 }}>
-          <div style={{ fontSize: 12, letterSpacing: 2, color: C.muted, fontFamily: "monospace", marginBottom: 4 }}>
+          <div style={{ fontSize: 10, letterSpacing: 2, color: C.muted, fontFamily: "monospace", marginBottom: 4 }}>
             Nivel {level.id} · {questionIdx + 1}/{level.questions.length}
           </div>
-          <div style={{ fontSize: 16, fontWeight: "700", color: C.text }}>{level.title}</div>
+          <div style={{ fontSize: 16, fontWeight: "700", color: "#fff" }}>{level.title}</div>
           <div style={{ fontSize: 12, color: C.muted, marginTop: 4, lineHeight: 1.6 }}>{level.instruction}</div>
         </div>
 
@@ -775,7 +775,7 @@ export default function PatternGame() {
           )}
 
           {/* Question */}
-          <div style={{ fontSize: 15, fontWeight: "600", color: C.text, lineHeight: 1.5, marginBottom: 16 }}>
+          <div style={{ fontSize: 15, fontWeight: "600", color: "#fff", lineHeight: 1.5, marginBottom: 16 }}>
             {question.question || "Ce urmează?"}
           </div>
 
@@ -807,7 +807,7 @@ export default function PatternGame() {
                     border: `2px solid ${showCorrect ? C.green : showWrong ? C.red : isSelected ? typeColor : C.border}`,
                     background: showCorrect ? C.green : showWrong ? C.red : isSelected ? typeColor : "transparent",
                     display: "flex", alignItems: "center", justifyContent: "center",
-                    fontSize: 12, color: "#F3F4F6", fontWeight: "bold",
+                    fontSize: 11, color: "#F3F4F6", fontWeight: "bold",
                     transition: "all 0.2s",
                   }}>
                     {showCorrect ? "✓" : showWrong ? "×" : String.fromCharCode(65 + i)}
@@ -830,7 +830,7 @@ export default function PatternGame() {
               borderRadius: 12, animation: "fadeUp 0.3s ease",
             }}>
               <div style={{
-                fontSize: 12, letterSpacing: 2,
+                fontSize: 10, letterSpacing: 2,
                 color: selected === question.answer ? C.green : C.red,
                 textTransform: "uppercase", fontFamily: "monospace", marginBottom: 6,
               }}>
@@ -849,7 +849,7 @@ export default function PatternGame() {
             onClick={handleNext}
             style={{
               width: "100%",
-              background: typeColor,
+              background: `linear-gradient(135deg, ${typeColor}, ${typeColor}AA)`,
               border: "none", borderRadius: 14,
               color: "#F3F4F6", fontWeight: "bold", fontSize: 15,
               padding: "16px", cursor: "pointer",

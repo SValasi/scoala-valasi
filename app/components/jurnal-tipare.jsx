@@ -37,18 +37,12 @@ function getRandomPercent() {
 }
 
 function useLocalEntries() {
-const [entries, setEntries] = useState([]);
-
-useEffect(() => {
-  try {
-    const raw = localStorage.getItem("sv_jurnal_entries");
-    if (raw) {
-      setEntries(JSON.parse(raw));
-    }
-  } catch (e) {
-    console.error(e);
-  }
-}, []);
+  const [entries, setEntries] = useState(() => {
+    try {
+      const raw = localStorage.getItem("sv_jurnal_entries");
+      return raw ? JSON.parse(raw) : [];
+    } catch { return []; }
+  });
 
   function save(newEntries) {
     setEntries(newEntries);
@@ -77,7 +71,7 @@ function PrivacyScreen({ onContinue }) {
   return (
     <div style={{
       minHeight: "100vh",
-      background: C.bg,
+      background: `radial-gradient(ellipse at 30% 20%, #1A0F05 0%, ${C.bg} 60%)`,
       display: "flex", flexDirection: "column", alignItems: "center",
       justifyContent: "center", padding: "32px 20px",
       fontFamily: "'Georgia', serif", color: C.text,
@@ -87,11 +81,11 @@ function PrivacyScreen({ onContinue }) {
         <div style={{ textAlign: "center", marginBottom: 36 }}>
           <div style={{ fontSize: 48, marginBottom: 16 }}>🐉</div>
           <div style={{ fontSize: 10, letterSpacing: 5, color: C.orange, textTransform: "uppercase", fontFamily: "monospace", marginBottom: 12 }}>
-            Young Dragons Academy
+            Școala Valasi
           </div>
           <h1 style={{
             fontSize: "clamp(22px, 5vw, 32px)", fontWeight: 700, margin: 0,
-            background: C.accent || C.orange,
+            background: `linear-gradient(135deg, #fff 0%, ${C.gold} 100%)`,
             WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
             lineHeight: 1.3,
           }}>Jurnalul de Tipare</h1>
@@ -105,7 +99,7 @@ function PrivacyScreen({ onContinue }) {
           boxShadow: `0 0 60px ${C.orange}08`,
         }}>
           <p style={{
-            fontSize: 18, fontWeight: "700", color: C.text,
+            fontSize: 18, fontWeight: "700", color: "#fff",
             margin: "0 0 20px", lineHeight: 1.5, textAlign: "center",
           }}>
             Jurnalul tău e al tău. Complet.
@@ -147,7 +141,7 @@ function PrivacyScreen({ onContinue }) {
           borderRadius: 16, padding: "18px 20px",
           marginBottom: 16,
         }}>
-          <div style={{ fontSize: 12, letterSpacing: 2, color: C.gold, textTransform: "uppercase", fontFamily: "monospace", marginBottom: 10 }}>
+          <div style={{ fontSize: 11, letterSpacing: 2, color: C.gold, textTransform: "uppercase", fontFamily: "monospace", marginBottom: 10 }}>
             Ce putem garanta — și ce nu
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
@@ -170,7 +164,7 @@ function PrivacyScreen({ onContinue }) {
           onClick={onContinue}
           style={{
             width: "100%",
-            background: C.accent,
+            background: `linear-gradient(135deg, ${C.orange}, ${C.gold})`,
             border: "none", borderRadius: 16,
             color: "#F3F4F6", fontWeight: "bold", fontSize: 16,
             padding: "18px", cursor: "pointer",
@@ -250,7 +244,7 @@ function NewEntryForm({ onSave, onCancel }) {
         display: "flex", justifyContent: "space-between",
         alignItems: "center", marginBottom: 20,
       }}>
-        <div style={{ fontSize: 12, letterSpacing: 2, color: C.orange, textTransform: "uppercase", fontFamily: "monospace" }}>
+        <div style={{ fontSize: 10, letterSpacing: 3, color: C.orange, textTransform: "uppercase", fontFamily: "monospace" }}>
           Intrare nouă
         </div>
         <button onClick={onCancel} style={{ background: "none", border: "none", color: C.muted, fontSize: 18, cursor: "pointer" }}>×</button>
@@ -270,14 +264,14 @@ function NewEntryForm({ onSave, onCancel }) {
       {/* Steps 0-2 */}
       {step <= 2 && current && (
         <div style={{ animation: "fadeUp 0.3s ease" }}>
-          <div style={{ fontSize: 17, fontWeight: "700", color: C.text, marginBottom: 8, lineHeight: 1.4 }}>
+          <div style={{ fontSize: 17, fontWeight: "700", color: "#fff", marginBottom: 8, lineHeight: 1.4 }}>
             {current.title}
           </div>
           <div style={{ fontSize: 13, color: "#9088AA", lineHeight: 1.7, marginBottom: 12 }}>
             {current.subtitle}
           </div>
           <div style={{
-            fontSize: 12, color: C.muted, fontStyle: "italic",
+            fontSize: 11, color: C.muted, fontStyle: "italic",
             padding: "8px 12px", background: `${C.orange}08`,
             borderRadius: 8, borderLeft: `2px solid ${C.orange}33`,
             marginBottom: 14, lineHeight: 1.6,
@@ -313,7 +307,7 @@ function NewEntryForm({ onSave, onCancel }) {
               disabled={!canNext}
               style={{
                 flex: 1,
-                background: canNext ? C.accent : C.border,
+                background: canNext ? `linear-gradient(135deg, ${C.orange}, ${C.gold})` : C.border,
                 border: "none", borderRadius: 10,
                 color: canNext ? "#F3F4F6" : C.muted,
                 fontWeight: "bold", fontSize: 14,
@@ -329,7 +323,7 @@ function NewEntryForm({ onSave, onCancel }) {
       {/* Step 3 — Pattern selection */}
       {step === 3 && (
         <div style={{ animation: "fadeUp 0.3s ease" }}>
-          <div style={{ fontSize: 17, fontWeight: "700", color: C.text, marginBottom: 8 }}>
+          <div style={{ fontSize: 17, fontWeight: "700", color: "#fff", marginBottom: 8 }}>
             Recunoști un tipar?
           </div>
           <div style={{ fontSize: 13, color: "#9088AA", lineHeight: 1.7, marginBottom: 16 }}>
@@ -376,7 +370,7 @@ function NewEntryForm({ onSave, onCancel }) {
           )}
 
           <div style={{ marginBottom: 14 }}>
-            <div style={{ fontSize: 12, color: C.muted, fontFamily: "monospace", letterSpacing: 1, marginBottom: 6, textTransform: "uppercase" }}>
+            <div style={{ fontSize: 11, color: C.muted, fontFamily: "monospace", letterSpacing: 1, marginBottom: 6, textTransform: "uppercase" }}>
               O notă pentru tine (opțional)
             </div>
             <textarea
@@ -405,7 +399,7 @@ function NewEntryForm({ onSave, onCancel }) {
               disabled={!form.tipar || (form.tipar === "altul" && !form.tiparCustom.trim())}
               style={{
                 flex: 1,
-                background: form.tipar ? C.green : C.border,
+                background: form.tipar ? `linear-gradient(135deg, ${C.green}, #2ECC71)` : C.border,
                 border: "none", borderRadius: 10,
                 color: form.tipar ? "#F3F4F6" : C.muted,
                 fontWeight: "bold", fontSize: 14,
@@ -470,7 +464,7 @@ function EntryCard({ entry, onDelete }) {
           ))}
           <button onClick={() => onDelete(entry.id)} style={{
             background: "none", border: `1px solid ${C.red}33`,
-            borderRadius: 8, color: C.red + "88", fontSize: 12,
+            borderRadius: 8, color: C.red + "88", fontSize: 11,
             padding: "6px 14px", cursor: "pointer", marginTop: 4,
             fontFamily: "monospace",
           }}>Șterge această intrare</button>
@@ -494,17 +488,17 @@ function PatternInsight({ entries }) {
 
   return (
     <div style={{
-      background: C.panelWarm,
+      background: `linear-gradient(135deg, ${cat.color}12, ${C.panelWarm})`,
       border: `1px solid ${cat.color}44`,
       borderRadius: 18, padding: "22px 22px",
       marginBottom: 16,
       boxShadow: `0 0 30px ${cat.color}11`,
       animation: "fadeUp 0.5s ease",
     }}>
-      <div style={{ fontSize: 12, letterSpacing: 2, color: cat.color, textTransform: "uppercase", fontFamily: "monospace", marginBottom: 12 }}>
+      <div style={{ fontSize: 10, letterSpacing: 3, color: cat.color, textTransform: "uppercase", fontFamily: "monospace", marginBottom: 12 }}>
         🔍 Tipar identificat
       </div>
-      <div style={{ fontSize: 16, fontWeight: "700", color: C.text, marginBottom: 10, lineHeight: 1.4 }}>
+      <div style={{ fontSize: 16, fontWeight: "700", color: "#fff", marginBottom: 10, lineHeight: 1.4 }}>
         {cat.emoji} {cat.label} — apare de {dominant[1]} ori în jurnalul tău
       </div>
       <div style={{ fontSize: 13, color: "#A09888", lineHeight: 1.7, marginBottom: 16 }}>
@@ -545,7 +539,7 @@ export default function JurnalTipare() {
   return (
     <div style={{
       minHeight: "100vh",
-      background: C.bg,
+      background: `radial-gradient(ellipse at 25% 15%, #150A03 0%, ${C.bg} 55%)`,
       fontFamily: "'Georgia', serif", color: C.text,
       padding: "24px 16px 80px",
     }}>
@@ -563,7 +557,7 @@ export default function JurnalTipare() {
           </div>
           <h1 style={{
             fontSize: "clamp(22px, 5vw, 32px)", fontWeight: 700, margin: "0 0 6px",
-            background: C.accent || C.orange,
+            background: `linear-gradient(135deg, #fff 0%, ${C.gold} 100%)`,
             WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
           }}>Jurnalul de Tipare</h1>
           <p style={{ fontSize: 12, color: C.muted, margin: 0, fontStyle: "italic" }}>
@@ -582,7 +576,7 @@ export default function JurnalTipare() {
             marginBottom: 16, animation: "fadeUp 0.4s ease",
           }}>
             <div style={{ fontSize: 40, marginBottom: 16 }}>📖</div>
-            <div style={{ fontSize: 15, fontWeight: "600", color: C.text, marginBottom: 10 }}>
+            <div style={{ fontSize: 15, fontWeight: "600", color: "#fff", marginBottom: 10 }}>
               Jurnalul tău e gol — deocamdată
             </div>
             <div style={{ fontSize: 13, color: "#9088AA", lineHeight: 1.8, marginBottom: 20 }}>
@@ -619,7 +613,7 @@ export default function JurnalTipare() {
             onClick={handleNewEntry}
             style={{
               width: "100%",
-              background: C.accent,
+              background: `linear-gradient(135deg, ${C.orange}, ${C.gold})`,
               border: "none", borderRadius: 16,
               color: "#F3F4F6", fontWeight: "bold", fontSize: 15,
               padding: "16px", cursor: "pointer",
@@ -639,7 +633,7 @@ export default function JurnalTipare() {
             borderRadius: 12, marginBottom: 16,
           }}>
             <div style={{ fontSize: 14 }}>🔒</div>
-            <div style={{ fontSize: 12, color: "#5A7A60", lineHeight: 1.5 }}>
+            <div style={{ fontSize: 11, color: "#5A7A60", lineHeight: 1.5 }}>
               Salvat local pe acest dispozitiv. Noi nu vedem nimic. Dacă ștergi cache-ul browserului, jurnalul dispare — e în controlul tău.
             </div>
           </div>
@@ -651,7 +645,7 @@ export default function JurnalTipare() {
             {!showClearConfirm ? (
               <button onClick={() => setShowClearConfirm(true)} style={{
                 background: "none", border: "none",
-                color: C.muted, fontSize: 12, cursor: "pointer",
+                color: C.muted, fontSize: 11, cursor: "pointer",
                 fontFamily: "monospace", letterSpacing: 1,
                 textDecoration: "underline",
               }}>Șterge tot jurnalul</button>
