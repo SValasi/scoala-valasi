@@ -76,12 +76,22 @@ const STEPS = [
 ];
 
 function useWindowSize() {
-  const [size, setSize] = useState({ w: window.innerWidth, h: window.innerHeight });
+  const [size, setSize] = useState({ w: 0, h: 0 });
+
   useEffect(() => {
-    const fn = () => setSize({ w: window.innerWidth, h: window.innerHeight });
-    window.addEventListener("resize", fn);
-    return () => window.removeEventListener("resize", fn);
+    const update = () => {
+      setSize({
+        w: window.innerWidth,
+        h: window.innerHeight,
+      });
+    };
+
+    update();
+
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
   }, []);
+
   return size;
 }
 
